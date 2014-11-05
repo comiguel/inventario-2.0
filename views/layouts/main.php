@@ -29,13 +29,12 @@ AppAsset::register($this);
                 'brandLabel' => 'Elecsis',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
+                    'class' => 'navbar navbar-default',
                 ],
             ]);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-                    ['label' => 'Home', 'url' => ['/site/index']],
                     ['label' => 'Dispositivos', 'url' => ['/dispositivos/']],
                     ['label' => 'Sims', 'url' => ['/sims/']],
                     ['label' => 'Proveedores', 'url' => ['/proveedores/']],
@@ -47,7 +46,7 @@ AppAsset::register($this);
                              ['label' => 'Estados', 'url' => ['/estados/']],
                              ['label' => 'Planes', 'url' => ['/planes/']],
                              ['label' => 'Contactos', 'url' => ['/contactos/']],
-                             ['label' => 'Historico', 'url' => ['#']],
+                             ['label' => 'Historico', 'url' => ['/historicos/']],
                          ],
                      ],
                     Yii::$app->user->isGuest ?

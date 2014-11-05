@@ -11,7 +11,32 @@ body {
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+    padding: 30px 15px 20px;
+}
+
+.navbar-default .navbar-nav > li > a:hover,.dropdown-menu > li > a:hover {
+    background-color: #86898A;
+    color: white;
+}
+
+.navbar-brand{
+    background: url(/inventario-2.0/web/images/logo.png) no-repeat;
+    height: 50px;
+    margin-left: 0; 
+    text-indent: -9999px;
+    width: 158px;
+}
+
+@media (max-width: 992px) {
+   .navbar-default .navbar-nav > li > a{
+        padding-left:9px;
+        padding-right: 9px;
+    }   
+}
+
+.btn.btn-success{
+    float: right;
+    margin: 10px 0;
 }
 
 .footer {
