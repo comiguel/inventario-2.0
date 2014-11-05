@@ -45,26 +45,28 @@ class DispositivosSearch extends Dispositivos
      */
     public function search($params)
     {
-        $query = Dispositivos::find()->where('dispositivos.borrado=0');
+        // $query = Dispositivos::find()->where('dispositivos.borrado=0');
+        $sql = "SELECT d.id_disp id_disp, t.tipo_ref tipo_ref, t.nombre nombre, d.f_adquirido f_adquirido, e.estado estado, p.nombre proveedor, d.imei_ref imei_ref, t.pc_siva pc_siva, t.pc_iva pc_iva, t.pv_siva pv_siva, t.pv_iva pv_iva, d.comentario comentario, t.descripcion descripcion, d.ubicacion ubicacion, if (d.facturado=0, 'Sin facturar', 'Facturado') facturado, t.usa_sim sim, t.total_sims total, d.sims_asig sims_asig FROM tipo_disp t, dispositivos d, estados e, proveedores p WHERE d.tipo_disp = t.id_tipo AND d.id_estado = e.id_estado AND t.id_proveedor = p.id_proveedor;"
+        $query = \Yii::$app->db->createCommand($sql)->find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $dataProvider->setSort([
-            'attributes' => [
-                // 'comentario' => [
-                //     'asc' => ['comentario' => SORT_ASC],
-                //     'desc' => ['comentario' => SORT_DESC],
-                //     'label' => 'Coment'
-                // ],
-                'estadoName' => [
-                    'asc' => ['estados.estado' => SORT_ASC],
-                    'desc' => ['estados.estado' => SORT_DESC],
-                    'label' => 'Estado'
-                ],
-            ]
-        ]);
+        // $dataProvider->setSort([
+        //     'attributes' => [
+        //         'comentario' => [
+        //             'asc' => ['comentario' => SORT_ASC],
+        //             'desc' => ['comentario' => SORT_DESC],
+        //             'label' => 'Coment'
+        //         ],
+        //         'estadoName' => [
+        //             'asc' => ['estados.estado' => SORT_ASC],
+        //             'desc' => ['estados.estado' => SORT_DESC],
+        //             'label' => 'Estado'
+        //         ],
+        //     ]
+        // ]);
 
         if (!($this->load($params) && $this->validate())) {
             $query->joinWith(['estado']); //nombre de la relación con la tabla estados

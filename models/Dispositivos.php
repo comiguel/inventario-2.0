@@ -57,17 +57,17 @@ class Dispositivos extends \yii\db\ActiveRecord
     {
         return [
             'id_disp' => 'Disp',
-            'f_adquirido' => 'F Adquirido',
-            'imei_ref' => 'Imei Ref',
+            'f_adquirido' => 'Fecha Adquirido',
+            'imei_ref' => 'Imei/Ref',
             'comentario' => 'Comentario',
             'ubicacion' => 'Ubicacion',
             'tipo_disp' => 'Tipo Disp',
             'id_estado' => 'Estado',
             'sims_asig' => 'Sims Asig',
-            'facturado' => 'Facturado',
+            'facturado' => 'Estado Facturación',
             'borrado' => 'Borrado',
             'estadoName' => Yii::t('app', 'Estado'),
-            'tipoDispName' => Yii::t('app', 'Tipo'),
+            'tipoDispName' => Yii::t('app', 'Referencia Artículo'),
         ];
     }
 
