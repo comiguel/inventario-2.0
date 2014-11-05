@@ -12,6 +12,8 @@ use app\models\Dispositivos;
  */
 class DispositivosSearch extends Dispositivos
 {
+    public $estadoName;
+    public $tipoDispName;
     /**
      * @inheritdoc
      */
@@ -20,6 +22,8 @@ class DispositivosSearch extends Dispositivos
         return [
             [['id_disp', 'tipo_disp', 'id_estado', 'facturado', 'borrado'], 'integer'],
             [['f_adquirido', 'imei_ref', 'comentario', 'ubicacion', 'sims_asig'], 'safe'],
+            [['estadoName'], 'safe'],
+            [['tipoDispName'], 'safe'],
         ];
     }
 
@@ -47,7 +51,24 @@ class DispositivosSearch extends Dispositivos
             'query' => $query,
         ]);
 
+        // $dataProvider->setSort([
+        //     'attributes' => [
+        //         'comentario' => [
+        //             'asc' => ['comentario' => SORT_ASC],
+        //             'desc' => ['comentario' => SORT_DESC],
+        //             'label' => 'Coment'
+        //         ],
+        //         'estadoName' => [
+        //             'asc' => ['estados.estado' => SORT_ASC],
+        //             'desc' => ['estados.estado' => SORT_DESC],
+        //             'label' => 'Estado'
+        //         ]
+        //     ]
+        // ]);
+
         if (!($this->load($params) && $this->validate())) {
+            $query->joinWith(['estado']); //nombre de la relación con la tabla estados
+            $query->joinWith(['tipoDisp']); //nombre de la relación con la tabla tipo_disp
             return $dataProvider;
         }
 
@@ -64,6 +85,13 @@ class DispositivosSearch extends Dispositivos
             ->andFilterWhere(['like', 'comentario', $this->comentario])
             ->andFilterWhere(['like', 'ubicacion', $this->ubicacion])
             ->andFilterWhere(['like', 'sims_asig', $this->sims_asig]);
+
+        $query->joinWith(['estado' => function ($q) {
+            $q->where('estados.estado LIKE "%' . $this->estadoName . '%"');
+        }]);
+        $query->joinWith(['tipoDisp' => function ($q) {
+            $q->where('tipo_disp.nombre LIKE "%' . $this->tipoDispName . '%"');
+        }]);
 
         return $dataProvider;
     }

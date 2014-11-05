@@ -19,7 +19,7 @@ use Yii;
  * @property integer $borrado
  *
  * @property DetalleFact[] $detalleFacts
- * @property Estados $idEstado
+ * @property Estados $estado
  * @property TipoDisp $tipoDisp
  * @property Sims[] $sims
  */
@@ -56,16 +56,18 @@ class Dispositivos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_disp' => 'Id Disp',
+            'id_disp' => 'Disp',
             'f_adquirido' => 'F Adquirido',
             'imei_ref' => 'Imei Ref',
             'comentario' => 'Comentario',
             'ubicacion' => 'Ubicacion',
             'tipo_disp' => 'Tipo Disp',
-            'id_estado' => 'Id Estado',
+            'id_estado' => 'Estado',
             'sims_asig' => 'Sims Asig',
             'facturado' => 'Facturado',
             'borrado' => 'Borrado',
+            'estadoName' => Yii::t('app', 'Estado'),
+            'tipoDispName' => Yii::t('app', 'Tipo'),
         ];
     }
 
@@ -80,9 +82,13 @@ class Dispositivos extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdEstado()
+    public function getEstado()
     {
         return $this->hasOne(Estados::className(), ['id_estado' => 'id_estado']);
+    }
+
+    public function getEstadoName() {
+        return $this->estado->estado;
     }
 
     /**
@@ -91,6 +97,10 @@ class Dispositivos extends \yii\db\ActiveRecord
     public function getTipoDisp()
     {
         return $this->hasOne(TipoDisp::className(), ['id_tipo' => 'tipo_disp']);
+    }
+
+    public function getTipoDispName() {
+        return $this->tipoDisp->nombre;
     }
 
     /**

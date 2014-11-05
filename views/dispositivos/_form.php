@@ -1,3 +1,9 @@
+<script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#estados').val("<?= $model['id_estado']; ?>");
+    });
+</script>
 <?php
 
 use yii\helpers\Html;
@@ -16,19 +22,32 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'imei_ref')->textInput(['maxlength' => 25]) ?>
 
+    <?= $form->field($model, 'tipo_disp')->textInput() ?>
+
+    <!--<?= $form->field($model, 'id_estado')->textInput() ?>-->
+
+    <div class="form-group col-md-12">
+        <label class="col-md-12 control-label">Estado</label>
+        <div class="col-md-12">
+            <select id="estados" data-live-search="true" data-width="100%" name="texto" class="selectpicker">
+                <option value="">Seleccionar estado</option>
+                <?php
+                foreach($estados as $row){?>
+                    <option value="<?= $row['id_estado'];?>"><?= $row['estado'];?></option>
+                <?php }?>
+            </select>
+        </div>
+    </div>
+
     <?= $form->field($model, 'comentario')->textInput(['maxlength' => 1000]) ?>
 
     <?= $form->field($model, 'ubicacion')->textInput(['maxlength' => 200]) ?>
 
-    <?= $form->field($model, 'tipo_disp')->textInput() ?>
+    <!--<?= $form->field($model, 'sims_asig')->textInput(['maxlength' => 2]) ?>-->
 
-    <?= $form->field($model, 'id_estado')->textInput() ?>
+    <!--<?= $form->field($model, 'facturado')->textInput() ?>-->
 
-    <?= $form->field($model, 'sims_asig')->textInput(['maxlength' => 2]) ?>
-
-    <?= $form->field($model, 'facturado')->textInput() ?>
-
-    <?= $form->field($model, 'borrado')->textInput() ?>
+    <!--<?= $form->field($model, 'borrado')->textInput() ?>-->
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -65,8 +65,12 @@ class DispositivosController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_disp]);
         } else {
+            $connection = \Yii::$app->db;
+            $sql = "SELECT * FROM estados";
+            $estados=$connection->createCommand($sql)->query();
             return $this->render('create', [
                 'model' => $model,
+                'estados' => $estados,
             ]);
         }
     }
@@ -84,8 +88,12 @@ class DispositivosController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_disp]);
         } else {
+            $connection = \Yii::$app->db;
+            $sql = "SELECT * FROM estados";
+            $estados=$connection->createCommand($sql)->queryAll();
             return $this->render('update', [
                 'model' => $model,
+                'estados' => $estados,
             ]);
         }
     }
