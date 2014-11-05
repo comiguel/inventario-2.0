@@ -41,7 +41,7 @@ class ClientesSearch extends Clientes
      */
     public function search($params)
     {
-        $query = Clientes::find();
+        $query = Clientes::find()->where('borrado=0')->orderBy('nombre');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

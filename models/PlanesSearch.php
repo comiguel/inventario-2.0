@@ -42,7 +42,7 @@ class PlanesSearch extends Planes
      */
     public function search($params)
     {
-        $query = Planes::find();
+        $query = Planes::find()->where('borrado=0')->orderBy('nombre_plan');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

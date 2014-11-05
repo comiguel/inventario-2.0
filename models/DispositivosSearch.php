@@ -41,7 +41,7 @@ class DispositivosSearch extends Dispositivos
      */
     public function search($params)
     {
-        $query = Dispositivos::find();
+        $query = Dispositivos::find()->where('borrado=0')->orderBy('imei_ref');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

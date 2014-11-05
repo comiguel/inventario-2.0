@@ -41,7 +41,7 @@ class EstadosSearch extends Estados
      */
     public function search($params)
     {
-        $query = Estados::find();
+        $query = Estados::find()->where('borrado=0')->orderBy('estado');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

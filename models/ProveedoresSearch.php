@@ -41,7 +41,7 @@ class ProveedoresSearch extends Proveedores
      */
     public function search($params)
     {
-        $query = Proveedores::find();
+        $query = Proveedores::find()->where('borrado=0')->orderBy('nombre');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
