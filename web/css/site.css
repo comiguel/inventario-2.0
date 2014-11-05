@@ -20,7 +20,7 @@ body {
 }
 
 .navbar-brand{
-    background: url(/inventario-2.0/web/images/logo.png) no-repeat;
+    background: url(../images/logo.png) no-repeat;
     height: 50px;
     margin-left: 0; 
     text-indent: -9999px;

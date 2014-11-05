@@ -45,26 +45,26 @@ class DispositivosSearch extends Dispositivos
      */
     public function search($params)
     {
-        $query = Dispositivos::find()->where('borrado=0')->orderBy('imei_ref');
+        $query = Dispositivos::find()->where('dispositivos.borrado=0');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        // $dataProvider->setSort([
-        //     'attributes' => [
-        //         'comentario' => [
-        //             'asc' => ['comentario' => SORT_ASC],
-        //             'desc' => ['comentario' => SORT_DESC],
-        //             'label' => 'Coment'
-        //         ],
-        //         'estadoName' => [
-        //             'asc' => ['estados.estado' => SORT_ASC],
-        //             'desc' => ['estados.estado' => SORT_DESC],
-        //             'label' => 'Estado'
-        //         ]
-        //     ]
-        // ]);
+        $dataProvider->setSort([
+            'attributes' => [
+                // 'comentario' => [
+                //     'asc' => ['comentario' => SORT_ASC],
+                //     'desc' => ['comentario' => SORT_DESC],
+                //     'label' => 'Coment'
+                // ],
+                'estadoName' => [
+                    'asc' => ['estados.estado' => SORT_ASC],
+                    'desc' => ['estados.estado' => SORT_DESC],
+                    'label' => 'Estado'
+                ],
+            ]
+        ]);
 
         if (!($this->load($params) && $this->validate())) {
             $query->joinWith(['estado']); //nombre de la relación con la tabla estados

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\EstadosSearch;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DispositivosSearch */
@@ -14,6 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('..\estados\_search', ['model' => new EstadosSearch()]); ?>
+    <?php // echo $this->render('prueba'); ?>
 
     <p>
         <?= Html::a('Create Dispositivos', ['create'], ['class' => 'btn btn-success']) ?>

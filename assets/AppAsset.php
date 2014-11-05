@@ -22,7 +22,7 @@ class AppAsset extends AssetBundle
         'css/bootstrap-select.min.css',
     ];
     public $js = [
-        'js/jquery.min.js',
+        // 'js/jquery.min.js',
         'js/bootstrap-select.min.js',
     ];
     public $depends = [

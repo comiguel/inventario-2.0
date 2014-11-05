@@ -1,4 +1,4 @@
-<script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/jquery.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
         $('#estados').val("<?= $model['id_estado']; ?>");
