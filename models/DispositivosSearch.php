@@ -21,8 +21,9 @@ class DispositivosSearch extends Dispositivos
     public function rules()
     {
         return [
-            [['id_disp', 'tipo_disp', 'id_estado', 'facturado', 'borrado'], 'integer'],
+            [['id_disp', 'tipo_disp', 'id_estado', 'borrado'], 'integer'],
             [['f_adquirido', 'imei_ref', 'comentario', 'ubicacion', 'sims_asig'], 'safe'],
+            [['facturado'], 'safe'],
             [['estadoName'], 'safe'],
             [['tipoDispName'], 'safe'],
             [['proveedorName'], 'safe'],

@@ -1,7 +1,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#estados').val("<?= $model['id_estado']; ?>");
+        $('#estados').val("<?= $model->id_estado; ?>");
     });
 </script>
 <?php

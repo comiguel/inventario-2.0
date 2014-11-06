@@ -24,34 +24,47 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'showOnEmpty' => false,
+        
+        'rowOptions' => [
+            'class' => 'text-center',
+        ],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
-
             // 'id_disp',
             // 'tipo_disp',
-            'tipoDispName',
-            'f_adquirido',
-            // 'id_estado',
-            'estadoName',
-            // [
-            //     'header' => 'Proveedor',
-            //     'value' => 'proveedorName',
-            //     'contentOptions' => [
-            //         'class' => 'text-center',
-            //     ]
-            // ],
-            // 'proveedorName',
-            'imei_ref',
             [
+                'attribute' => 'tipoDispName',
+                'headerOptions' => ['class' => 'text-center'],
+            ],
+            [
+                'attribute' => 'f_adquirido',
+                'headerOptions' => ['class' => 'text-center'],
+            ],
+            // 'id_estado',
+            [
+                'attribute' => 'estadoName',
+                'headerOptions' => ['class' => 'text-center'],
+            ],
+            [
+                'attribute' => 'proveedorName',
+                'headerOptions' => ['class' => 'text-center'],
+            ],
+            [
+                'attribute' => 'imei_ref',
+                'headerOptions' => ['class' => 'text-center'],
+            ],
+            [
+                'attribute' => 'facturado',
+                'headerOptions' => ['class' => 'text-center'],
                 'header' => 'Estado de facturación',
-                'value' => function ($data){ if($data['facturado'] == 0){
-                                                return 'Sin facturar';
-                                            }else{
-                                                return 'Facturado';
-                                            }},
-                'contentOptions' => [
-                    'class' => 'text-center',
-                ]
+                'value' =>
+                function ($data){
+                if($data->facturado == 0){
+                    return 'Sin facturar';
+                }else{
+                    return 'Facturado';
+                }},
             ],
             // 'facturado',
             // 'sims_asig',

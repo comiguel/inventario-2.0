@@ -68,9 +68,12 @@ class DispositivosController extends Controller
             $connection = \Yii::$app->db;
             $sql = "SELECT * FROM estados";
             $estados=$connection->createCommand($sql)->query();
+            $sql = "SELECT * FROM proveedores";
+            $proveedores=$connection->createCommand($sql)->query();
             return $this->render('create', [
                 'model' => $model,
                 'estados' => $estados,
+                'proveedores' => $proveedores,
             ]);
         }
     }
@@ -91,9 +94,12 @@ class DispositivosController extends Controller
             $connection = \Yii::$app->db;
             $sql = "SELECT * FROM estados";
             $estados=$connection->createCommand($sql)->queryAll();
+            $sql = "SELECT * FROM proveedores";
+            $proveedores=$connection->createCommand($sql)->query();
             return $this->render('update', [
                 'model' => $model,
                 'estados' => $estados,
+                'proveedores' => $proveedores,
             ]);
         }
     }

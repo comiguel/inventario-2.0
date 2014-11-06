@@ -3,6 +3,26 @@ body {
     height: 100%;
 }
 
+a, tr{
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+textarea{
+    resize:vertical;
+}
+
+.content
+{
+    display: flex;
+}
+
+.buttons-submit .btn{
+    margin-top: 10px;
+}
+
 .wrap {
     min-height: 100%;
     height: auto;
@@ -98,7 +118,7 @@ a.desc:after {
 }
 
 .grid-view th {
-    white-space: nowrap;
+    /*white-space: nowrap;*/
 }
 
 .hint-block {

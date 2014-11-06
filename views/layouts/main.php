@@ -36,11 +36,38 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-                    ['label' => 'Dispositivos', 'url' => ['/dispositivos/']],
-                    ['label' => 'Sims', 'url' => ['/sims/']],
-                    ['label' => 'Proveedores', 'url' => ['/proveedores/']],
-                    ['label' => 'Clientes', 'url' => ['/clientes/']],
-                    ['label' => 'Usuarios', 'url' => ['/clientes/']],
+                    ['label' => 'Dispositivos',
+                        'items' => [
+                            ['label' => 'Listado de dispositivos', 'url' => ['/dispositivos/']],
+                            ['label' => 'Registrar dispositivo', 'url' => ['/dispositivos/create']],
+                            ['label' => 'Listado de tipo de dispositivos', 'url' => ['/tipodisp/']],
+                            ['label' => 'Registrar tipo de dispositivo', 'url' => ['/tipodisp/create']],
+                        ],
+                    ],
+                    ['label' => 'Sims',
+                        'items' => [
+                            ['label' => 'Listado de simcards', 'url' => ['/sims/']],
+                            ['label' => 'Registrar simcard', 'url' => ['/sims/create']],
+                        ],
+                    ],
+                    ['label' => 'Proveedores',
+                        'items' => [
+                            ['label' => 'Listado de proveedores', 'url' => ['/proveedores/']],
+                            ['label' => 'Registrar proveedor', 'url' => ['/proveedores/create']],
+                        ],
+                    ],
+                    ['label' => 'Clientes',
+                        'items' => [
+                            ['label' => 'Listado de clientes', 'url' => ['/clientes/']],
+                            ['label' => 'Registrar cliente', 'url' => ['/clientes/create']],
+                        ],
+                    ],
+                    ['label' => 'Usuarios',
+                        'items' => [
+                            ['label' => 'Listado de usuarios', 'url' => ['/usuarios/']],
+                            ['label' => 'Registrar usuario', 'url' => ['/usuarios/create']],
+                        ],
+                    ],
                     [
                        'label' => 'Otras opciones',
                        'items' => [
