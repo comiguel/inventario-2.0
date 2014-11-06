@@ -14,11 +14,6 @@ textarea{
     resize:vertical;
 }
 
-.content
-{
-    display: flex;
-}
-
 .buttons-submit .btn{
     margin-top: 10px;
 }
