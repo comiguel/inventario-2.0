@@ -68,6 +68,7 @@ class Dispositivos extends \yii\db\ActiveRecord
             'borrado' => 'Borrado',
             'estadoName' => Yii::t('app', 'Estado'),
             'tipoDispName' => Yii::t('app', 'Referencia Artículo'),
+            'proveedorName' => Yii::t('app', 'Proveedor'),
         ];
     }
 
@@ -101,6 +102,10 @@ class Dispositivos extends \yii\db\ActiveRecord
 
     public function getTipoDispName() {
         return $this->tipoDisp->nombre;
+    }
+
+    public function getProveedorName() {
+        return $this->tipoDisp->proveedorName;
     }
 
     /**

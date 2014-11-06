@@ -21,7 +21,7 @@ use Yii;
  * @property integer $borrado
  *
  * @property Dispositivos[] $dispositivos
- * @property Proveedores $idProveedor
+ * @property Proveedores $proveedor
  */
 class TipoDisp extends \yii\db\ActiveRecord
 {
@@ -65,6 +65,7 @@ class TipoDisp extends \yii\db\ActiveRecord
             'usa_sim' => 'Usa Sim',
             'total_sims' => 'Total Sims',
             'borrado' => 'Borrado',
+            'proveedorName' => Yii::t('app', 'Proveedor'),
         ];
     }
 
@@ -79,8 +80,12 @@ class TipoDisp extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdProveedor()
+    public function getProveedor()
     {
         return $this->hasOne(Proveedores::className(), ['id_proveedor' => 'id_proveedor']);
+    }
+
+    public function getProveedorName() {
+        return $this->proveedor->nombre;
     }
 }

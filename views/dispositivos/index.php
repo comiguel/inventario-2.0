@@ -33,8 +33,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'f_adquirido',
             // 'id_estado',
             'estadoName',
+            // [
+            //     'header' => 'Proveedor',
+            //     'value' => 'proveedorName',
+            //     'contentOptions' => [
+            //         'class' => 'text-center',
+            //     ]
+            // ],
+            // 'proveedorName',
             'imei_ref',
-            'facturado',
+            [
+                'header' => 'Estado de facturación',
+                'value' => function ($data){ if($data['facturado'] == 0){
+                                                return 'Sin facturar';
+                                            }else{
+                                                return 'Facturado';
+                                            }},
+                'contentOptions' => [
+                    'class' => 'text-center',
+                ]
+            ],
+            // 'facturado',
             // 'sims_asig',
             // 'comentario',
             // 'ubicacion',
