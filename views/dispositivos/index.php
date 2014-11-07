@@ -25,10 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'showOnEmpty' => false,
-        
-        'rowOptions' => [
-            'class' => 'text-center',
-        ],
+        // 'tableOptions' => ['class' => 'table-hover table-striped table-bordered'],
+        'rowOptions' => ['class' => 'text-center'],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
             // 'id_disp',
@@ -58,6 +56,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'facturado',
                 'headerOptions' => ['class' => 'text-center'],
                 'header' => 'Estado de facturación',
+                // 'filter' => '<select class="selectpicker" data-width="100%">
+                //     <option value=""> </option>
+                //     <option value="1">Facturado</option>
+                //     <option value="0">Sin facturar</option>
+                // </select>',
                 'value' =>
                 function ($data){
                 if($data->facturado == 0){

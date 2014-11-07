@@ -8,6 +8,7 @@ use app\models\DispositivosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * DispositivosController implements the CRUD actions for Dispositivos model.
@@ -51,6 +52,17 @@ class DispositivosController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    public function actionTypes(){
+        if(Yii::$app->request->post() && isset($_POST['proveedor'])){
+            $sql = "SELECT id_tipo, nombre FROM tipo_disp WHERE id_proveedor=".$_POST['proveedor'];
+            $result=Yii::$app->db->createCommand($sql)->queryAll();
+            \Yii::$app->response->format = 'json';
+            return $result;
+        }else{
+            echo "No disponible";
+        }
     }
 
     /**

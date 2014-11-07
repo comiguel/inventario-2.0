@@ -1,6 +1,15 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#estados').val("<?= $model->id_estado; ?>");
+        $("#proveedor").on('change', function() { //Cuando se cambia el proveedor se crean los tipos de dispositivos en el select respectivo
+			var id_proveedor = $("#proveedor").val();
+			if(id_proveedor!=0){
+				$.post('types', {proveedor: id_proveedor})
+				.done(function(data) {
+					reloadSelect(data,"#tipoDispositivo");
+				});
+			}
+		});
     });
 </script>
 <?php
