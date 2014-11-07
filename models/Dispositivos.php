@@ -104,6 +104,10 @@ class Dispositivos extends \yii\db\ActiveRecord
         return $this->tipoDisp->nombre;
     }
 
+    public function getProveedorId() {
+        return $this->tipoDisp->id_proveedor;
+    }
+
     public function getProveedorName() {
         return $this->tipoDisp->proveedorName;
     }

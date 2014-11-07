@@ -21,10 +21,10 @@ function success(mensaje,num){
 	}
 }
 
-function reloadSelect(data,idSelect){
+function reloadSelect(data, idSelect, firstOption){
 	var x = [];
 	$(idSelect).empty();
-	$(idSelect).append('<option value="">Seleccionar opción</option>');
+	$(idSelect).append('<option value="">'+firstOption+'</option>');
 	// console.log(data);
 	$.each(data, function(index, element) {
 		var p = new Array();
@@ -34,4 +34,28 @@ function reloadSelect(data,idSelect){
 		$(idSelect).append('<option value='+p[0]+'>'+p[1]+'</option>');
 	});
 	$(idSelect).selectpicker('refresh');
+}
+
+function reloadTable(data){ //Actualiza los valores de la tabla de precios
+	$('#prices').empty();
+		$.each(data[0], function(i, e) {
+			if(e==null){
+				e="-";
+			}
+			$('#prices').append('<td>'+e+'</td>');
+		});
+	}
+
+function restarTable(){
+	$('#prices').empty();
+	for (var i = 0; i < 5; i++) {
+		$('#prices').append('<td>-</td>');
+	};
+}
+
+function initializeSelects(selects){
+	$('.selectpicker').each(function(index, val) {
+		$(this).val(selects[index]);
+	});
+	$('.selectpicker').selectpicker('refresh');
 }

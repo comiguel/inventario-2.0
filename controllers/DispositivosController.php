@@ -33,12 +33,14 @@ class DispositivosController extends Controller
      */
     public function actionIndex()
     {
+        $model = new Dispositivos();
         $searchModel = new DispositivosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
@@ -61,7 +63,18 @@ class DispositivosController extends Controller
             \Yii::$app->response->format = 'json';
             return $result;
         }else{
-            echo "No disponible";
+            return "No disponible";
+        }
+    }
+
+    public function actionPrices(){
+        if(Yii::$app->request->post() && isset($_POST['tipo'])){
+            $sql = "SELECT pc_siva, pc_iva, pv_siva, pv_iva, descripcion FROM tipo_disp WHERE id_tipo=".$_POST['tipo'];
+            $result=Yii::$app->db->createCommand($sql)->queryAll();
+            \Yii::$app->response->format = 'json';
+            return $result;
+        }else{
+            return "No disponible";
         }
     }
 
@@ -108,10 +121,13 @@ class DispositivosController extends Controller
             $estados=$connection->createCommand($sql)->queryAll();
             $sql = "SELECT * FROM proveedores";
             $proveedores=$connection->createCommand($sql)->query();
+            $sql = "SELECT * FROM tipo_disp WHERE id_proveedor = ".$model->proveedorId;
+            $tiposDisp=$connection->createCommand($sql)->query();
             return $this->render('update', [
                 'model' => $model,
                 'estados' => $estados,
                 'proveedores' => $proveedores,
+                'tiposDisp' => $tiposDisp,
             ]);
         }
     }

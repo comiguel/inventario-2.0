@@ -19,7 +19,6 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/library.js"></script>
-    <script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/yii.gridView.js"></script>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>

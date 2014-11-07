@@ -8,6 +8,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Estados;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Dispositivos */
@@ -26,7 +28,7 @@ use yii\widgets\ActiveForm;
 
     <!--<?= $form->field($model, 'id_estado')->textInput() ?>-->
 
-    <div class="form-group col-md-12">
+    <!-- <div class="form-group col-md-12">
         <label class="col-md-12 control-label">Estado</label>
         <div class="col-md-12">
             <select id="estados" data-live-search="true" data-width="100%" name="texto" class="selectpicker">
@@ -37,7 +39,9 @@ use yii\widgets\ActiveForm;
                 <?php }?>
             </select>
         </div>
-    </div>
+    </div> -->
+
+    <label class="col-md-12 control-label">Estado</label><?= Html::activeDropDownList($model, 'id_estado', ArrayHelper::map(Estados::find()->all(), 'id_estado', 'estado'), ['data-width' => '100%', 'data-live-search' => 'true', 'class' => 'selectpicker']) ?>
 
     <?= $form->field($model, 'comentario')->textInput(['maxlength' => 1000]) ?>
 

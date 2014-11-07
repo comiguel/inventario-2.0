@@ -78,17 +78,17 @@ class DispositivosSearch extends Dispositivos
         }
 
         $query->andFilterWhere([
-            'id_disp' => $this->id_disp,
+            // 'id_disp' => $this->id_disp,
             'f_adquirido' => $this->f_adquirido,
-            'tipo_disp' => $this->tipo_disp,
-            'id_estado' => $this->id_estado,
+            // 'tipo_disp' => $this->tipo_disp,
+            // 'id_estado' => $this->id_estado,
             'facturado' => $this->facturado,
-            'borrado' => $this->borrado,
+            // 'borrado' => $this->borrado,
         ]);
 
         $query->andFilterWhere(['like', 'imei_ref', $this->imei_ref])
-            ->andFilterWhere(['like', 'comentario', $this->comentario])
-            ->andFilterWhere(['like', 'ubicacion', $this->ubicacion])
+            // ->andFilterWhere(['like', 'comentario', $this->comentario])
+            // ->andFilterWhere(['like', 'ubicacion', $this->ubicacion])
             ->andFilterWhere(['like', 'sims_asig', $this->sims_asig]);
 
         $query->joinWith(['estado' => function ($q) {
