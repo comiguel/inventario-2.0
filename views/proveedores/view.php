@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Proveedores */
 
-$this->title = $model->id_proveedor;
+$this->title = $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Proveedores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_proveedor], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_proveedor], [
+        <?= Html::a('Editar', ['update', 'id' => $model->id_proveedor], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->id_proveedor], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Desea borrar este item?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_proveedor',
+            // 'id_proveedor',
             'nombre',
             'tipo_identi',
             'num_id',
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'direccion',
             'telefono',
             'email:email',
-            'borrado',
+            // 'borrado',
         ],
     ]) ?>
 

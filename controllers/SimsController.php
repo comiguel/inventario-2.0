@@ -5,6 +5,9 @@ namespace app\controllers;
 use Yii;
 use app\models\Sims;
 use app\models\SimsSearch;
+use app\models\Planes;
+use app\models\Estados;
+use app\models\Proveedores;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,12 +64,20 @@ class SimsController extends Controller
     public function actionCreate()
     {
         $model = new Sims();
+        
+
+        $planes = Planes::find()->all();
+        $estados = Estados::find()->all();
+        $proveedores = Proveedores::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_sim]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'planes' => $planes,
+                'estados' => $estados,
+                'proveedores' => $proveedores,
             ]);
         }
     }
@@ -81,11 +92,18 @@ class SimsController extends Controller
     {
         $model = $this->findModel($id);
 
+        $planes = Planes::find()->all();
+        $estados = Estados::find()->all();
+        $proveedores = Proveedores::find()->all();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_sim]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'planes' => $planes,
+                'estados' => $estados,
+                'proveedores' => $proveedores,
             ]);
         }
     }

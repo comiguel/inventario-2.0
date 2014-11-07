@@ -107,8 +107,7 @@ class PlanesController extends Controller
             if($rows==0){
                 $this->findModel($id)->delete();            
             }else{
-                // $sql = "UPDATE planes SET borrado = '1' WHERE id_plan =".$id;
-                // Yii::$app->db->createCommand($sql)->execute();            
+               
                 $plan = Planes::findOne($id);
                 $plan->borrado = '1';
                 $plan->update();
@@ -118,6 +117,12 @@ class PlanesController extends Controller
         }
 
         return $this->redirect(['index']);
+    }
+
+    public function actionMultidelete(){
+         $sql = "UPDATE planes SET borrado='1' WHERE id_plan IN (".$_POST['data'].")";
+         Yii::$app->db->createCommand($sql)->execute();  
+         return $this->redirect(['index']);   
     }
 
     /**

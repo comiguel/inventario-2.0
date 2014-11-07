@@ -62,16 +62,16 @@ class Sims extends \yii\db\ActiveRecord
     {
         return [
             'id_sim' => 'Id Sim',
-            'f_act' => 'F Act',
-            'num_linea' => 'Num Linea',
-            'imei_sc' => 'Imei Sc',
-            'tipo_plan' => 'Tipo Plan',
+            'f_act' => 'Fecha de Activación',
+            'num_linea' => 'Número de Linea',
+            'imei_sc' => 'Imei de Sim',
+            'tipo_plan' => 'Tipo de Plan',
             'comentario' => 'Comentario',
-            'id_estado' => 'Id Estado',
-            'id_proveedor' => 'Id Proveedor',
-            'id_plan' => 'Id Plan',
-            'imei_disp' => 'Imei Disp',
-            'f_asig' => 'F Asig',
+            'id_estado' => 'Estado',
+            'id_proveedor' => 'Proveedor',
+            'id_plan' => 'Plan',
+            'imei_disp' => 'Imei de Disp',
+            'f_asig' => 'Fecha de Asignación',
         ];
     }
 

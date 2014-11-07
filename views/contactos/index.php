@@ -31,9 +31,25 @@ $this->params['breadcrumbs'][] = $this->title;
             'tipo_entidad',
             'cargo',
             'email:email',
-            
+            [   'header' => 'Entidad',
+                
+                'value' => function($data){
+                    if($data->id_proveedor === null){
+                        return $data->id_cliente;
+                    }else{
+                        return $data->id_proveedor;
+                    }
+                }
+            ],
             // 'id_proveedor',
             // 'id_cliente',
+
+            // 'Nombre',
+            // 'Telefono',
+            // 'Tipo_entidad',
+            // 'Cargo',
+            // 'Email:email',
+            // 'Entidad',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Planes */
 
-$this->title = $model->;
+$this->title = $model->nombre_plan;
 $this->params['breadcrumbs'][] = ['label' => 'Planes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_plan], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_plan], [
+        <?= Html::a('Editar', ['update', 'id' => $model->id_plan], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->id_plan], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Desea borrar este item?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,13 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_plan',
+            // 'id_plan',
             'nombre_plan',
             'cargo_voz',
             'cargo_datos',
             'desc_p_voz',
             'desc_p_datos',
-            'borrado',
+            // 'borrado',
         ],
     ]) ?>
 

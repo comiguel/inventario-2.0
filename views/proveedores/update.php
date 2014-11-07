@@ -5,14 +5,14 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Proveedores */
 
-$this->title = 'Update Proveedores: ' . ' ' . $model->id_proveedor;
+$this->title = 'Editar Proveedores: ' . ' ' . $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Proveedores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_proveedor, 'url' => ['view', 'id' => $model->id_proveedor]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="proveedores-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1><br>
 
     <?= $this->render('_form', [
         'model' => $model,

@@ -55,11 +55,11 @@ class Proveedores extends \yii\db\ActiveRecord
         return [
             'id_proveedor' => 'Id Proveedor',
             'nombre' => 'Nombre',
-            'tipo_identi' => 'Tipo Identi',
-            'num_id' => 'Num ID',
+            'tipo_identi' => 'Tipo de ID',
+            'num_id' => 'Número de ID',
             'ciudad' => 'Ciudad',
-            'direccion' => 'Direccion',
-            'telefono' => 'Telefono',
+            'direccion' => 'Dirección',
+            'telefono' => 'Teléfono',
             'email' => 'Email',
             'borrado' => 'Borrado',
         ];

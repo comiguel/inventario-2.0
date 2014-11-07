@@ -54,11 +54,11 @@ class Clientes extends \yii\db\ActiveRecord
         return [
             'id_cliente' => 'Id Cliente',
             'nombre' => 'Nombre',
-            'tipo_identi' => 'Tipo Identi',
-            'num_id' => 'Num ID',
+            'tipo_identi' => 'Tipo de ID',
+            'num_id' => 'Número ID',
             'ciudad' => 'Ciudad',
-            'direccion' => 'Direccion',
-            'telefono' => 'Telefono',
+            'direccion' => 'Dirección',
+            'telefono' => 'Teléfono',
             'email' => 'Email',
             'borrado' => 'Borrado',
         ];

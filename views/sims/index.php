@@ -13,10 +13,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="sims-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <!-- <?= $this->render('_search', ['model' => $searchModel]); ?> -->
 
     <p>
-        <?= Html::a('Create Sims', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Sim', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,16 +26,16 @@ $this->params['breadcrumbs'][] = $this->title;
             // ['class' => 'yii\grid\SerialColumn'],
 
             // 'id_sim',
-            'f_act',
+            // 'f_act',
             'num_linea',
             'imei_sc',
             'tipo_plan',
-            'comentario',
+            // 'comentario',
             'id_estado',
             'id_proveedor',
             'id_plan',
             'imei_disp',
-            'f_asig',
+            // 'f_asig',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

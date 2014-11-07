@@ -41,6 +41,7 @@ class ContactosSearch extends Contactos
      */
     public function search($params)
     {
+
         $query = Contactos::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -48,6 +49,8 @@ class ContactosSearch extends Contactos
         ]);
 
         if (!($this->load($params) && $this->validate())) {
+            $query->joinWith(['idProveedor']);
+            $query->joinWith(['idCliente']);
             return $dataProvider;
         }
 
@@ -55,13 +58,20 @@ class ContactosSearch extends Contactos
             'id_contacto' => $this->id_contacto,
             'id_proveedor' => $this->id_proveedor,
             'id_cliente' => $this->id_cliente,
-        ]);
+        ]);  
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre])
             ->andFilterWhere(['like', 'telefono', $this->telefono])
             ->andFilterWhere(['like', 'tipo_entidad', $this->tipo_entidad])
             ->andFilterWhere(['like', 'cargo', $this->cargo])
             ->andFilterWhere(['like', 'email', $this->email]);
+
+        $query->joinWith(['idProveedor' => function ($q) {
+            $q->where('proveedores.nombre LIKE "%' . $this->ProveedorName . '%"');
+        }]);
+        $query->joinWith(['idCliente' => function ($q) {
+            $q->where('clientes.nombre LIKE "%' . $this->ClienteName . '%"');
+        }]);
 
         return $dataProvider;
     }

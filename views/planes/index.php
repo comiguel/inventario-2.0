@@ -1,3 +1,17 @@
+<script type="text/javascript">
+   $(document).ready(function() {
+       $('#delete').click(function(event) {
+           event.preventDefault();
+           var keys = $('#grid').yiiGridView('getSelectedRows');
+           keys = keys.toString();
+           $.post('multidelete', {data: keys}).done(function(data){
+                alert(data);
+           }); 
+       });
+   });
+    
+</script>
+
 <?php
 
 use yii\helpers\Html;
@@ -16,15 +30,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Planes', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Plan', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <p>
+        <button id="delete" class="btn btn-danger" >Eliminar planes</button>
+    </p>
+    
 
     <?= GridView::widget([
+        'id' => 'grid',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
 
+            ['class' => 'yii\grid\CheckboxColumn'],
             // 'id_plan',
             'nombre_plan',
             'cargo_voz',
