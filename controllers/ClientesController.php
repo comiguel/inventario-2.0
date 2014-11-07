@@ -98,7 +98,29 @@ class ClientesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $query = (new \yii\db\Query());
+        $query->select('*')->from('contactos')->where('id_cliente =:id');
+        $query->addParams(['id'=>$id]);
+        $rows = $query->count(); 
+
+        $query->select('*')->from('facturas')->where('id_cliente =:id');
+        $query->addParams(['id'=>$id]);
+        $rows += $query->count();
+
+        try {
+
+            if($rows==0){
+                $this->findModel($id)->delete();            
+            }else{
+                // $sql = "UPDATE planes SET borrado = '1' WHERE id_plan =".$id;
+                // Yii::$app->db->createCommand($sql)->execute();            
+                $cliente = Clientes::findOne($id);
+                $cliente->borrado = '1';
+                $cliente->update();
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
 
         return $this->redirect(['index']);
     }

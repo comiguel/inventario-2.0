@@ -98,7 +98,24 @@ class PlanesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $query = (new \yii\db\Query());
+        $query->select('*')->from('sims')->where('id_plan =:id');
+        $query->addParams(['id'=>$id]);
+        $rows = $query->count();
+        try {
+
+            if($rows==0){
+                $this->findModel($id)->delete();            
+            }else{
+                // $sql = "UPDATE planes SET borrado = '1' WHERE id_plan =".$id;
+                // Yii::$app->db->createCommand($sql)->execute();            
+                $plan = Planes::findOne($id);
+                $plan->borrado = '1';
+                $plan->update();
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
 
         return $this->redirect(['index']);
     }

@@ -29,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'accion',
             'fecha_hora',
 
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 

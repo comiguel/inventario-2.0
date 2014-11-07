@@ -98,8 +98,30 @@ class EstadosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $query = (new \yii\db\Query());
+        $query->select('*')->from('sims')->where('id_estado =:id');
+        $query->addParams(['id'=>$id]);
+        $rows = $query->count();
 
+        $query->select('*')->from('dispositivos')->where('id_estado =:id');
+        $query->addParams(['id'=>$id]);
+        $rows += $query->count();
+
+
+        try {
+
+            if($rows==0){
+                $this->findModel($id)->delete();            
+            }else{
+                // $sql = "UPDATE estados SET borrado = '1' WHERE id_estado IN =".$id;
+                // Yii::$app->db->createCommand($sql)->execute();            
+                $estado = estados::findOne($id);
+                $estado->borrado = '1';
+                $estado->update();
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
         return $this->redirect(['index']);
     }
 

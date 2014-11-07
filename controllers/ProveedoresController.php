@@ -98,7 +98,33 @@ class ProveedoresController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $query = (new \yii\db\Query());
+        $query->select('*')->from('contactos')->where('id_proveedor =:id');
+        $query->addParams(['id'=>$id]);
+        $rows = $query->count(); 
+
+        $query->select('*')->from('sims')->where('id_proveedor =:id');
+        $query->addParams(['id'=>$id]);
+        $rows += $query->count();
+
+        $query->select('*')->from('tipo_disp')->where('id_proveedor =:id');
+        $query->addParams(['id'=>$id]);
+        $rows += $query->count();
+
+        try {
+
+            if($rows==0){
+                $this->findModel($id)->delete();            
+            }else{
+                // $sql = "UPDATE planes SET borrado = '1' WHERE id_plan =".$id;
+                // Yii::$app->db->createCommand($sql)->execute();            
+                $proveedor = Proveedores::findOne($id);
+                $proveedor->borrado = '1';
+                $proveedor->update();
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
 
         return $this->redirect(['index']);
     }
