@@ -18,6 +18,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/bootstrap-filestyle.min.js"></script>
     <script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/library.js"></script>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>

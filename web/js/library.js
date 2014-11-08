@@ -46,7 +46,7 @@ function reloadTable(data){ //Actualiza los valores de la tabla de precios
 		});
 	}
 
-function restarTable(){
+function restartTable(){
 	$('#prices').empty();
 	for (var i = 0; i < 5; i++) {
 		$('#prices').append('<td>-</td>');

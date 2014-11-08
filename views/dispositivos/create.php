@@ -1,5 +1,8 @@
 <script type="text/javascript">
     $(document).ready(function() {
+    	$("#link").on('click', function() { //Despliega el modal de cargar dispositivos por archivos
+				$('#myModal').modal({backdrop: 'static'});
+		});
         $("#proveedor").on('change', function() { //Cuando se cambia el proveedor se crean los tipos de dispositivos en el select respectivo
 			restartTable();
 			var id_proveedor = $("#proveedor").val();
