@@ -1,8 +1,15 @@
+<script>
+    $(document).ready(function() {
+        // $('.selectpicker')
+    });
+</script>
 <?php
 
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\EstadosSearch;
+use app\models\Estados;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DispositivosSearch */
@@ -20,12 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Dispositivos', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
+<!-- <div class="col-sm-12"> -->
+    
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'showOnEmpty' => false,
-        // 'tableOptions' => ['class' => 'table-hover table-striped table-bordered'],
+        // 'showOnEmpty' => true,
+        // 'tableOptions' => ['class' => 'table-hover table-condensed table-striped table-bordered'],
         'rowOptions' => ['class' => 'text-center'],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
@@ -42,7 +50,8 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'id_estado',
             [
                 'attribute' => 'estadoName',
-                'headerOptions' => ['class' => 'text-center'],
+                'headerOptions' => ['class' => 'text-center', 'width' => '12%'],
+                'filter' => Html::activeDropDownList($model, 'estado', ArrayHelper::map(Estados::find()->all(), 'estado', 'estado'), ['name' => 'DispositivosSearch[estadoName]', 'class' => 'form-control']),
             ],
             [
                 'attribute' => 'proveedorName',
@@ -50,13 +59,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'imei_ref',
-                'headerOptions' => ['class' => 'text-center'],
+                'headerOptions' => ['class' => 'text-center', 'width' => '15%'],
             ],
             [
                 'attribute' => 'facturado',
-                'headerOptions' => ['class' => 'text-center'],
+                'headerOptions' => ['class' => 'text-center', 'width' => '15%'],
                 'header' => 'Estado de facturación',
-                // 'filter' => '<select class="selectpicker" data-width="100%">
+                'filter' => ['1' => 'Facturado', '0' => 'Sin Facturar'],
+                // 'filterInputOptions' => ['class' => 'selectpicker', 'data-width' => '100%'],
+                // 'filter' => '<select class="selectpicker" name=DispositivosSearch[facturado] data-width="100%">
                 //     <option value=""> </option>
                 //     <option value="1">Facturado</option>
                 //     <option value="0">Sin facturar</option>
@@ -78,5 +89,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+<!-- </div> -->
 
 </div>
