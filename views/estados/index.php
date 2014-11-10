@@ -1,3 +1,8 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        multiDelete('#delete','#grid','estados');
+    });
+</script>
 <?php
 
 use yii\helpers\Html;
@@ -18,12 +23,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Crear estado', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <p>
+        <button id="delete"  class="btn btn-danger" >Eliminar estados</button>
+    </p>
 
     <?= GridView::widget([
+        'id' => 'grid',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\CheckboxColumn'],
 
             'estado',
             'descripcion',

@@ -109,6 +109,16 @@ class ContactosController extends Controller
         return $this->redirect(['index']);
     }
 
+     public function actionMultidelete(){
+          $sql = "UPDATE contactos SET borrado='1' WHERE id_contacto IN (".$_POST['data'].")";
+         try {
+            Yii::$app->db->createCommand($sql)->execute(); 
+            return  $this->redirect(['index']);
+         } catch (Exception $e) {
+            return $e->getMessage();
+         }
+    }
+
     /**
      * Finds the Contactos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

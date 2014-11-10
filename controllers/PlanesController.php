@@ -121,8 +121,12 @@ class PlanesController extends Controller
 
     public function actionMultidelete(){
          $sql = "UPDATE planes SET borrado='1' WHERE id_plan IN (".$_POST['data'].")";
-         Yii::$app->db->createCommand($sql)->execute();  
-         return $this->redirect(['index']);   
+         try {
+            Yii::$app->db->createCommand($sql)->execute(); 
+            return  $this->redirect(['index']);
+         } catch (Exception $e) {
+            return $e->getMessage();
+         }
     }
 
     /**

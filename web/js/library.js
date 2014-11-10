@@ -35,3 +35,22 @@ function reloadSelect(data,idSelect){
 	});
 	$(idSelect).selectpicker('refresh');
 }
+
+function multiDelete(btnDelete,grid,controlador){
+    $(btnDelete).click(function(event) {
+        event.preventDefault();
+        var keys = $(grid).yiiGridView('getSelectedRows');
+        if (keys==''){
+        	success("No se ha seleccionado ningun elemento!",'2');
+        }else{
+
+	        keys = keys.toString();
+	        var r = confirm("¿Seguro que desea eliminar los elementos seleccionados?")
+	        if (r==true){
+	             $.post(controlador+'/multidelete', {data: keys}).done(function(data){
+	                  
+	             });
+	        } 
+        }
+    });     
+}

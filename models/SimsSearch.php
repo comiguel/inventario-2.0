@@ -41,7 +41,7 @@ class SimsSearch extends Sims
      */
     public function search($params)
     {
-        $query = Sims::find();
+        $query = Sims::find()->where('sims.borrado=0');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

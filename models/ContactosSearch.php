@@ -42,7 +42,7 @@ class ContactosSearch extends Contactos
     public function search($params)
     {
 
-        $query = Contactos::find();
+        $query = Contactos::find()->where('contactos.borrado=0');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -129,6 +129,16 @@ class ProveedoresController extends Controller
         return $this->redirect(['index']);
     }
 
+     public function actionMultidelete(){
+         $sql = "UPDATE proveedores SET borrado='1' WHERE id_proveedor IN (".$_POST['data'].")";
+         try {
+            Yii::$app->db->createCommand($sql)->execute(); 
+            return  $this->redirect(['index']);
+         } catch (Exception $e) {
+            return $e->getMessage();
+         }
+    }
+
     /**
      * Finds the Proveedores model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

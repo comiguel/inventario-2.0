@@ -1,15 +1,7 @@
 <script type="text/javascript">
-   $(document).ready(function() {
-       $('#delete').click(function(event) {
-           event.preventDefault();
-           var keys = $('#grid').yiiGridView('getSelectedRows');
-           keys = keys.toString();
-           $.post('multidelete', {data: keys}).done(function(data){
-                alert(data);
-           }); 
-       });
-   });
-    
+  $(document).ready(function() {
+     multiDelete('#delete','#grid','planes');
+  });
 </script>
 
 <?php
@@ -33,9 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Crear Plan', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <p>
-        <button id="delete" class="btn btn-danger" >Eliminar planes</button>
+        <button id="delete"  class="btn btn-danger" >Eliminar planes</button>
     </p>
-    
+
 
     <?= GridView::widget([
         'id' => 'grid',

@@ -41,7 +41,7 @@ class usuariosSearch extends usuarios
      */
     public function search($params)
     {
-        $query = usuarios::find();
+        $query = usuarios::find()->where('usuarios.borrado=0');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

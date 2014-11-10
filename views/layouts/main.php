@@ -20,6 +20,9 @@ AppAsset::register($this);
     <script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/library.js"></script>
     <script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/yii.gridView.js"></script>
+    <script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/toastr.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="<?= Yii::$app->request->baseUrl; ?>/css/toastr.css">
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
