@@ -1,6 +1,10 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var selects = ['<?= $model->id_estado?>','<?= $model->proveedorId?>','<?= $model->tipo_disp?>'];
+        var precios = ['<?= $precios["pc_siva"] ?>','<?= $precios["pc_iva"] ?>', '<?= $precios["pv_siva"] ?>','<?= $precios["pv_iva"] ?>', '<?= $precios["descripcion"] ?>'];
+        $('#prices td').each(function(index, el) {
+            $(this).append(precios[index]);
+        });
         $("#proveedor").on('change', function() { //Cuando se cambia el proveedor se crean los tipos de dispositivos en el select respectivo
             restartTable();
 			var id_proveedor = $("#proveedor").val();
@@ -23,7 +27,8 @@
                 restartTable();
             }
         });
-        initializeSelects(selects);
+        initializeSelects(selects); // carga los select del form con los valores del vector "selects" en el mismo orden
+
     });
 </script>
 <?php
@@ -34,7 +39,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Dispositivos */
 
-$this->title = 'Actualizar Dispositivo: ' . ' ' . $model->id_disp;
+$this->title = 'Actualización de Dispositivo: ' . ' ' . $model->id_disp;
 $this->params['breadcrumbs'][] = ['label' => 'Dispositivos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_disp, 'url' => ['view', 'id' => $model->id_disp]];
 $this->params['breadcrumbs'][] = 'Actualizar';
@@ -95,9 +100,6 @@ $this->params['breadcrumbs'][] = 'Actualizar';
                             </select>
                         </div>
                     </div>
-                    <div class="form-group col-md-12 text-center">
-                        <a id="link">Ingresar dipositivos por archivo</a>
-                    </div>
                     <div class="col-md-10 col-lg-offset-1">
                         <table id="infoDisp" class="table-responsive table-bordered" width="100%" cellspacing="0">
                             <thead>
@@ -111,11 +113,11 @@ $this->params['breadcrumbs'][] = 'Actualizar';
                             </thead>
                             <tbody>
                                 <tr id="prices" class="text-center">
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -123,18 +125,18 @@ $this->params['breadcrumbs'][] = 'Actualizar';
                     <div class="form-group col-md-12">
                         <label class="col-md-2 control-label">Comentario:</label>
                         <div class="col-md-11 col-md-offset-1">
-                            <textarea type="textArea" name="Dispositivos[comentario]" value="<?= $model['comentario']?>" class="form-control" placeholder="Comentario..."></textarea>
+                            <textarea type="textArea" name="Dispositivos[comentario]" class="form-control" placeholder="Comentario..."><?= $model->comentario?></textarea>
                         </div>
                     </div>
                     <div class="form-group col-md-12">
                         <label class="col-md-2 control-label">Ubicación:</label>
                         <div class="col-md-11 col-md-offset-1">
-                            <textarea type="textArea" name="Dispositivos[ubicacion]" value="<?= $model['ubicacion']?>" class="form-control" placeholder="Comentario..."></textarea>
+                            <textarea type="textArea" name="Dispositivos[ubicacion]" class="form-control" placeholder="Comentario..."><?= $model->ubicacion?></textarea>
                         </div>
                     </div>
                     <div class="buttons-submit col-sm-9">
                         <div class="col-sm-2 col-sm-offset-5">
-                            <?= Html::submitButton('Guardar dispositivo', ['class' => 'btn btn-primary']) ?>
+                            <?= Html::submitButton('Actualizar dispositivo', ['class' => 'btn btn-primary']) ?>
                         </div>
                         <div class="col-sm-2 col-sm-offset-1">
                             <a href="#" class="btn btn-success">Cancelar</a>

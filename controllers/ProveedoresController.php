@@ -101,7 +101,7 @@ class ProveedoresController extends Controller
         $query = (new \yii\db\Query());
         $query->select('*')->from('contactos')->where('id_proveedor =:id');
         $query->addParams(['id'=>$id]);
-        $rows = $query->count(); 
+        $rows = $query->count();
 
         $query->select('*')->from('sims')->where('id_proveedor =:id');
         $query->addParams(['id'=>$id]);
@@ -114,10 +114,10 @@ class ProveedoresController extends Controller
         try {
 
             if($rows==0){
-                $this->findModel($id)->delete();            
+                $this->findModel($id)->delete();
             }else{
                 // $sql = "UPDATE planes SET borrado = '1' WHERE id_plan =".$id;
-                // Yii::$app->db->createCommand($sql)->execute();            
+                // Yii::$app->db->createCommand($sql)->execute();
                 $proveedor = Proveedores::findOne($id);
                 $proveedor->borrado = '1';
                 $proveedor->update();
@@ -129,14 +129,14 @@ class ProveedoresController extends Controller
         return $this->redirect(['index']);
     }
 
-     public function actionMultidelete(){
-         $sql = "UPDATE proveedores SET borrado='1' WHERE id_proveedor IN (".$_POST['data'].")";
-         try {
-            Yii::$app->db->createCommand($sql)->execute(); 
-            return  $this->redirect(['index']);
-         } catch (Exception $e) {
+    public function actionMultidelete(){
+        $sql = "UPDATE proveedores SET borrado='1' WHERE id_proveedor IN (".$_POST['data'].")";
+        try {
+            Yii::$app->db->createCommand($sql)->execute();
+            return $this->redirect(['index']);
+        } catch (Exception $e) {
             return $e->getMessage();
-         }
+        }
     }
 
     /**

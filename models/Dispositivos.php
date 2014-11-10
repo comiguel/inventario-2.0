@@ -57,17 +57,18 @@ class Dispositivos extends \yii\db\ActiveRecord
     {
         return [
             'id_disp' => 'Disp',
-            'f_adquirido' => 'Fecha Adquirido',
-            'imei_ref' => 'Imei/Ref',
+            'f_adquirido' => 'Fecha de adquisición',
+            'imei_ref' => 'Imei/Ref del artículo',
             'comentario' => 'Comentario',
             'ubicacion' => 'Ubicacion',
-            'tipo_disp' => 'Tipo Disp',
+            'tipo_disp' => 'Tipo del artículo',
             'id_estado' => 'Estado',
-            'sims_asig' => 'Sims Asig',
-            'facturado' => 'Estado Facturación',
+            'sims_asig' => 'Sims Asignadas',
+            'facturado' => 'Estado de facturación',
             'borrado' => 'Borrado',
             'estadoName' => Yii::t('app', 'Estado'),
-            'tipoDispName' => Yii::t('app', 'Referencia Artículo'),
+            'tipoDispName' => Yii::t('app', 'Tipo de artículo'),
+            'tipoDispRef' => Yii::t('app', 'Referencia artículo'),
             'proveedorName' => Yii::t('app', 'Proveedor'),
         ];
     }
@@ -102,6 +103,10 @@ class Dispositivos extends \yii\db\ActiveRecord
 
     public function getTipoDispName() {
         return $this->tipoDisp->nombre;
+    }
+
+    public function getTipoDispRef() {
+        return $this->tipoDisp->tipo_ref;
     }
 
     public function getProveedorId() {

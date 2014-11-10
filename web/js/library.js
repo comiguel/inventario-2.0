@@ -33,7 +33,7 @@ function reloadSelect(data, idSelect, firstOption){
 		});
 		$(idSelect).append('<option value='+p[0]+'>'+p[1]+'</option>');
 	});
-	$(idSelect).selectpicker('refresh');
+	$('.selectpicker').selectpicker('refresh');
 }
 
 
@@ -44,17 +44,16 @@ function multiDelete(btnDelete,grid,controlador){
         if (keys==''){
         	success("No se ha seleccionado ningun elemento!",'2');
         }else{
-
-	        keys = keys.toString();
-	        var r = confirm("¿Seguro que desea eliminar los elementos seleccionados?")
-	        if (r==true){
-	             $.post(controlador+'/multidelete', {data: keys}).done(function(data){
-	                  
-	             });
-	        } 
+			keys = keys.toString();
+			var r = confirm("¿Seguro que desea eliminar los elementos seleccionados?")
+			if (r==true){
+				$.post('multidelete', {data: keys}).done(function(data){
+				
+				});
+			}
         }
-    }); 
- }    
+    });
+ }
 
 function reloadTable(data){ //Actualiza los valores de la tabla de precios
 	$('#prices').empty();

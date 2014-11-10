@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Crear Sim', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <p>
-        <button id="delete"  class="btn btn-danger" >Eliminar sims</button>
+        <button id="delete" class="btn btn-danger" >Eliminar sims</button>
     </p>
 
     <?= GridView::widget([

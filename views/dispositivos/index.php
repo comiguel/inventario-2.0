@@ -1,6 +1,6 @@
 <script>
     $(document).ready(function() {
-        // $('.selectpicker')
+        multiDelete('#delete','#grid');
     });
 </script>
 <?php
@@ -27,9 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Dispositivos', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <p>
+        <button id="delete" class="btn btn-danger" >Eliminar dispositivos</button>
+    </p>
 <!-- <div class="col-sm-12"> -->
     
     <?= GridView::widget([
+        'id' => 'grid',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         // 'showOnEmpty' => true,
@@ -37,10 +41,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'rowOptions' => ['class' => 'text-center'],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\CheckboxColumn'],
             // 'id_disp',
             // 'tipo_disp',
             [
-                'attribute' => 'tipoDispName',
+                'attribute' => 'tipoDispRef',
                 'headerOptions' => ['class' => 'text-center'],
             ],
             [

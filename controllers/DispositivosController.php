@@ -123,11 +123,14 @@ class DispositivosController extends Controller
             $proveedores=$connection->createCommand($sql)->query();
             $sql = "SELECT * FROM tipo_disp WHERE id_proveedor = ".$model->proveedorId;
             $tiposDisp=$connection->createCommand($sql)->query();
+            $sql = "SELECT pc_siva, pc_iva, pv_siva, pv_iva, descripcion FROM tipo_disp WHERE nombre = '".$model->tipoDispName."'";
+            $precios=$connection->createCommand($sql)->queryAll();
             return $this->render('update', [
                 'model' => $model,
                 'estados' => $estados,
                 'proveedores' => $proveedores,
                 'tiposDisp' => $tiposDisp,
+                'precios' => $precios[0],
             ]);
         }
     }
@@ -140,9 +143,38 @@ class DispositivosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $query = (new \yii\db\Query());
+        $query->select('*')->from('detalle_fact')->where('id_disp =:id');
+        $query->addParams(['id'=>$id]);
+        $rows = $query->count();
+
+        $query->select('*')->from('sims')->where('id_disp =:id');
+        $query->addParams(['id'=>$id]);
+        $rows += $query->count();
+
+        try {
+            if($rows==0){
+                $this->findModel($id)->delete();
+            }else{
+                $dispositivo = Dispositivos::findOne($id);
+                $dispositivo->borrado = '1';
+                $dispositivo->update();
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
 
         return $this->redirect(['index']);
+    }
+
+    public function actionMultidelete(){
+        $sql = "UPDATE dispositivos SET borrado='1' WHERE id_disp IN (".$_POST['data'].")";
+        try {
+            Yii::$app->db->createCommand($sql)->execute();
+            return $this->redirect(['index']);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

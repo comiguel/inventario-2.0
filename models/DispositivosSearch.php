@@ -14,6 +14,7 @@ class DispositivosSearch extends Dispositivos
 {
     public $estadoName;
     public $tipoDispName;
+    public $tipoDispRef;
     public $proveedorName;
     /**
      * @inheritdoc
@@ -26,6 +27,7 @@ class DispositivosSearch extends Dispositivos
             [['facturado'], 'safe'],
             [['estadoName'], 'safe'],
             [['tipoDispName'], 'safe'],
+            [['tipoDispRef'], 'safe'],
             [['proveedorName'], 'safe'],
         ];
     }
@@ -86,16 +88,19 @@ class DispositivosSearch extends Dispositivos
             // 'borrado' => $this->borrado,
         ]);
 
-        $query->andFilterWhere(['like', 'imei_ref', $this->imei_ref])
+        $query->andFilterWhere(['like', 'imei_ref', $this->imei_ref]);
             // ->andFilterWhere(['like', 'comentario', $this->comentario])
             // ->andFilterWhere(['like', 'ubicacion', $this->ubicacion])
-            ->andFilterWhere(['like', 'sims_asig', $this->sims_asig]);
+            // ->andFilterWhere(['like', 'sims_asig', $this->sims_asig]);
 
         $query->joinWith(['estado' => function ($q) {
             $q->where('estados.estado LIKE "%' . $this->estadoName . '%"');
         }]);
         $query->joinWith(['tipoDisp' => function ($q) {
             $q->where('tipo_disp.nombre LIKE "%' . $this->tipoDispName . '%"');
+        }]);
+        $query->joinWith(['tipoDisp' => function ($q) {
+            $q->where('tipo_disp.tipo_ref LIKE "%' . $this->tipoDispRef . '%"');
         }]);
 
         return $dataProvider;

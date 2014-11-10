@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Dispositivos */
 
-$this->title = $model->id_disp;
+$this->title = 'Artículo: '.$model->id_disp;
 $this->params['breadcrumbs'][] = ['label' => 'Dispositivos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,15 +29,48 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             // 'id_disp',
-            'f_adquirido',
-            'imei_ref',
+            'tipoDispRef',
             // 'tipo_disp',
             'tipoDispName',
+            'f_adquirido',
             // 'id_estado',
             'estadoName',
-            'sims_asig',
-            'facturado',
+            'proveedorName',
+            'imei_ref',
+            [
+                'label' => 'Precio de compra sin IVA',
+                'value' => $model->tipoDisp->pc_siva,
+            ],
+            [
+                'label' => 'Precio de compra con IVA',
+                'value' => $model->tipoDisp->pc_iva,
+            ],
+            [
+                'label' => 'Precio de venta sin IVA',
+                'value' => $model->tipoDisp->pv_siva,
+            ],
+            [
+                'label' => 'Precio de venta con IVA',
+                'value' => $model->tipoDisp->pv_iva,
+            ],
+            // 'facturado',
+            [
+                'label' => 'Estado de facturación',
+                'value' => ($model->facturado == 0)? 'Sin facturar' : 'Facturado',
+            ],
+            [
+                'label' => 'Sims asignadas',
+                'value' => ($model->tipoDisp->usa_sim == 'si')? $model->sims_asig : 'El ítem no usa simcards',
+            ],
+            [
+                'label' => 'Ranuras de Sim disponibles',
+                'value' => ($model->tipoDisp->total_sims)-($model->sims_asig),
+            ],
             'comentario',
+            [
+                'label' => 'Descripción del tipo de artículo',
+                'value' => $model->tipoDisp->descripcion,
+            ],
             'ubicacion',
             // 'borrado',
         ],
