@@ -21,10 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Contactos', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Contactos', ['create'], ['class' => 'btn btn-success btn-right']) ?>
     </p>
     <p>
-        <button id="delete"  class="btn btn-danger" >Eliminar contactos</button>
+        <button id="delete" class="btn btn-danger" >Eliminar contactos</button>
     </p>
 
     <?= GridView::widget([

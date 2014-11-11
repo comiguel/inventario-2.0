@@ -78,6 +78,31 @@ class DispositivosController extends Controller
         }
     }
 
+    public function actionFacturar(){
+        if(Yii::$app->request->post() && isset($_POST['keys'])){
+            $query = (new \yii\db\Query());
+            $query->select('id_disp')->from('dispositivos')->where("id_disp IN (".$_POST['keys'].") AND facturado = 1");
+            $rows = $query->count();
+            \Yii::$app->response->format = 'json';
+            if($rows>0){
+                return ['respuesta' => '0'];
+            }else{
+                $total_siva = 0;
+                $total_iva = 0;
+                foreach ($_POST['ids'] as $key => $id) {
+                    $model = $this->findModel($id);
+                    $total_siva += $model->tipoDisp->pv_siva;
+                    $total_iva += $model->tipoDisp->pv_iva;
+                    $model->facturado = 1;
+                    $model->save(false);
+                }
+                return [$total_siva => $total_iva];
+            }
+        }else{
+            return "No disponible";
+        }
+    }
+
     /**
      * Creates a new Dispositivos model.
      * If creation is successful, the browser will be redirected to the 'view' page.

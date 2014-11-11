@@ -1,6 +1,18 @@
 <script>
     $(document).ready(function() {
         multiDelete('#delete','#grid');
+        $('#facturar').on('click', function() {
+            var ids = $('#grid').yiiGridView('getSelectedRows');
+            $.post('facturar', {keys: ids.toString(), ids: ids})
+            .done(function(data) {
+                if(data.respuesta==0){
+                    success('Estás intentando facturar un ítem ya facturado, por favor verifica e intenta nuevamente','2');
+                }else{
+                    // success('Facturación exitosa','1');
+                    console.log(data);
+                }
+            });
+        });
     });
 </script>
 <?php
@@ -25,10 +37,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('..\estados\_search', ['model' => new EstadosSearch()]); ?>
 
     <p>
-        <?= Html::a('Create Dispositivos', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Dispositivos', ['create'], ['class' => 'btn btn-success btn-right']) ?>
     </p>
     <p>
-        <button id="delete" class="btn btn-danger" >Eliminar dispositivos</button>
+        <button id="facturar" class="btn btn-primary btn-right">Facturar</button>
+    </p>
+    <p>
+        <button id="delete" class="btn btn-danger">Eliminar dispositivos</button>
     </p>
 <!-- <div class="col-sm-12"> -->
     
