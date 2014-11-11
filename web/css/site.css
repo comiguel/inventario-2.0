@@ -55,8 +55,14 @@ textarea{
     }   
 }
 
-.btn.btn-success{
+.btn-right{
     float: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+a.btn-right{
+    margin-right: 0px;
 }
 
 .footer {

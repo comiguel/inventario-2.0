@@ -37,7 +37,7 @@ function reloadSelect(data, idSelect, firstOption){
 }
 
 
-function multiDelete(btnDelete,grid,controlador){
+function multiDelete(btnDelete,grid){
     $(btnDelete).click(function(event) {
         event.preventDefault();
         var keys = $(grid).yiiGridView('getSelectedRows');

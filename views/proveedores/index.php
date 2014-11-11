@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Crear Proveedor', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Proveedor', ['create'], ['class' => 'btn btn-success btn-right']) ?>
     </p>
     <p>
         <button id="delete"  class="btn btn-danger" >Eliminar proveedores</button>
