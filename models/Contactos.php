@@ -15,6 +15,7 @@ use Yii;
  * @property string $email
  * @property integer $id_proveedor
  * @property integer $id_cliente
+ * @property integer $borrado
  *
  * @property Proveedores $idProveedor
  * @property Clientes $idCliente
@@ -36,7 +37,7 @@ class Contactos extends \yii\db\ActiveRecord
     {
         return [
             [['nombre', 'tipo_entidad', 'email'], 'required'],
-            [['id_proveedor', 'id_cliente'], 'integer'],
+            [['id_proveedor', 'id_cliente', 'borrado'], 'integer'],
             [['nombre', 'cargo', 'email'], 'string', 'max' => 45],
             [['telefono'], 'string', 'max' => 20],
             [['tipo_entidad'], 'string', 'max' => 30]
@@ -57,6 +58,7 @@ class Contactos extends \yii\db\ActiveRecord
             'email' => 'Email',
             'id_proveedor' => 'Id Proveedor',
             'id_cliente' => 'Id Cliente',
+            'borrado' => 'Borrado',
         ];
     }
 

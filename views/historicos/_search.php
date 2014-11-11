@@ -21,9 +21,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tabla') ?>
 
-    <?= $form->field($model, 'elementos') ?>
+    <?= $form->field($model, 'antiguo') ?>
 
-    <?= $form->field($model, 'accion') ?>
+    <?= $form->field($model, 'nuevo') ?>
+
+    <?php // echo $form->field($model, 'accion') ?>
 
     <?php // echo $form->field($model, 'fecha_hora') ?>
 

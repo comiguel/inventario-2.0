@@ -10,7 +10,8 @@ use Yii;
  * @property integer $id_historico
  * @property string $usuario
  * @property string $tabla
- * @property string $elementos
+ * @property string $antiguo
+ * @property string $nuevo
  * @property string $accion
  * @property string $fecha_hora
  */
@@ -30,10 +31,10 @@ class Historicos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['usuario', 'tabla', 'elementos', 'accion', 'fecha_hora'], 'required'],
+            [['usuario', 'tabla', 'antiguo', 'nuevo', 'accion', 'fecha_hora'], 'required'],
             [['fecha_hora'], 'safe'],
             [['usuario', 'tabla'], 'string', 'max' => 45],
-            [['elementos'], 'string', 'max' => 600],
+            [['antiguo', 'nuevo'], 'string', 'max' => 300],
             [['accion'], 'string', 'max' => 2000]
         ];
     }
@@ -47,7 +48,8 @@ class Historicos extends \yii\db\ActiveRecord
             'id_historico' => 'Id Historico',
             'usuario' => 'Usuario',
             'tabla' => 'Tabla',
-            'elementos' => 'Elementos',
+            'antiguo' => 'Antiguo',
+            'nuevo' => 'Nuevo',
             'accion' => 'Accion',
             'fecha_hora' => 'Fecha Hora',
         ];

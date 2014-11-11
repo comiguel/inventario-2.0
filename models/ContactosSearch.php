@@ -18,7 +18,7 @@ class ContactosSearch extends Contactos
     public function rules()
     {
         return [
-            [['id_contacto', 'id_proveedor', 'id_cliente'], 'integer'],
+            [['id_contacto', 'id_proveedor', 'id_cliente', 'borrado'], 'integer'],
             [['nombre', 'telefono', 'tipo_entidad', 'cargo', 'email'], 'safe'],
         ];
     }
@@ -58,6 +58,7 @@ class ContactosSearch extends Contactos
             'id_contacto' => $this->id_contacto,
             'id_proveedor' => $this->id_proveedor,
             'id_cliente' => $this->id_cliente,
+             'borrado' => $this->borrado,
         ]);  
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre])

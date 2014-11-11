@@ -19,7 +19,7 @@ class HistoricosSearch extends Historicos
     {
         return [
             [['id_historico'], 'integer'],
-            [['usuario', 'tabla', 'elementos', 'accion', 'fecha_hora'], 'safe'],
+            [['usuario', 'tabla', 'antiguo', 'nuevo', 'accion', 'fecha_hora'], 'safe'],
         ];
     }
 
@@ -58,7 +58,8 @@ class HistoricosSearch extends Historicos
 
         $query->andFilterWhere(['like', 'usuario', $this->usuario])
             ->andFilterWhere(['like', 'tabla', $this->tabla])
-            ->andFilterWhere(['like', 'elementos', $this->elementos])
+            ->andFilterWhere(['like', 'antiguo', $this->antiguo])
+            ->andFilterWhere(['like', 'nuevo', $this->nuevo])
             ->andFilterWhere(['like', 'accion', $this->accion]);
 
         return $dataProvider;

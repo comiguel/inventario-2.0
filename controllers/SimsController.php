@@ -35,12 +35,14 @@ class SimsController extends Controller
      */
     public function actionIndex()
     {
+        $model = new Sims();
         $searchModel = new SimsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
@@ -69,6 +71,11 @@ class SimsController extends Controller
         $planes = Planes::find()->all();
         $estados = Estados::find()->all();
         $proveedores = Proveedores::find()->all();
+
+        if($model->id_plan==0)
+            $model->tipo_plan = 'Prepago';
+        else
+            $model->tipo_plan = 'Postpago';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_sim]);

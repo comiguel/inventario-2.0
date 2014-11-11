@@ -79,7 +79,7 @@ use yii\widgets\ActiveForm;
                                 <div class="form-group col-md-6">
                                     <label class="col-md-5 control-label">Estado:</label>
                                     <div class="col-md-7">
-                                        <select id="select_estado" data-live-search="true" data-width="100%" name="texto" class="selectpicker">
+                                        <select id="select_estado" data-live-search="true" data-width="100%" name="Sims[id_estado]" class="selectpicker">
                                             <option value="">Seleccionar estado</option>
                                             <?php
                                                 foreach($estados as $row){?>
@@ -93,7 +93,7 @@ use yii\widgets\ActiveForm;
                                 <div class="form-group col-md-6">
                                     <label class="col-md-5 control-label">Proveedor:</label>
                                     <div class="col-md-7">
-                                        <select id="proveedor" data-live-search="true" data-width="100%" name="texto" class="selectpicker">
+                                        <select id="proveedor" data-live-search="true" data-width="100%" name="Sims[id_proveedor]" class="selectpicker">
                                             <option value="">Seleccionar Proveedor</option>
                                             <?php
                                                 foreach($proveedores as $row){?>

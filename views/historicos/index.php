@@ -25,7 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'id_historico',
             'usuario',
             'tabla',
-            'elementos',
+            'antiguo',          
+            'nuevo',
             'accion',
             'fecha_hora',
 

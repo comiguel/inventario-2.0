@@ -8,6 +8,9 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\EstadosSearch;
+use app\models\Estados;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SimsSearch */
@@ -32,18 +35,33 @@ $this->params['breadcrumbs'][] = $this->title;
         'id'=>'grid',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' => ['class' => 'text-center'],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
             ['class' => 'yii\grid\CheckboxColumn'],
+
             // 'id_sim',
             // 'f_act',
             'num_linea',
             'imei_sc',
             'tipo_plan',
             // 'comentario',
-            'id_estado',
-            'id_proveedor',
-            'id_plan',
+            // 'id_estado',
+             [
+                'attribute' => 'estadoName',
+                'headerOptions' => ['class' => 'text-center', 'width' => '12%'],
+                // 'filter' => Html::activeDropDownList($model, 'estado', ArrayHelper::map(Estados::find()->all(), 'estado', 'estado'), ['name' => 'SimsSearch[estadoName]', 'class' => 'form-control']),
+            ],
+             [
+                'attribute' => 'proveedorName',
+                'headerOptions' => ['class' => 'text-center'],
+            ],
+            // 'id_proveedor',
+             [
+                'attribute' => 'planName',
+                'headerOptions' => ['class' => 'text-center'],
+            ],
+            // 'id_plan',
             'imei_disp',
             // 'f_asig',
 
