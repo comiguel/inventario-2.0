@@ -15,7 +15,11 @@
   -ms-word-wrap: break-word;
   word-wrap: break-word;
 }
-.toast-message a,
+.toast-message a{
+  color: #1D2F34;
+  text-decoration: underline;
+
+}
 .toast-message label {
   color: #ffffff;
 }

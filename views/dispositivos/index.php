@@ -2,15 +2,18 @@
     $(document).ready(function() {
         multiDelete('#delete','#grid');
         $('#facturar').on('click', function() {
-            var ids = $('#grid').yiiGridView('getSelectedRows');
-            $.post('facturar', {keys: ids.toString(), ids: ids})
+            // $.post('tableFact', {keys: $('#grid').yiiGridView('getSelectedRows').toString()})
+            // .done(function(data) {
+            //     success(data.mensaje,data.respuesta);
+            //     console.log(data.factura);
+            // });
+            $('#modalFacturar').modal({backdrop: 'static'});
+        });
+        $('#btnRegistraFactura').on('click', function(event) {
+            $.post('facturar', {keys: $('#grid').yiiGridView('getSelectedRows').toString(), cliente: $('#cliente').val()})
             .done(function(data) {
-                if(data.respuesta==0){
-                    success('Estás intentando facturar un ítem ya facturado, por favor verifica e intenta nuevamente','2');
-                }else{
-                    // success('Facturación exitosa','1');
-                    console.log(data);
-                }
+                success(data.mensaje,data.respuesta);
+                console.log(data.factura);
             });
         });
     });
@@ -106,9 +109,59 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'ubicacion',
             // 'borrado',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'headerOptions' => ['width' => '6%']],
         ],
     ]); ?>
+
+    <div class="modal fade" id="modalFacturar" tabindex="-1" role="dialog" aria-labelledby="modalFacturarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Facturación de artículos</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-md-10">
+                            <label class="col-md-5 control-label">Cliente:</label>
+                            <div class="col-md-7">
+                                <select id="cliente" data-live-search="true" data-width="100%" name="texto" class="selectpicker">
+                                    <option value="">Seleccionar cliente</option>
+                                    <?php foreach($clientes as $row){?>
+                                        <option value="<?= $row['id_cliente'];?>"><?= $row['nombre'];?></option>
+                                    <?php }?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <table id="tableFactura" class="table table-hover table-bordered table-striped" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Referencia</th>
+                                        <th class="text-center">Imei</th>
+                                        <th class="text-center">Precio de venta sin IVA</th>
+                                        <th class="text-center">Precio de venta con IVA</th>
+                                        <th class="text-center">Estado de facturación</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="filasFact">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="buttons-submit col-sm-12">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button id="btnRegistraFactura" class="btn btn-success">Registrar factura</button>
+                            </div>
+                            <div class="col-sm-3">
+                                <button data-dismiss="modal" class="btn btn-primary" type="button">Volver</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <!-- </div> -->
 
 </div>

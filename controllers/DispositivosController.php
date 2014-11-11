@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Dispositivos;
+use app\models\Facturas;
 use app\models\DispositivosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -36,10 +37,12 @@ class DispositivosController extends Controller
         $model = new Dispositivos();
         $searchModel = new DispositivosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $sql = "SELECT * FROM clientes";
+        $clientes=\Yii::$app->db->createCommand($sql)->query();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'clientes' => $clientes,
             'model' => $model,
         ]);
     }
@@ -83,20 +86,45 @@ class DispositivosController extends Controller
             $query = (new \yii\db\Query());
             $query->select('id_disp')->from('dispositivos')->where("id_disp IN (".$_POST['keys'].") AND facturado = 1");
             $rows = $query->count();
+            $ids = explode(',', $_POST['keys']);
             \Yii::$app->response->format = 'json';
             if($rows>0){
-                return ['respuesta' => '0'];
+                $mensaje = 'Estás intentando facturar un ítem ya facturado, por favor verifica e intenta nuevamente';
+                return ['respuesta' => '2', 'mensaje' => $mensaje];
             }else{
+                foreach ($ids as $key => $id) {
+                    $model = $this->findModel($id);
+                    if($model->tipoDisp->pv_siva == false || $model->tipoDisp->pv_iva == false){
+                        $mensaje = 'El tipo de artículo "'.$model->tipoDispName.'" con referencia "'.
+                        $model->tipoDispRef.'" no tiene precio de venta por el cual facturar, <strong><a href="'.
+                        \Yii::$app->homeUrl.'tipodisp/update?id='.$model->tipoDisp->id_tipo.'">Haz click aquí</a></strong> para establecerlo y poder facturarlo';
+                        return ['respuesta' => '4', 'mensaje' => $mensaje, 'otro' => $ids];
+                    }
+                }
                 $total_siva = 0;
                 $total_iva = 0;
-                foreach ($_POST['ids'] as $key => $id) {
-                    $model = $this->findModel($id);
-                    $total_siva += $model->tipoDisp->pv_siva;
-                    $total_iva += $model->tipoDisp->pv_iva;
-                    $model->facturado = 1;
-                    $model->save(false);
+                $transaction = \Yii::$app->db->beginTransaction();
+                try{
+                    $factura = new Facturas();
+                    foreach ($ids as $key => $id) {
+                        $model = $this->findModel($id);
+                        $total_siva += $model->tipoDisp->pv_siva;
+                        $total_iva += $model->tipoDisp->pv_iva;
+                        $model->facturado = 1;
+                        $model->save(false);
+                    }
+                    // $factura->f_venta = date("Y-m-d H:i:s");
+                    // $factura->pv_siva = $total_siva;
+                    // $factura->pv_iva = $total_iva;
+                    // $factura->id_cliente = $_POST['cliente'];
+                    // $factura->save();
+                    $transaction->commit();
+
+                    return ['factura' => $factura->id_factura,'respuesta' => '1', 'mensaje' => 'Se ha realizado la facturación satisfactoriamente'];
+                } catch(\Exception $e) {
+                    $transaction->rollBack();
+                    return ['respuesta' => '3', 'mensaje' => 'Hubo un errror'.$e->getMessage()] ;
                 }
-                return [$total_siva => $total_iva];
             }
         }else{
             return "No disponible";

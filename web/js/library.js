@@ -18,6 +18,7 @@ function success(mensaje,num){
 		case '1': toastr.success(mensaje);break;
 		case '2': toastr.warning(mensaje);break;
 		case '3': toastr.error(mensaje);break;
+		case '4': toastr.info(mensaje);break;
 	}
 }
 
