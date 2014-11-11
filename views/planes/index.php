@@ -1,6 +1,6 @@
 <script type="text/javascript">
   $(document).ready(function() {
-     multiDelete('#delete','#grid','planes');
+     multiDelete('#delete','#grid');
   });
 </script>
 

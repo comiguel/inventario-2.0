@@ -1,6 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
-        multiDelete('#delete','#grid','usuarios');
+        multiDelete('#delete','#grid');
     });
 </script>
 <?php

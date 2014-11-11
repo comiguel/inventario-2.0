@@ -45,43 +45,43 @@ AppAsset::register($this);
                 'items' => [
                     ['label' => 'Dispositivos',
                         'items' => [
-                            ['label' => 'Listado de dispositivos', 'url' => ['/dispositivos/']],
+                            ['label' => 'Listado de dispositivos', 'url' => ['/dispositivos/index']],
                             ['label' => 'Registrar dispositivo', 'url' => ['/dispositivos/create']],
-                            ['label' => 'Listado de tipo de dispositivos', 'url' => ['/tipodisp/']],
+                            ['label' => 'Listado de tipo de dispositivos', 'url' => ['/tipodisp/index']],
                             ['label' => 'Registrar tipo de dispositivo', 'url' => ['/tipodisp/create']],
                         ],
                     ],
                     ['label' => 'Sims',
                         'items' => [
-                            ['label' => 'Listado de simcards', 'url' => ['/sims/']],
+                            ['label' => 'Listado de simcards', 'url' => ['/sims/index']],
                             ['label' => 'Registrar simcard', 'url' => ['/sims/create']],
                         ],
                     ],
                     ['label' => 'Proveedores',
                         'items' => [
-                            ['label' => 'Listado de proveedores', 'url' => ['/proveedores/']],
+                            ['label' => 'Listado de proveedores', 'url' => ['/proveedores/index']],
                             ['label' => 'Registrar proveedor', 'url' => ['/proveedores/create']],
                         ],
                     ],
                     ['label' => 'Clientes',
                         'items' => [
-                            ['label' => 'Listado de clientes', 'url' => ['/clientes/']],
+                            ['label' => 'Listado de clientes', 'url' => ['/clientes/index']],
                             ['label' => 'Registrar cliente', 'url' => ['/clientes/create']],
                         ],
                     ],
                     ['label' => 'Usuarios',
                         'items' => [
-                            ['label' => 'Listado de usuarios', 'url' => ['/usuarios/']],
+                            ['label' => 'Listado de usuarios', 'url' => ['/usuarios/index']],
                             ['label' => 'Registrar usuario', 'url' => ['/usuarios/create']],
                         ],
                     ],
                     [
                        'label' => 'Otras opciones',
                        'items' => [
-                             ['label' => 'Estados', 'url' => ['/estados/']],
-                             ['label' => 'Planes', 'url' => ['/planes/']],
-                             ['label' => 'Contactos', 'url' => ['/contactos/']],
-                             ['label' => 'Historico', 'url' => ['/historicos/']],
+                             ['label' => 'Estados', 'url' => ['/estados/index']],
+                             ['label' => 'Planes', 'url' => ['/planes/index']],
+                             ['label' => 'Contactos', 'url' => ['/contactos/index']],
+                             ['label' => 'Historico', 'url' => ['/historicos/index']],
                          ],
                      ],
                     Yii::$app->user->isGuest ?
