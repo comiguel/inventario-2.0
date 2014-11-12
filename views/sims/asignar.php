@@ -1,14 +1,19 @@
 <script>
 	$(document).on('ready', function(event) {
 		$('#tipoDispositivo').on('change', function(event) {
-			if($('#tipoDispositivo').val()!=0){
+			if($('#tipoDispositivo').val()!=""){
 				$.post('dispdisponibles', {id_tipo: $('#tipoDispositivo').val()})
 				.done(function(data){
-					console.log(data);
+					$('#imeiDisp').empty();
+					$('#imeiDisp').append('<option value="">Seleccionar Imei</option>');
+					$.each(data, function(index, val) {
+						$('#imeiDisp').append('<option value="'+val.imei+'">'+val.imei+'</option>')
+					});
+					$('.selectpicker').selectpicker('refresh');
 				});
 			}
 		});
-		data = <?= $data;?>;
+		var data = <?= $data;?>;
 		if(data['informado']=='1'){
 			$('#tipoDispositivo').val(data['tipo']);
 			$('#tipoDispositivo option:not(:selected)').attr('disabled', 'true');

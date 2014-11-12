@@ -62,9 +62,8 @@ class SimsController extends Controller
     {
         if(Yii::$app->request->post() && isset($_POST['id_tipo'])){
             \Yii::$app->response->format = 'json';
-            $connection = \Yii::$app->db;
-            $sql = "SELECT d.imei_ref imei FROM dispositivos d, tipo_disp t WHERE (t.total_sims-d.sims_asig)>0 AND d.tipo_disp = ".$_POST['id_tipo'];
-            $result=$connection->createCommand($sql)->queryAll();
+            $sql = "SELECT d.imei_ref imei FROM dispositivos d, tipo_disp t WHERE (t.total_sims-d.sims_asig)>0 AND d.tipo_disp = ".$_POST['id_tipo']." AND t.id_tipo = ".$_POST['id_tipo'];
+            $result = \Yii::$app->db->createCommand($sql)->queryAll();
             return $result;
         }
     }
@@ -109,7 +108,7 @@ class SimsController extends Controller
             }
             $sql = "SELECT * FROM estados";
             $estados=$connection->createCommand($sql)->query();
-            $sql = "SELECT * FROM tipo_disp WHERE usa_sim='si'";
+            $sql = "SELECT DISTINCT t.id_tipo, t.nombre FROM tipo_disp t, dispositivos d WHERE t.usa_sim='si' AND d.tipo_disp = t.id_tipo AND t.total_sims>d.sims_asig";
             $tipos=$connection->createCommand($sql)->query();
             $sql = "SELECT d.imei_ref imei FROM dispositivos d, tipo_disp t WHERE (t.total_sims-d.sims_asig)>0 AND d.tipo_disp = t.id_tipo";
             $imeis=$connection->createCommand($sql)->query();
