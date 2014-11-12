@@ -43,7 +43,7 @@ textarea{
 .navbar-brand{
     background: url(../images/logo.png) no-repeat;
     height: 50px;
-    margin-left: 0; 
+    margin-left: 0;
     text-indent: -9999px;
     width: 158px;
 }
@@ -52,13 +52,19 @@ textarea{
    .navbar-default .navbar-nav > li > a{
         padding-left:9px;
         padding-right: 9px;
-    }   
+    }
 }
 
 .btn-right{
     float: right;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+}
+
+@media (max-width: 426px) {
+    .btn-right{
+        float: left;
+        margin-right: 4px;
+    }
 }
 
 a.btn-right{

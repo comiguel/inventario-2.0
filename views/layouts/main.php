@@ -55,6 +55,7 @@ AppAsset::register($this);
                         'items' => [
                             ['label' => 'Listado de simcards', 'url' => ['/sims/index']],
                             ['label' => 'Registrar simcard', 'url' => ['/sims/create']],
+                            ['label' => 'Asignar simcard', 'url' => ['/sims/asignar']],
                         ],
                     ],
                     ['label' => 'Proveedores',

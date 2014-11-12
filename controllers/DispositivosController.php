@@ -81,7 +81,7 @@ class DispositivosController extends Controller
         }
     }
 
-    public function actionFacturar(){
+    public function actionValidatefact(){
         if(Yii::$app->request->post() && isset($_POST['keys'])){
             $query = (new \yii\db\Query());
             $query->select('id_disp')->from('dispositivos')->where("id_disp IN (".$_POST['keys'].") AND facturado = 1");
@@ -92,6 +92,7 @@ class DispositivosController extends Controller
                 $mensaje = 'Estás intentando facturar un ítem ya facturado, por favor verifica e intenta nuevamente';
                 return ['respuesta' => '2', 'mensaje' => $mensaje];
             }else{
+                $data;
                 foreach ($ids as $key => $id) {
                     $model = $this->findModel($id);
                     if($model->tipoDisp->pv_siva == false || $model->tipoDisp->pv_iva == false){
@@ -99,35 +100,48 @@ class DispositivosController extends Controller
                         $model->tipoDispRef.'" no tiene precio de venta por el cual facturar, <strong><a href="'.
                         \Yii::$app->homeUrl.'tipodisp/update?id='.$model->tipoDisp->id_tipo.'">Haz click aquí</a></strong> para establecerlo y poder facturarlo';
                         return ['respuesta' => '4', 'mensaje' => $mensaje, 'otro' => $ids];
+                    }else{
+                        $data[$key] = [$model->tipoDisp->tipo_ref, $model->imei_ref, $model->tipoDisp->pv_siva, $model->tipoDisp->pv_iva, ($model->facturado == 1) ? 'Facturado' : 'Sin Facturar'];
                     }
                 }
-                $total_siva = 0;
-                $total_iva = 0;
-                $transaction = \Yii::$app->db->beginTransaction();
-                try{
-                    $factura = new Facturas();
-                    foreach ($ids as $key => $id) {
-                        $model = $this->findModel($id);
-                        $total_siva += $model->tipoDisp->pv_siva;
-                        $total_iva += $model->tipoDisp->pv_iva;
-                        $model->facturado = 1;
-                        $model->save(false);
-                    }
-                    // $factura->f_venta = date("Y-m-d H:i:s");
-                    // $factura->pv_siva = $total_siva;
-                    // $factura->pv_iva = $total_iva;
-                    // $factura->id_cliente = $_POST['cliente'];
-                    // $factura->save();
-                    $transaction->commit();
-
-                    return ['factura' => $factura->id_factura,'respuesta' => '1', 'mensaje' => 'Se ha realizado la facturación satisfactoriamente'];
-                } catch(\Exception $e) {
-                    $transaction->rollBack();
-                    return ['respuesta' => '3', 'mensaje' => 'Hubo un errror'.$e->getMessage()] ;
-                }
+                return ['respuesta' => '1', 'data' => $data];
             }
         }else{
             return "No disponible";
+        }
+    }
+
+    public function actionFacturar(){
+        if(Yii::$app->request->post() && isset($_POST['keys']) && isset($_POST['cliente'])){
+            $ids = explode(',', $_POST['keys']);
+            \Yii::$app->response->format = 'json';
+            $total_siva = 0;
+            $total_iva = 0;
+            $transaction = \Yii::$app->db->beginTransaction();
+            try{
+                $factura = new Facturas();
+                foreach ($ids as $key => $id) {
+                    $model = $this->findModel($id);
+                    $total_siva += $model->tipoDisp->pv_siva;
+                    $total_iva += $model->tipoDisp->pv_iva;
+                    $model->facturado = 1;
+                    $model->save(false);
+                }
+                $factura->f_venta = date("Y-m-d H:i:s");
+                $factura->pv_siva = $total_siva;
+                $factura->pv_iva = $total_iva;
+                $factura->id_cliente = $_POST['cliente'];
+                $factura->save();
+                foreach ($ids as $key => $id) {
+                    $sql = "INSERT INTO detalle_fact (id_factura, id_disp) VALUES (".$factura->id_factura.", ".$id.")";
+                    $result = \Yii::$app->db->createCommand($sql)->execute();
+                }
+                $transaction->commit();
+                return ['respuesta' => '1', 'mensaje' => 'Se ha realizado la facturación satisfactoriamente'];
+            } catch(\Exception $e) {
+                $transaction->rollBack();
+                return ['respuesta' => '3', 'mensaje' => 'Hubo un errror'.$e->getMessage()] ;
+            }
         }
     }
 

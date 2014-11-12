@@ -2,18 +2,24 @@
     $(document).ready(function() {
         multiDelete('#delete','#grid');
         $('#facturar').on('click', function() {
-            // $.post('tableFact', {keys: $('#grid').yiiGridView('getSelectedRows').toString()})
-            // .done(function(data) {
-            //     success(data.mensaje,data.respuesta);
-            //     console.log(data.factura);
-            // });
-            $('#modalFacturar').modal({backdrop: 'static'});
+            $.post('validatefact', {keys: $('#grid').yiiGridView('getSelectedRows').toString()})
+            .done(function(data) {
+                if(data.respuesta != 1){
+                    success(data.mensaje,data.respuesta);
+                }else{
+                    $('#filasFact').empty();
+                    $.each(data.data, function(index, val) {
+                        $('#filasFact').append('<tr class="text-center"><td>'+val[0]+'</td><td>'+val[1]+'</td><td>'+val[2]+'</td><td>'+val[3]+'</td><td>'+val[4]+'</td></tr>');
+                    });
+                    $('#modalFacturar').modal({backdrop: 'static'});
+                }
+            });
         });
         $('#btnRegistraFactura').on('click', function(event) {
             $.post('facturar', {keys: $('#grid').yiiGridView('getSelectedRows').toString(), cliente: $('#cliente').val()})
             .done(function(data) {
+                $('#cliente').val('');
                 success(data.mensaje,data.respuesta);
-                console.log(data.factura);
             });
         });
     });
@@ -39,11 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <?php // echo $this->render('..\estados\_search', ['model' => new EstadosSearch()]); ?>
 
-    <p>
-        <?= Html::a('Crear Dispositivos', ['create'], ['class' => 'btn btn-success btn-right']) ?>
-    </p>
-    <p>
-        <button id="facturar" class="btn btn-primary btn-right">Facturar</button>
+    <p class="btn-right">
+        <button id="facturar" class="btn btn-primary">Facturar</button>
+        <?= Html::a('Crear Dispositivos', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <p>
         <button id="delete" class="btn btn-danger">Eliminar dispositivos</button>
@@ -151,7 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="buttons-submit col-sm-12">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <button id="btnRegistraFactura" class="btn btn-success">Registrar factura</button>
+                                <button id="btnRegistraFactura" data-dismiss="modal" class="btn btn-success">Registrar factura</button>
                             </div>
                             <div class="col-sm-3">
                                 <button data-dismiss="modal" class="btn btn-primary" type="button">Volver</button>

@@ -58,6 +58,73 @@ class SimsController extends Controller
         ]);
     }
 
+    public function actionDispdisponibles()
+    {
+        if(Yii::$app->request->post() && isset($_POST['id_tipo'])){
+            \Yii::$app->response->format = 'json';
+            $connection = \Yii::$app->db;
+            $sql = "SELECT d.imei_ref imei FROM dispositivos d, tipo_disp t WHERE (t.total_sims-d.sims_asig)>0 AND d.tipo_disp = ".$_POST['id_tipo'];
+            $result=$connection->createCommand($sql)->queryAll();
+            return $result;
+        }
+    }
+
+    public function actionAsignar(){
+        $connection = \Yii::$app->db;
+        if(Yii::$app->request->post()){
+            \Yii::$app->response->format = 'json';
+            parse_str($_POST['data'], $data);
+            $transaction=$connection->beginTransaction();
+            try
+            {
+                $dispositivo = Dispositivos::find()->where(['imei_ref' => $data[3]])->one();
+                $dispositivo->sims_asig = (($dispositivo->sims_asig)+1);
+                $dispositivo->save();
+
+                $sql = "SELECT * FROM sims WHERE isnull(imei_disp) AND id_plan = ".$data[4]." ORDER BY id_sim ASC LIMIT 0,1";
+                $sim = Sims::findBySql($sql)->all();
+                $sim->id_estado = $data[0];
+                $sim->f_asig = $data[1];
+                $sim->imei_disp = $data[3];
+                $sim->save(false);
+
+                $transaction->commit();
+                return ['mensaje' => 'La sim se asignó correctamente al dispositivo', 'cod' => '1'];
+            }
+            catch(Exception $e) // se arroja una excepción si una consulta falla
+            {
+                $transaction->rollBack();
+                return ['mensaje' => $e->getMessage(), 'cod' => '3'];
+            }
+
+        }else{
+            $data['informado'] = "0";
+            if(isset($_GET['tipo_disp']) && isset($_GET['imei'])){
+                $sql = "SELECT id_tipo FROM tipo_disp WHERE nombre='".$_GET['tipo_disp']."'";
+                $result=$connection->createCommand($sql)->queryAll();
+                $data['tipo'] = $result[0]['id_tipo'];
+                $data['imei'] = $_GET['imei'];
+                $data['informado'] = "1";
+                // $this->renderPartial('/sim/asignar', array('data' => json_encode($data)));
+            }
+            $sql = "SELECT * FROM estados";
+            $estados=$connection->createCommand($sql)->query();
+            $sql = "SELECT * FROM tipo_disp WHERE usa_sim='si'";
+            $tipos=$connection->createCommand($sql)->query();
+            $sql = "SELECT d.imei_ref imei FROM dispositivos d, tipo_disp t WHERE (t.total_sims-d.sims_asig)>0 AND d.tipo_disp = t.id_tipo";
+            $imeis=$connection->createCommand($sql)->query();
+            $sql = "SELECT DISTINCT p.id_plan Plan, p.nombre_plan Nombre FROM planes p RIGHT JOIN sims s ON p.id_plan = s.id_plan AND ISNULL(s.imei_disp)";
+            $planes=$connection->createCommand($sql)->query();
+            return $this->render('asignar', [
+                'data' => json_encode($data),
+                'estados' => $estados,
+                'tipos' => $tipos,
+                'imeis' => $imeis,
+                'planes' => $planes,
+                ]);
+        }
+    }
+
     /**
      * Creates a new Sims model.
      * If creation is successful, the browser will be redirected to the 'view' page.

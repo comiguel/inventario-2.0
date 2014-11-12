@@ -14,16 +14,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <p class="btn-right">
+        <a href="<?= \Yii::$app->homeUrl; ?>sims/asignar?tipo_disp=<?=$model->tipoDispName; ?>&imei=<?= $model->imei_ref; ?>" id="asignar" <?= ($model->tipoDisp->total_sims-$model->sims_asig > 0) ? '':'disabled' ?> class="btn btn-success">Asignar simcard</a>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id_disp], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_disp], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
     </p>
+    <?= Html::a('Eliminar', ['delete', 'id' => $model->id_disp], [
+        'class' => 'btn btn-danger',
+        'data' => [
+            'confirm' => 'Esta seguro que desea borrar este item?',
+            'method' => 'post',
+        ],
+    ]) ?>
 
     <?= DetailView::widget([
         'model' => $model,
