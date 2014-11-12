@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\TipoDisp */
 
-$this->title = $model->id_tipo;
+$this->title = $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Tipo Disps', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_tipo], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_tipo], [
+        <?= Html::a('Actualizar', ['update', 'id' => $model->id_tipo], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->id_tipo], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Desea borrar este item?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_tipo',
+            // 'id_tipo',
             'tipo_ref',
             'nombre',
             'descripcion',
@@ -36,10 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'pc_iva',
             'pv_siva',
             'pv_iva',
-            'id_proveedor',
+            'proveedorName',
             'usa_sim',
             'total_sims',
-            'borrado',
+            // 'borrado',
         ],
     ]) ?>
 

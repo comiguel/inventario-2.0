@@ -44,7 +44,7 @@ class TipoDispSearch extends TipoDisp
      */
     public function search($params)
     {
-        $query = TipoDisp::find();
+        $query = TipoDisp::find()->where('tipo_disp.borrado=0');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

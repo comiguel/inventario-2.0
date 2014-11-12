@@ -54,13 +54,13 @@ class TipoDisp extends \yii\db\ActiveRecord
     {
         return [
             'id_tipo' => 'Id Tipo',
-            'tipo_ref' => 'Tipo Ref',
+            'tipo_ref' => 'Tipo Referencia',
             'nombre' => 'Nombre',
             'descripcion' => 'Descripcion',
-            'pc_siva' => 'Pc Siva',
-            'pc_iva' => 'Pc Iva',
-            'pv_siva' => 'Pv Siva',
-            'pv_iva' => 'Pv Iva',
+            'pc_siva' => 'Precio compra sin iva',
+            'pc_iva' => 'Precio compra Iva',
+            'pv_siva' => 'Precio venta sin iva',
+            'pv_iva' => 'Precio venta Iva',
             'id_proveedor' => 'Id Proveedor',
             'usa_sim' => 'Usa Sim',
             'total_sims' => 'Total Sims',

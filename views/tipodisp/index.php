@@ -1,3 +1,9 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        multiDelete('#delete','#grid');
+    });
+</script>
+
 <?php
 
 use yii\helpers\Html;
@@ -7,7 +13,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\TipoDispSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tipo Disps';
+$this->title = 'Tipos de dispositivos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tipo-disp-index">
@@ -16,15 +22,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Tipo Disp', ['create'], ['class' => 'btn btn-success btn-right']) ?>
+        <?= Html::a('Crear Tipo disp', ['create'], ['class' => 'btn btn-success btn-right']) ?>
+    </p>
+     <p>
+        <button id="delete" class="btn btn-danger" >Eliminar tipos disp</button>
     </p>
 
     <?= GridView::widget([
+        'id'=>'grid',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
-
+            ['class' => 'yii\grid\CheckboxColumn'],
             // 'id_tipo',
             'tipo_ref',
             'nombre',

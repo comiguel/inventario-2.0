@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\TipoDisp;
 use app\models\TipoDispSearch;
+use app\models\Proveedores;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -65,8 +66,14 @@ class TipoDispController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_tipo]);
         } else {
+            $proveedores = Proveedores::find()->all();
+            $query = (new \yii\db\Query());
+            $query->select('*')->from('ivas');
+            $ivas = $query->all();
             return $this->render('create', [
                 'model' => $model,
+                'proveedores' => $proveedores,
+                'ivas' =>$ivas,
             ]);
         }
     }
@@ -81,11 +88,19 @@ class TipoDispController extends Controller
     {
         $model = $this->findModel($id);
 
+
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_tipo]);
         } else {
+            $proveedores = Proveedores::find()->all();
+            $query = (new \yii\db\Query());
+            $query->select('*')->from('ivas');
+            $ivas = $query->all();
             return $this->render('update', [
                 'model' => $model,
+                'proveedores' => $proveedores,
+                'ivas' =>$ivas,
             ]);
         }
     }
@@ -98,9 +113,35 @@ class TipoDispController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $query = (new \yii\db\Query());
+        $query->select('*')->from('dispositivos')->where('tipo_disp =:id');
+        $query->addParams(['id'=>$id]);
+        $rows = $query->count();
+        try {
+
+            if($rows==0){
+                $this->findModel($id)->delete();            
+            }else{
+               
+                $tipo = TipoDisp::findOne($id);
+                $tipo->borrado = '1';
+                $tipo->update();
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
 
         return $this->redirect(['index']);
+    }
+
+    public function actionMultidelete(){
+         $sql = "UPDATE tipo_disp SET borrado='1' WHERE id_tipo IN (".$_POST['data'].")";
+         try {
+            Yii::$app->db->createCommand($sql)->execute(); 
+            return  $this->redirect(['index']);
+         } catch (Exception $e) {
+            return $e->getMessage();
+         }
     }
 
     /**

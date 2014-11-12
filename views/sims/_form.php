@@ -110,8 +110,8 @@ use yii\widgets\ActiveForm;
                                     </div>
                                 </div>
 
-                    <div class="form-group col-md-7">
-                        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Editar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                    <div class="form-group col-md-12 text-center">
+                        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>
