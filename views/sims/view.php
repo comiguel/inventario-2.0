@@ -1,3 +1,14 @@
+<script>
+    $(document).ready(function() {
+        $('#desasignar').on('click', function(event) {
+            event.preventDefault();
+            $.post('desasignar', {sim: '<?=$model->id_sim; ?>'})
+            .done(function(data) {
+                window.location.href = '';
+            })
+        });
+    });
+</script>
 <?php
 
 use yii\helpers\Html;
@@ -15,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p class="btn-right">
-        <button class="btn btn-success">Desasignar simcard</button>
+        <button id="desasignar" <?= ($model->imei_disp == NULL) ? 'disabled':'' ?> class="btn btn-success">Desasignar simcard</button>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id_sim], ['class' => 'btn btn-primary']) ?>
     </p>
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id_sim], [
