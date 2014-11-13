@@ -148,7 +148,7 @@ class SimsController extends Controller
                 $model->tipo_plan = 'Postpago';
 
             if($model->f_asig == '')//asigna 0000-00-00 en el campo de f_asig si no se ha hecho asignación
-                $model->f_asig = '0000-00-00';
+                $model->f_asig = 'NULL';
 
             if($model->save()){
                 return $this->redirect(['view', 'id' => $model->id_sim]);
@@ -177,12 +177,7 @@ class SimsController extends Controller
         $estados = Estados::find()->all();
         $proveedores = Proveedores::find()->all();
 
-        if ($model->load(Yii::$app->request->post())) {
-
-            if($model->f_asig == '')
-                $model->f_asig = '0000-00-00';
-
-            if($model->save())
+        if ($model->load(Yii::$app->request->post() && $model->save())) {
                 return $this->redirect(['view', 'id' => $model->id_sim]);
         } else {
             return $this->render('update', [
