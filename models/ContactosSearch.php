@@ -12,6 +12,9 @@ use app\models\Contactos;
  */
 class ContactosSearch extends Contactos
 {
+
+    public $proveedorName;
+    public $clienteName;
     /**
      * @inheritdoc
      */
@@ -20,6 +23,8 @@ class ContactosSearch extends Contactos
         return [
             [['id_contacto', 'id_proveedor', 'id_cliente', 'borrado'], 'integer'],
             [['nombre', 'telefono', 'tipo_entidad', 'cargo', 'email'], 'safe'],
+            [['proveedorName'], 'safe'],
+            [['clienteName'], 'safe'],
         ];
     }
 
@@ -49,8 +54,8 @@ class ContactosSearch extends Contactos
         ]);
 
         if (!($this->load($params) && $this->validate())) {
-            $query->joinWith(['idProveedor']);
-            $query->joinWith(['idCliente']);
+            $query->joinWith(['proveedor']);
+            $query->joinWith(['cliente']);
             return $dataProvider;
         }
 
@@ -67,11 +72,11 @@ class ContactosSearch extends Contactos
             ->andFilterWhere(['like', 'cargo', $this->cargo])
             ->andFilterWhere(['like', 'email', $this->email]);
 
-        $query->joinWith(['idProveedor' => function ($q) {
-            $q->where('proveedores.nombre LIKE "%' . $this->ProveedorName . '%"');
+        $query->joinWith(['proveedor' => function ($q) {
+            $q->where('proveedores.nombre LIKE "%' . $this->proveedorName . '%"');
         }]);
-        $query->joinWith(['idCliente' => function ($q) {
-            $q->where('clientes.nombre LIKE "%' . $this->ClienteName . '%"');
+        $query->joinWith(['cliente' => function ($q) {
+            $q->where('clientes.nombre LIKE "%' . $this->clienteName . '%"');
         }]);
 
         return $dataProvider;

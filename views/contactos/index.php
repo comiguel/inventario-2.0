@@ -41,12 +41,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'cargo',
             'email:email',
             [   'header' => 'Entidad',
-                
-                'value' => function($data){
+                'attribute' => function($data){
                     if($data->id_proveedor === null){
-                        return $data->id_cliente;
+                        return $data->clienteName;
                     }else{
-                        return $data->id_proveedor;
+                        return $data->proveedorName;
                     }
                 }
             ],

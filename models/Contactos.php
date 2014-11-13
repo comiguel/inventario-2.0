@@ -59,22 +59,32 @@ class Contactos extends \yii\db\ActiveRecord
             'id_proveedor' => 'Id Proveedor',
             'id_cliente' => 'Id Cliente',
             'borrado' => 'Borrado',
+            'proveedorName' => Yii::t('app', 'Proveedor'),
+            'clienteName' => Yii::t('app', 'Cliente'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdProveedor()
+    public function getProveedor()
     {
         return $this->hasOne(Proveedores::className(), ['id_proveedor' => 'id_proveedor']);
+    }
+
+    public function getProveedorName(){
+        return $this->proveedor->nombre;
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdCliente()
+    public function getCliente()
     {
         return $this->hasOne(Clientes::className(), ['id_cliente' => 'id_cliente']);
+    }
+
+    public function getClienteName(){
+        return $this->cliente->nombre;
     }
 }

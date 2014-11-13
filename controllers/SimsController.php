@@ -69,6 +69,31 @@ class SimsController extends Controller
         }
     }
 
+    public function actionDesasignar()
+    {
+        if(Yii::$app->request->post() && isset($_POST['sim'])){
+            \Yii::$app->response->format = 'json';
+            $transaction=\Yii::$app->db->beginTransaction();
+            try
+            {
+                $sim = Sims::find()->where(['id_sim' => $_POST['sim']])->one();
+                $dispositivo = Dispositivos::find()->where(['imei_ref' => $sim->imei_disp])->one();
+                $sim->imei_disp = NULL;
+                $sim->f_asig = NULL;
+                $sim->save(false);
+                $dispositivo->sims_asig = $dispositivo->sims_asig-1;
+                $dispositivo->save(false);
+                $transaction->commit();
+                return ['mensaje' => "La sim con IMEI: ".$sim->imei_sc." del dispositivo con IMEI: ".$dispositivo->imei_ref, 'respuesta' => "1"];
+            }
+            catch(Exception $e) // se arroja una excepción si una consulta falla
+            {
+                $transaction->rollBack();
+                return ['mensaje' => $e->getMessage(), 'respuesta' => "3"];
+            }
+        }
+    }
+
     public function actionAsignar(){
         $connection = \Yii::$app->db;
         if(Yii::$app->request->post()){
@@ -124,6 +149,9 @@ class SimsController extends Controller
                 ]);
         }
     }
+
+
+
 
     /**
      * Creates a new Sims model.
