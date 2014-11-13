@@ -139,13 +139,20 @@ class SimsController extends Controller
         $estados = Estados::find()->all();
         $proveedores = Proveedores::find()->all();
 
-        if($model->id_plan==0)
-            $model->tipo_plan = 'Prepago';
-        else
-            $model->tipo_plan = 'Postpago';
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_sim]);
+       
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->id_plan==0) //Asigna el tipo de plan segun el id_plan que se envió
+                $model->tipo_plan = 'Prepago';
+            else
+                $model->tipo_plan = 'Postpago';
+
+            if($model->f_asig == '')//asigna 0000-00-00 en el campo de f_asig si no se ha hecho asignación
+                $model->f_asig = '0000-00-00';
+
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id_sim]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -170,8 +177,13 @@ class SimsController extends Controller
         $estados = Estados::find()->all();
         $proveedores = Proveedores::find()->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_sim]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            if($model->f_asig == '')
+                $model->f_asig = '0000-00-00';
+
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id_sim]);
         } else {
             return $this->render('update', [
                 'model' => $model,
