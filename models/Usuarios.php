@@ -14,8 +14,10 @@ use Yii;
  * @property string $nombre
  * @property integer $borrado
  */
-class Usuarios extends \yii\db\ActiveRecord
+class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    public $authKey;
+    public $accessToken;
     /**
      * @inheritdoc
      */
@@ -52,5 +54,57 @@ class Usuarios extends \yii\db\ActiveRecord
             'nombre' => 'Nombre',
             'borrado' => 'Borrado',
         ];
+    }
+
+    public function getId()
+    {
+        return $this->id_usuario;
+    }
+
+    public static function findIdentity($id)
+    {
+        // return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        $usuario = Usuarios::find()->where(['id_usuario' => $id])->one();
+        if ($usuario !== null) {
+            return new static($usuario);
+        }
+        return null;
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        $usuario = Usuarios::find()->where(['accessToken' => $toke])->one();
+        if ($usuario['accessToken'] !== null) {
+            return new static($usuario);
+        }
+        return null;
+    }
+
+    public function getUsername(){
+        return $this->usuario;
+    }
+
+    public function getAuthKey()
+    {
+        return $this->authKey;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return $this->authKey === $authKey;
+    }
+    
+    public function validatePassword($password)
+    {
+        return $this->contrasena === sha1($password);
+    }
+
+    public static function findByUsername($username)
+    {
+        $usuario = Usuarios::find()->where(['usuario' => $username])->one();
+        if ($usuario !== null) {
+            return new static($usuario);
+        }
+        return null;
     }
 }
