@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
+use yii\filters\AccessControl;
 
 /**
  * DispositivosController implements the CRUD actions for Dispositivos model.
@@ -23,6 +24,22 @@ class DispositivosController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                // 'only' => ['login', 'logout', 'signup', 'index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['login', 'signup'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['logout', 'index', 'create',],
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
