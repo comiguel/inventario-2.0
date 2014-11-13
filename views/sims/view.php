@@ -14,8 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <p class="btn-right">
+        <button class="btn btn-success">Desasignar simcard</button>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id_sim], ['class' => 'btn btn-primary']) ?>
+    </p>
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id_sim], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -23,7 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-    </p>
 
     <?= DetailView::widget([
         'model' => $model,

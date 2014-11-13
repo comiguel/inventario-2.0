@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Sims;
 use app\models\SimsSearch;
+use app\models\Dispositivos;
 use app\models\Planes;
 use app\models\Estados;
 use app\models\Proveedores;
@@ -78,22 +79,22 @@ class SimsController extends Controller
             {
                 $dispositivo = Dispositivos::find()->where(['imei_ref' => $data[3]])->one();
                 $dispositivo->sims_asig = (($dispositivo->sims_asig)+1);
-                $dispositivo->save();
+                $dispositivo->save(false);
 
                 $sql = "SELECT * FROM sims WHERE isnull(imei_disp) AND id_plan = ".$data[4]." ORDER BY id_sim ASC LIMIT 0,1";
-                $sim = Sims::findBySql($sql)->all();
+                $sim = Sims::findBySql($sql)->one();
                 $sim->id_estado = $data[0];
                 $sim->f_asig = $data[1];
                 $sim->imei_disp = $data[3];
                 $sim->save(false);
 
                 $transaction->commit();
-                return ['mensaje' => 'La sim se asignó correctamente al dispositivo', 'cod' => '1'];
+                return ['id' => $dispositivo->id_disp, 'mensaje' => 'La sim se asignó correctamente al dispositivo', 'respuesta' => '1'];
             }
             catch(Exception $e) // se arroja una excepción si una consulta falla
             {
                 $transaction->rollBack();
-                return ['mensaje' => $e->getMessage(), 'cod' => '3'];
+                return ['mensaje' => $e->getMessage(), 'respuesta' => '3'];
             }
 
         }else{
@@ -112,7 +113,7 @@ class SimsController extends Controller
             $tipos=$connection->createCommand($sql)->query();
             $sql = "SELECT d.imei_ref imei FROM dispositivos d, tipo_disp t WHERE (t.total_sims-d.sims_asig)>0 AND d.tipo_disp = t.id_tipo";
             $imeis=$connection->createCommand($sql)->query();
-            $sql = "SELECT DISTINCT p.id_plan Plan, p.nombre_plan Nombre FROM planes p RIGHT JOIN sims s ON p.id_plan = s.id_plan AND ISNULL(s.imei_disp)";
+            $sql = "SELECT DISTINCT p.id_plan Plan, p.nombre_plan Nombre FROM planes p, sims s WHERE p.id_plan = s.id_plan AND ISNULL(s.imei_disp)";
             $planes=$connection->createCommand($sql)->query();
             return $this->render('asignar', [
                 'data' => json_encode($data),

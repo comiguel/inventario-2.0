@@ -13,11 +13,20 @@
 				});
 			}
 		});
+		$('#btnAsignar').on('click', function(event) {
+			event.preventDefault();
+			$.post('asignar', {data: $('#asignarSimcard').serialize()})
+			.done(function(data) {
+				if(data.respuesta == '1'){
+					window.location.href = '<?= \Yii::$app->homeUrl."dispositivos/view?id="; ?>'+data.id;
+				}
+				console.log(data);
+			})
+		});
 		var data = <?= $data;?>;
 		if(data['informado']=='1'){
 			$('#tipoDispositivo').val(data['tipo']);
 			$('#tipoDispositivo option:not(:selected)').attr('disabled', 'true');
-			// $('#tipoDispositivo').val("si");
 			$('#imeiDisp').val(data['imei']);
 			$('#imeiDisp option:not(:selected)').attr('disabled', 'true');
 		}else{
@@ -46,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="form-group col-md-12">
 					<label class="col-md-3 control-label">Nuevo estado de la sim:</label>
 					<div class="col-md-7">
-						<select id="estado" data-live-search="true" name="texto" data-width="100%" class="selectpicker">
+						<select id="estado" data-live-search="true" name="0" data-width="100%" class="selectpicker">
 							<option value="">Seleccionar estado</option>
 							<?php
 							foreach($estados as $row){?>
@@ -58,13 +67,13 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="form-group col-md-12">
 					<label for="dateAsi" class="col-md-3 control-label">Fecha de asignación:</label>
 					<div class="col-md-7">
-						<input type="date" class="form-control" name="fecha" placeholder="dd/mm/aaaa">
+						<input type="date" class="form-control" name="1" placeholder="dd/mm/aaaa">
 					</div>
 				</div>
 				<div class="form-group col-md-12">
 					<label class="col-md-3 control-label">Tipo de dispositivo:</label>
 					<div class="col-md-7">
-						<select id="tipoDispositivo" name="texto" data-width="100%" class="selectpicker">
+						<select id="tipoDispositivo" name="2" data-width="100%" class="selectpicker">
 							<option value="">Seleccionar tipo de dispositivo</option>
 							<?php
 							foreach($tipos as $row){?>
@@ -76,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="form-group col-md-12">
 					<label class="col-md-3 control-label">Imei del dispositivo a asignar:</label>
 					<div class="col-md-7">
-						<select id="imeiDisp" name="texto" data-width="100%" class="selectpicker">
+						<select id="imeiDisp" name="3" data-width="100%" class="selectpicker">
 							<option value="">Seleccionar Imei</option>
 							<?php
 							foreach($imeis as $row){?>
@@ -88,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="form-group col-md-12">
 					<label class="col-md-3 control-label">Plan:</label>
 					<div class="col-md-7">
-						<select id="plan" name="texto" data-width="100%" class="selectpicker">
+						<select id="plan" name="4" data-width="100%" class="selectpicker">
 							<option value="">Seleccionar plan</option>
 							<?php
 							foreach($planes as $row){?>
