@@ -29,6 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             // 'id_disp',
+            [
+                'label' => 'Sims asignadas',
+                'value' => ($model->tipoDisp->usa_sim == 'si')? $model->sims_asig : 'El ítem no usa simcards',
+            ],
+            [
+                'label' => 'Ranuras de Sim disponibles',
+                'value' => ($model->tipoDisp->total_sims)-($model->sims_asig),
+            ],
             'tipoDispRef',
             // 'tipo_disp',
             'tipoDispName',
@@ -57,14 +65,6 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Estado de facturación',
                 'value' => ($model->facturado == 0)? 'Sin facturar' : 'Facturado',
-            ],
-            [
-                'label' => 'Sims asignadas',
-                'value' => ($model->tipoDisp->usa_sim == 'si')? $model->sims_asig : 'El ítem no usa simcards',
-            ],
-            [
-                'label' => 'Ranuras de Sim disponibles',
-                'value' => ($model->tipoDisp->total_sims)-($model->sims_asig),
             ],
             'comentario',
             [

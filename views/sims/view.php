@@ -41,6 +41,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             // 'id_sim',
+            [
+                'label' => 'Sim asignada?',
+                // 'value' => ($model->imei_disp == NULL) ? 'Ningún dispositvo la usa aún':'La está usando el dispositivo <a href="'.\Yii::$app->homeUrl.'dispositivos/view?id='.$model->imeiDisp->id_disp.'">'.$model->imei_disp.'</a>',
+                // 'value' => ($model->imei_disp == NULL) ? 'Ningún dispositvo la usa aún':'La está utilizando el dispositivo '.Html::a($model->imei_disp, [\Yii::$app->homeUrl.'dispositivos/view', 'id' => $model->imeiDisp->id_disp]),
+                'value' => ($model->imei_disp == NULL) ? 'Ningún dispositvo la tiene asignada':'La está utilizando el dispositivo: '.$model->imei_disp,
+            ],
             'f_act',
             'num_linea',
             'imei_sc',
