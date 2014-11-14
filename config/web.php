@@ -8,10 +8,15 @@ $config = [
     'timeZone' => 'America/Bogota',
     'bootstrap' => ['log'],
     'components' => [
-
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            'itemTable' => 'items',
+            'itemChildTable' => 'items_hijos',
+            'assignmentTable' => 'asignaciones',
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation

@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Crear Usuario', ['create'], ['class' => 'btn btn-success btn-right']) ?>
     </p>
      <p>
-        <button id="delete"  class="btn btn-danger" >Eliminar usuarios</button>
+        <button id="delete" class="btn btn-danger" >Eliminar usuarios</button>
     </p>
 
     <?= GridView::widget([

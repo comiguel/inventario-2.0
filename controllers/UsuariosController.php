@@ -5,9 +5,11 @@ namespace app\controllers;
 use Yii;
 use app\models\usuarios;
 use app\models\usuariosSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Query;
 
 /**
  * UsuariosController implements the CRUD actions for usuarios model.
@@ -39,6 +41,38 @@ class UsuariosController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionRoles(){
+        $query = new Query;
+        $query->select('*')->from('items')->where('type = 1')->all();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $this->render('roles', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCreaterole(){
+        if(Yii::$app->request->post()){
+            \Yii::$app->response->format = 'json';
+            parse_str($_POST['data'], $data);
+            $auth = Yii::$app->authManager;
+            try{
+                $role = $auth->createRole($data['nombre']);
+                $role->description = $data['descripcion'];
+                $auth->add($role);
+                return ['mensaje' => 'El perfil se registró correctamente', 'respuesta' => '1'];
+            }catch (Exception $e) {
+                return ['mensaje' => 'No se pudo registrar el perfil, intente nuevamente, asegúrese que el perfil que intenta crear no exista', 'respuesta' => '3'];
+            }
+        }else{
+            // $role = Yii::$app->authManager->getRole('admin');
+            // Yii::$app->authManager->assign($role, 1);
+            return $this->render('createrole');
+        }
     }
 
     /**
@@ -106,8 +140,8 @@ class UsuariosController extends Controller
     public function actionMultidelete(){
           $sql = "UPDATE usuarios SET borrado='1' WHERE id_usuario IN (".$_POST['data'].")";
          try {
-            Yii::$app->db->createCommand($sql)->execute(); 
-            return  $this->redirect(['index']);
+            Yii::$app->db->createCommand($sql)->execute();
+            return $this->redirect(['index']);
          } catch (Exception $e) {
             return $e->getMessage();
          }
