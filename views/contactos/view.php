@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Contactos */
 
-$this->title = $model->id_contacto;
+$this->title = $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Contactos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -16,10 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id_contacto], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_contacto], [
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->id_contacto], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Desea borrar este item?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,14 +28,23 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_contacto',
+            // 'id_contacto',
             'nombre',
             'telefono',
             'tipo_entidad',
             'cargo',
             'email:email',
-            'id_proveedor',
-            'id_cliente',
+            [   'label' => 'Entidad',
+                'attribute' => function($data){
+                    if($data->tipo_entidad == 'Cliente'){
+                        return $data->clienteName;
+                    }else{
+                        return $data->proveedorName;
+                    }
+                }
+            ],
+            // 'id_proveedor',
+            // 'id_cliente',
         ],
     ]) ?>
 

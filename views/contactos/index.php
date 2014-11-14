@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Contactos', ['create'], ['class' => 'btn btn-success btn-right']) ?>
+        <?= Html::a('Crear Contacto', ['create'], ['class' => 'btn btn-success btn-right']) ?>
     </p>
     <p>
         <button id="delete" class="btn btn-danger" >Eliminar contactos</button>
@@ -35,30 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
             // ['class' => 'yii\grid\SerialColumn'],
             ['class' => 'yii\grid\CheckboxColumn'],
             // 'id_contacto',
-            'nombre',
-            'telefono',
-            'tipo_entidad',
-            'cargo',
-            'email:email',
-            [   'header' => 'Entidad',
-                'attribute' => function($data){
-                    if($data->id_proveedor === null){
-                        return $data->clienteName;
-                    }else{
-                        return $data->proveedorName;
-                    }
-                }
-            ],
-            // 'id_proveedor',
-            // 'id_cliente',
-
-            // 'Nombre',
-            // 'Telefono',
-            // 'Tipo_entidad',
-            // 'Cargo',
-            // 'Email:email',
-            // 'Entidad',
-
+            'Nombre',
+            'Telefono',
+            'Tipo_entidad',
+            'Cargo',
+            'Email:email',
+            'Entidad',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

@@ -12,12 +12,18 @@ use app\models\Proveedores;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
+use SimpleExcel\SimpleExcel;
 
 /**
  * SimsController implements the CRUD actions for Sims model.
  */
 class SimsController extends Controller
 {
+
+    public $path = '../web/uploads/';
+
     public function behaviors()
     {
         return [
@@ -161,7 +167,7 @@ class SimsController extends Controller
     public function actionCreate()
     {
         $model = new Sims();
-        
+        $upload = new UploadForm();
 
         $planes = Planes::find()->all();
         $estados = Estados::find()->all();
@@ -187,6 +193,7 @@ class SimsController extends Controller
                 'planes' => $planes,
                 'estados' => $estados,
                 'proveedores' => $proveedores,
+                'upload' => $upload,
             ]);
         }
     }
@@ -238,6 +245,38 @@ class SimsController extends Controller
          } catch (Exception $e) {
             return $e->getMessage();
          }
+    }
+
+     public function actionUpload()
+    {
+        $model = new UploadForm();
+        $excel = new SimpleExcel('csv');
+        if (Yii::$app->request->isPost) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+
+            if ($model->validate()) {                
+                $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
+                $excel->parser->loadFile($this->path.$model->file->baseName. '.' . $model->file->extension);
+                $foo = $excel->parser->getField();
+                // while($excel->parser->getRow(3))
+                // \Yii::$app->response->format = 'json';
+                unset($foo[0]);
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {                    
+                    foreach ($foo as $key => $value) {
+                        $fila = explode(';',$value[0]);
+                        $sql = "CALL uploadFile('".$fila[1]."','".$fila[2]."','".$fila[3]."','".$fila[4]."','".$fila[5]."','".$fila[6]."','".$fila[7]."','".$fila[8]."','".$fila[9]."')";
+                        \Yii::$app->db->createCommand($sql)->execute();
+                    }
+                    $transaction->commit();
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+                // return print_r($bar);
+            }
+        }
+
+        return $this->redirect(['create', 'mensaje' =>'OK']);
     }
 
     /**

@@ -27,6 +27,7 @@ use Yii;
  */
 class Sims extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */

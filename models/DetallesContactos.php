@@ -14,6 +14,7 @@ use Yii;
  * @property string $Cargo
  * @property string $Email
  * @property string $Entidad
+ * @property integer $Borrado
  */
 class DetallesContactos extends \yii\db\ActiveRecord
 {
@@ -31,12 +32,17 @@ class DetallesContactos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Contacto'], 'integer'],
-            [['Nombre', 'Tipo_entidad', 'Email'], 'required'],
+            [['Contacto','borrado'], 'integer'],
+            [['Nombre', 'Tipo_entidad', 'Email','borrado'], 'required'],
             [['Nombre', 'Cargo', 'Email', 'Entidad'], 'string', 'max' => 45],
             [['Telefono'], 'string', 'max' => 20],
             [['Tipo_entidad'], 'string', 'max' => 30]
         ];
+    }
+
+     public static function primaryKey()
+    {
+        return ['Contacto'];
     }
 
     /**

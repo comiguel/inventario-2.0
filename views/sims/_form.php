@@ -1,3 +1,10 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#plan').val('<?= $model["id_plan"];?>');
+        $('#proveedor').val('<?= $model["id_proveedor"];?>');    
+        $('#select_estado').val('<?= $model["id_estado"];?>');    
+    });
+</script>
 <?php
 
 use yii\helpers\Html;
@@ -103,16 +110,26 @@ use yii\widgets\ActiveForm;
                                     </div>
                                 </div>
 
+                                 <?php $this->beginBlock('uploadBlock'); ?>
+                                    <div class="form-group col-md-12 text-center">
+                                        <a id="link">Ingresar simcards por archivo</a>
+                                    </div>
+                                <?php $this->endBlock();  ?>
+
+                            <?php if ($model->isNewRecord && isset($this->blocks['uploadBlock'])){ ?>
+                                <?= $this->blocks['uploadBlock']; }?>
+
                                 <div class="form-group col-md-12 text-center">
                                     <label class="col-md-2 control-label">Comentarios:</label>
                                     <div class="col-md-12">
-                                        <textarea type="textArea" name="Sims[comentario]" value="<?= $model['comentario'];?>" class="form-control" placeholder="Comentario..."></textarea>
+                                        <textarea type="textArea" name="Sims[comentario]" class="form-control" placeholder="Comentario..."><?= $model['comentario'];?></textarea>
                                     </div>
                                 </div>
 
                     <div class="form-group col-md-12 text-center">
                         <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                     </div>
+
 
                     <?php ActiveForm::end(); ?>
 

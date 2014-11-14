@@ -4,7 +4,9 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Contactos;
+use app\models\DetallesContactos;
 use app\models\ContactosSearch;
+use app\models\DetallesContactosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -32,14 +34,9 @@ class ContactosController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ContactosSearch();
+        // $searchModel = new ContactosSearch();
+        $searchModel = new DetallesContactosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        // $sql = "SELECT * FROM detalles_contactos";
-        // $dataProvider = Yii::$app->db->createCommand($sql)->query();
-        // $query = new \yii\db\Query();
-        // $query->select('*')->from('detalles_contactos');
-        // $command = $query->createCommand();
-        // $dataProvider = $command->queryAll();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -94,6 +91,22 @@ class ContactosController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionProveedores(){
+        $query = (new \yii\db\Query());
+        $query->select('id_proveedor, nombre')->from('proveedores');
+        $proveedores = $query->all();        
+        \Yii::$app->response->format = 'json';
+        return $proveedores;
+    }
+
+     public function actionClientes(){
+        $query = (new \yii\db\Query());
+        $query->select('id_cliente, nombre')->from('clientes');
+        $clientes = $query->all();
+        \Yii::$app->response->format = 'json';
+        return $clientes;
     }
 
     /**

@@ -103,6 +103,12 @@ AppAsset::register($this);
         </div>
     </div>
 
+     <?php $this->beginBlock('uploadBlock'); ?>
+        <div class="form-group col-md-12 text-center">
+            <a id="link">Ingresar simcards por archivo</a>
+        </div>
+    <?php $this->endBlock();  ?>
+
     <footer class="footer">
         <div class="container">
             <p class="pull-left">&copy; Elecsis <?= date('Y') ?></p>
