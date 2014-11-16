@@ -96,11 +96,19 @@ class UsuariosController extends Controller
     {
         $model = new usuarios();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_usuario]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->contrasena = sha1($model->contrasena);
+            if($model->save()){
+                $role = Yii::$app->authManager->getRole($model->rol);
+                Yii::$app->authManager->assign($role, $model->id_usuario);
+                return $this->redirect(['view', 'id' => $model->id_usuario]);
+            }
         } else {
+            $query = new Query;
+            $roles = $query->select('name')->from('items')->all();
             return $this->render('create', [
                 'model' => $model,
+                'roles' => $roles,
             ]);
         }
     }
@@ -114,12 +122,24 @@ class UsuariosController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $contrasena = $model->contrasena;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_usuario]);
+        if ($model->load(Yii::$app->request->post())) {
+            ($model->contrasena === '') ? $model->contrasena = $contrasena : $model->contrasena = sha1($model->contrasena);
+            $role = Yii::$app->authManager->getRole($model->rol);
+            if($model->rol !== ''){
+                Yii::$app->authManager->revokeAll($id);
+                Yii::$app->authManager->assign($role, $id);
+            }
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id_usuario]);
+            }
         } else {
+            $query = new Query;
+            $roles = $query->select('name')->from('items')->all();
             return $this->render('update', [
                 'model' => $model,
+                'roles' => $roles,
             ]);
         }
     }

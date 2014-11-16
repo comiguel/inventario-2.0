@@ -32,13 +32,18 @@ class DispositivosController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['login', 'signup'],
+                        'actions' => ['index'],
                         'roles' => ['?'],
                     ],
                     [
-                        'allow' => false,
-                        'actions' => ['logout', 'index', 'create',],
+                        'allow' => true,
+                        'actions' => ['index', 'update'],
                         'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        // 'actions' => ['*'],
+                        'roles' => ['admin'],
                     ],
                 ],
             ],

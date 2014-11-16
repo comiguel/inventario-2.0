@@ -1,3 +1,11 @@
+<script>
+$(document).ready(function() {
+    <?php if(isset($_GET['id'])){ ?>
+        $('#perfil').val('<?= $model["rol"] ?>').selectpicker('refresh');
+        $('[name="Usuarios[contrasena]"]').attr('id', 'constrasena');
+    <?php } ?>
+});
+</script>
 <?php
 
 use yii\helpers\Html;
@@ -20,9 +28,24 @@ use yii\widgets\ActiveForm;
 
                     <?= $form->field($model, 'usuario')->textInput(['maxlength' => 15]) ?>
 
-                    <?= $form->field($model, 'contrasena')->textInput(['maxlength' => 75])->passwordInput() ?>
+                    <!-- <?= $form->field($model, 'contrasena')->textInput(['maxlength' => 75])->passwordInput() ?> -->
+                    <div class="form-group field-usuarios-contrasena">
+                        <label class="control-label" for="usuarios-contrasena">Contraseña</label>
+                        <input id="usuarios-contrasena" class="form-control" name="Usuarios[contrasena]" type="password">
+                        <div class="help-block"></div>
+                    </div>
 
-                    <?= $form->field($model, 'rol')->textInput(['maxlength' => 30]) ?>
+                    <!-- <?= $form->field($model, 'rol')->textInput(['maxlength' => 30]) ?> -->
+                    <div class="form-group field-usuarios-rol required">
+                        <label class="control-label" for="usuarios-rol">Perfil</label>
+                        <select id="perfil" data-live-search="true" data-width="100%" name="Usuarios[rol]" class="selectpicker">
+                            <option value="">Seleccionar perfil</option>
+                            <?php foreach($roles as $row){?>
+                                <option value="<?= $row['name'];?>"><?= $row['name'];?></option>
+                            <?php }?>
+                        </select>
+                        <div class="help-block"></div>
+                    </div>
 
                     <?= $form->field($model, 'nombre')->textInput(['maxlength' => 45]) ?>
 
