@@ -258,21 +258,19 @@ class SimsController extends Controller
                 $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
                 $excel->parser->loadFile($this->path.$model->file->baseName. '.' . $model->file->extension);
                 $foo = $excel->parser->getField();
-                // while($excel->parser->getRow(3))
-                // \Yii::$app->response->format = 'json';
+               
                 unset($foo[0]);
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {                    
                     foreach ($foo as $key => $value) {
                         $fila = explode(';',$value[0]);
-                        $sql = "CALL uploadFile('".$fila[1]."','".$fila[2]."','".$fila[3]."','".$fila[4]."','".$fila[5]."','".$fila[6]."','".$fila[7]."','".$fila[8]."','".$fila[9]."')";
+                        $sql = "CALL uploadFileSim('".$fila[1]."','".$fila[2]."','".$fila[3]."','".$fila[4]."','".$fila[5]."','".$fila[6]."','".$fila[7]."','".$fila[8]."','".$fila[9]."')";
                         \Yii::$app->db->createCommand($sql)->execute();
                     }
                     $transaction->commit();
                 } catch (Exception $e) {
                     $transaction->rollBack();
                 }
-                // return print_r($bar);
             }
         }
 

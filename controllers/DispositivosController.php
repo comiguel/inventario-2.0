@@ -11,12 +11,18 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\filters\AccessControl;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
+use SimpleExcel\SimpleExcel;
 
 /**
  * DispositivosController implements the CRUD actions for Dispositivos model.
  */
 class DispositivosController extends Controller
 {
+
+    public $path = '../web/uploads/';
+    
     public function behaviors()
     {
         return [
@@ -26,27 +32,27 @@ class DispositivosController extends Controller
                     'delete' => ['post'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                // 'only' => ['login', 'logout', 'signup', 'index'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['index'],
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'update'],
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'allow' => true,
-                        // 'actions' => ['*'],
-                        'roles' => ['admin'],
-                    ],
-                ],
-            ],
+            // 'access' => [
+            //     'class' => AccessControl::className(),
+            //     // 'only' => ['login', 'logout', 'signup', 'index'],
+            //     'rules' => [
+            //         [
+            //             'allow' => true,
+            //             'actions' => ['index'],
+            //             'roles' => ['?'],
+            //         ],
+            //         [
+            //             'allow' => true,
+            //             'actions' => ['index', 'update'],
+            //             'roles' => ['@'],
+            //         ],
+            //         [
+            //             'allow' => true,
+            //             // 'actions' => ['*'],
+            //             'roles' => ['admin'],
+            //         ],
+            //     ],
+            // ],
         ];
     }
 
@@ -175,6 +181,7 @@ class DispositivosController extends Controller
     public function actionCreate()
     {
         $model = new Dispositivos();
+        $upload = new UploadForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_disp]);
@@ -188,6 +195,7 @@ class DispositivosController extends Controller
                 'model' => $model,
                 'estados' => $estados,
                 'proveedores' => $proveedores,
+                'upload' => $upload,
             ]);
         }
     }
@@ -264,6 +272,36 @@ class DispositivosController extends Controller
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    public function actionUpload()
+    {
+        $model = new UploadForm();
+        $excel = new SimpleExcel('csv');
+        if (Yii::$app->request->isPost) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+
+            if ($model->validate()) {                
+                $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
+                $excel->parser->loadFile($this->path.$model->file->baseName. '.' . $model->file->extension);
+                $foo = $excel->parser->getField();
+              
+                unset($foo[0]);
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {                    
+                    foreach ($foo as $key => $value) {
+                        $fila = explode(';',$value[0]);
+                        $sql = "CALL uploadFileDisp('".$fila[1]."','".$fila[2]."','".$fila[3]."','".$fila[4]."','".$fila[5]."')";
+                        \Yii::$app->db->createCommand($sql)->execute();
+                    }
+                    $transaction->commit();
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
+        }
+
+        return $this->redirect(['create', 'mensaje' =>'OK']);
     }
 
     /**

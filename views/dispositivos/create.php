@@ -139,22 +139,13 @@ $this->params['breadcrumbs'][] = $this->title;
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-								<h4 class="modal-title" id="myModalLabel">INGRESAR DISPOSITIVOS AL INVENTARIO</h4>
+								<h4 class="modal-title" id="myModalLabel">Ingresar dispositivos por archivo</h4>
 							</div>
 							<div class="modal-body">
 								<div class="row">
-									<form id="fileForm" enctype="multipart/form-data" class="form form-horizontal" action="createByFile" role="form">
-										<div class="form-group col-md-12">
-											<label for="archivo" class="col-md-2 control-label">Archivo:</label>
-											<div class="col-md-7">
-												<input id="selectFile" class="filestyle" name="texto" data-buttonText="Examinar" data-buttonName="btn-primary" type="file" class="form-control">
-											</div>
-										</div>
-										<div class="col-xs-6 col-xs-offset-2">
-											<a class="btn btn-success">Cargar archivo</a>
-											<a class="btn btn-danger" data-dismiss="modal">Close</a>
-										</div>
-									</form>
+									<?= $this->render('upload', [
+								        'upload' => $upload,
+								    ]) ?>
 								</div>
 							</div>
 						</div>
