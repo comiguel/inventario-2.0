@@ -88,7 +88,8 @@ AppAsset::register($this);
                          ],
                      ],
                     Yii::$app->user->isGuest ?
-                        ['label' => 'Login', 'url' => ['/site/login']] :
+                        // ['label' => 'Login', 'url' => ['/site/login']] :
+                        '' :
                         ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
                             'url' => ['/site/logout'],
                             'linkOptions' => ['data-method' => 'post']],
@@ -109,7 +110,7 @@ AppAsset::register($this);
         <div class="form-group col-md-12 text-center">
             <a id="link">Ingresar simcards por archivo</a>
         </div>
-    <?php $this->endBlock();  ?>
+    <?php $this->endBlock(); ?>
 
     <footer class="footer">
         <div class="container">

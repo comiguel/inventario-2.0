@@ -32,27 +32,27 @@ class DispositivosController extends Controller
                     'delete' => ['post'],
                 ],
             ],
-            // 'access' => [
-            //     'class' => AccessControl::className(),
-            //     // 'only' => ['login', 'logout', 'signup', 'index'],
-            //     'rules' => [
-            //         [
-            //             'allow' => true,
-            //             'actions' => ['index'],
-            //             'roles' => ['?'],
-            //         ],
-            //         [
-            //             'allow' => true,
-            //             'actions' => ['index', 'update'],
-            //             'roles' => ['@'],
-            //         ],
-            //         [
-            //             'allow' => true,
-            //             // 'actions' => ['*'],
-            //             'roles' => ['admin'],
-            //         ],
-            //     ],
-            // ],
+            'access' => [
+                'class' => AccessControl::className(),
+                // 'only' => ['login', 'logout', 'signup', 'index'],
+                'rules' => [
+                    [
+                        'allow' => false,
+                        // 'actions' => ['index'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'update'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        // 'actions' => ['*'],
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
         ];
     }
 
