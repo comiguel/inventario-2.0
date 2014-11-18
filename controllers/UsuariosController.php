@@ -65,6 +65,11 @@ class UsuariosController extends Controller
                 $role->description = $data['descripcion'];
                 $auth->add($role);
                 return ['mensaje' => 'El perfil se registró correctamente', 'respuesta' => '1'];
+                // return $this->redirect(['view',
+                //             'id' => $model->name,
+                //             'mensaje' => 'El perfil se registró correctamente',
+                //             'respuesta' => '1',
+                //         ]);
             }catch (Exception $e) {
                 return ['mensaje' => 'No se pudo registrar el perfil, intente nuevamente, asegúrese que el perfil que intenta crear no exista', 'respuesta' => '3'];
             }
