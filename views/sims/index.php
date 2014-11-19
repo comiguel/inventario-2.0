@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="sims-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <!-- <?= $this->render('_search', ['model' => $searchModel]); ?> -->
+    <!-- <?php //echo $this->render('_search', ['model' => $searchModel]); ?> -->
 
     <p>
         <?= Html::a('Crear Sim', ['create'], ['class' => 'btn btn-success btn-right']) ?>
@@ -40,29 +40,42 @@ $this->params['breadcrumbs'][] = $this->title;
             // ['class' => 'yii\grid\SerialColumn'],
             ['class' => 'yii\grid\CheckboxColumn'],
 
+            'Fecha_act',
+            'Numero',
+            // 'Fecha_asig',
+            'Imei',
+            'Estado',
+            'Proveedor',
+            'Tipo_plan',
+            'Plan',
+            // 'Comentario',
+            'Asignada',
+            // 'Imei_dispositivo',
+            // 'Borrado',
+
             // 'id_sim',
             // 'f_act',
-            'num_linea',
-            'imei_sc',
-            'tipo_plan',
+            // 'num_linea',
+            // 'imei_sc',
+            // 'tipo_plan',
             // 'comentario',
             // 'id_estado',
-             [
-                'attribute' => 'estadoName',
-                'headerOptions' => ['class' => 'text-center', 'width' => '12%'],
-                // 'filter' => Html::activeDropDownList($model, 'estado', ArrayHelper::map(Estados::find()->all(), 'estado', 'estado'), ['name' => 'SimsSearch[estadoName]', 'class' => 'form-control']),
-            ],
-             [
-                'attribute' => 'proveedorName',
-                'headerOptions' => ['class' => 'text-center'],
-            ],
-            // 'id_proveedor',
-             [
-                'attribute' => 'planName',
-                'headerOptions' => ['class' => 'text-center'],
-            ],
-            // 'id_plan',
-            'imei_disp',
+            //  [
+            //     'attribute' => 'estadoName',
+            //     'headerOptions' => ['class' => 'text-center', 'width' => '12%'],
+            //     // 'filter' => Html::activeDropDownList($model, 'estado', ArrayHelper::map(Estados::find()->all(), 'estado', 'estado'), ['name' => 'SimsSearch[estadoName]', 'class' => 'form-control']),
+            // ],
+            //  [
+            //     'attribute' => 'proveedorName',
+            //     'headerOptions' => ['class' => 'text-center'],
+            // ],
+            // // 'id_proveedor',
+            //  [
+            //     'attribute' => 'planName',
+            //     'headerOptions' => ['class' => 'text-center'],
+            // ],
+            // // 'id_plan',
+            // 'imei_disp',
             // 'f_asig',
 
             ['class' => 'yii\grid\ActionColumn'],

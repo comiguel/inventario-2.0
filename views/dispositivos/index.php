@@ -64,49 +64,69 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
             ['class' => 'yii\grid\CheckboxColumn'],
+
+            'Referencia',
+            'Tipo_disp',
+            // 'Fecha_Adq',
+            'Estado',
+            // 'Proveedor',
+            'Imei_ref',
+            // 'Prec_compra_sin_iva',
+            // 'Prec_venta_sin_iva',
+            // 'Prec_compra_iva',
+            // 'Prec_venta_iva',
+            // 'Comentario_disp',
+            // 'Descripcion_tipo',
+            // 'Ubicacion',
+            'Facturado',
+            'Sim',
+            // 'Total',
+            'Sims_asignadas',
+            // 'Borrado',
+            
             // 'id_disp',
             // 'tipo_disp',
-            [
-                'attribute' => 'tipoDispRef',
-                'headerOptions' => ['class' => 'text-center'],
-            ],
-            [
-                'attribute' => 'f_adquirido',
-                'headerOptions' => ['class' => 'text-center'],
-            ],
-            // 'id_estado',
-            [
-                'attribute' => 'estadoName',
-                'headerOptions' => ['class' => 'text-center', 'width' => '12%'],
-                'filter' => Html::activeDropDownList($model, 'estado', ArrayHelper::map(Estados::find()->all(), 'estado', 'estado'), ['name' => 'DispositivosSearch[estadoName]', 'class' => 'form-control']),
-            ],
-            [
-                'attribute' => 'proveedorName',
-                'headerOptions' => ['class' => 'text-center'],
-            ],
-            [
-                'attribute' => 'imei_ref',
-                'headerOptions' => ['class' => 'text-center', 'width' => '15%'],
-            ],
-            [
-                'attribute' => 'facturado',
-                'headerOptions' => ['class' => 'text-center', 'width' => '15%'],
-                'header' => 'Estado de facturación',
-                'filter' => ['1' => 'Facturado', '0' => 'Sin Facturar'],
-                // 'filterInputOptions' => ['class' => 'selectpicker', 'data-width' => '100%'],
-                // 'filter' => '<select class="selectpicker" name=DispositivosSearch[facturado] data-width="100%">
-                //     <option value=""> </option>
-                //     <option value="1">Facturado</option>
-                //     <option value="0">Sin facturar</option>
-                // </select>',
-                'value' =>
-                function ($data){
-                if($data->facturado == 0){
-                    return 'Sin facturar';
-                }else{
-                    return 'Facturado';
-                }},
-            ],
+            // [
+            //     'attribute' => 'tipoDispRef',
+            //     'headerOptions' => ['class' => 'text-center'],
+            // ],
+            // [
+            //     'attribute' => 'f_adquirido',
+            //     'headerOptions' => ['class' => 'text-center'],
+            // ],
+            // // 'id_estado',
+            // [
+            //     'attribute' => 'estadoName',
+            //     'headerOptions' => ['class' => 'text-center', 'width' => '12%'],
+            //     'filter' => Html::activeDropDownList($model, 'estado', ArrayHelper::map(Estados::find()->all(), 'estado', 'estado'), ['name' => 'DispositivosSearch[estadoName]', 'class' => 'form-control']),
+            // ],
+            // [
+            //     'attribute' => 'proveedorName',
+            //     'headerOptions' => ['class' => 'text-center'],
+            // ],
+            // [
+            //     'attribute' => 'imei_ref',
+            //     'headerOptions' => ['class' => 'text-center', 'width' => '15%'],
+            // ],
+            // [
+            //     'attribute' => 'facturado',
+            //     'headerOptions' => ['class' => 'text-center', 'width' => '15%'],
+            //     'header' => 'Estado de facturación',
+            //     'filter' => ['1' => 'Facturado', '0' => 'Sin Facturar'],
+            //     // 'filterInputOptions' => ['class' => 'selectpicker', 'data-width' => '100%'],
+            //     // 'filter' => '<select class="selectpicker" name=DispositivosSearch[facturado] data-width="100%">
+            //     //     <option value=""> </option>
+            //     //     <option value="1">Facturado</option>
+            //     //     <option value="0">Sin facturar</option>
+            //     // </select>',
+            //     'value' =>
+            //     function ($data){
+            //     if($data->facturado == 0){
+            //         return 'Sin facturar';
+            //     }else{
+            //         return 'Facturado';
+            //     }},
+            // ],
             // 'facturado',
             // 'sims_asig',
             // 'comentario',

@@ -15,6 +15,7 @@ use yii\filters\VerbFilter;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
 use SimpleExcel\SimpleExcel;
+use app\models\DetallesSimsSearch;
 
 /**
  * SimsController implements the CRUD actions for Sims model.
@@ -43,7 +44,7 @@ class SimsController extends Controller
     public function actionIndex()
     {
         $model = new Sims();
-        $searchModel = new SimsSearch();
+        $searchModel = new DetallesSimsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

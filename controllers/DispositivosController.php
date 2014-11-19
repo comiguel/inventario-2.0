@@ -14,6 +14,7 @@ use yii\filters\AccessControl;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
 use SimpleExcel\SimpleExcel;
+use app\models\DetallesDispSearch;
 
 /**
  * DispositivosController implements the CRUD actions for Dispositivos model.
@@ -63,7 +64,8 @@ class DispositivosController extends Controller
     public function actionIndex()
     {
         $model = new Dispositivos();
-        $searchModel = new DispositivosSearch();
+        // $searchModel = new DispositivosSearch();
+        $searchModel = new DetallesDispSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $sql = "SELECT * FROM clientes";
         $clientes=\Yii::$app->db->createCommand($sql)->query();
