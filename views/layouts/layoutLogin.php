@@ -17,7 +17,7 @@ $this->beginPage();
 		<?php $this->head() ?>
 	</head>
 
-	<body ng-app>
+	<body>
 		<?php $this->beginBody() ?>
 		<div class="container"><br><br>
 			<?= $content; ?>

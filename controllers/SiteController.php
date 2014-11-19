@@ -49,7 +49,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->redirect(['..\dispositivos\index']);
+        return $this->redirect(['dispositivos/index']);
     }
 
     public function actionLogin()

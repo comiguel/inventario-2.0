@@ -7,15 +7,21 @@
 use yii\bootstrap\ActiveForm;
 $this->params['breadcrumbs'][] = 'Ingresar';
 ?>
-<div class="row">
+<div class="row" ng-app>
 	<div class="col-md-6 col-md-offset-3 ">
 		<div class="panel panel-success">
 			<div class="panel-heading">
 				<h3 class="panel-title">Ingresar</h3>
 			</div>
 			<div class="panel-body">
-				<form id="login-form" class="form-horizontal" action="login" method="post" name="formulario">
-				<input type="hidden" name="_csrf" value="QmMtTk9KMGMBPFQkHicDOwsQdQwCc0AzOyxiB3YjZQ8PCBklIH9xVg==">
+				<?php $form = ActiveForm::begin([
+					'id' => 'login-form',
+					'options' => ['class' => 'form-horizontal', 'name' => 'formulario'],
+					'fieldConfig' => [
+						'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+						'labelOptions' => ['class' => 'col-lg-1 control-label'],
+					],
+				]); ?>
 					<div class="form-group field-loginform-username" ng-class="{'has-error': formulario['LoginForm[username]'].$invalid, 'has-success': formulario['LoginForm[username]'].$valid}">
                         <label class="text-left control-label col-md-3" for="LoginForm[username]">Usuario</label>
                         <div class="col-md-9">
@@ -46,7 +52,7 @@ $this->params['breadcrumbs'][] = 'Ingresar';
 							<input ng-disabled="formulario.$invalid" type="submit" class="btn btn-lg btn-primary" value="Ingresar">
 						</div>
 					</div>
-				</form>
+				<?php ActiveForm::end(); ?>
 			</div>
 		</div>
 	</div>
