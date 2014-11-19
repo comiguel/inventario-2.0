@@ -281,14 +281,14 @@ class DispositivosController extends Controller
         if (Yii::$app->request->isPost) {
             $model->file = UploadedFile::getInstance($model, 'file');
 
-            if ($model->validate()) {                
+            if ($model->validate()) {
                 $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
                 $excel->parser->loadFile($this->path.$model->file->baseName. '.' . $model->file->extension);
                 $foo = $excel->parser->getField();
               
                 unset($foo[0]);
                 $transaction = \Yii::$app->db->beginTransaction();
-                try {                    
+                try {
                     foreach ($foo as $key => $value) {
                         $fila = explode(';',$value[0]);
                         $sql = "CALL uploadFileDisp('".$fila[1]."','".$fila[2]."','".$fila[3]."','".$fila[4]."','".$fila[5]."')";
