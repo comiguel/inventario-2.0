@@ -33,27 +33,27 @@ class DispositivosController extends Controller
                     'delete' => ['post'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                // 'only' => ['login', 'logout', 'signup', 'index'],
-                'rules' => [
-                    [
-                        'allow' => false,
-                        // 'actions' => ['index'],
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'update'],
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'allow' => true,
-                        // 'actions' => ['*'],
-                        'roles' => ['admin'],
-                    ],
-                ],
-            ],
+            // 'access' => [
+            //     'class' => AccessControl::className(),
+            //     // 'only' => ['login', 'logout', 'signup', 'index'],
+            //     'rules' => [
+            //         [
+            //             'allow' => false,
+            //             // 'actions' => ['index'],
+            //             'roles' => ['?'],
+            //         ],
+            //         [
+            //             'allow' => true,
+            //             'actions' => ['index', 'update'],
+            //             'roles' => ['@'],
+            //         ],
+            //         [
+            //             'allow' => true,
+            //             // 'actions' => ['*'],
+            //             'roles' => ['admin'],
+            //         ],
+            //     ],
+            // ],
         ];
     }
 
@@ -225,7 +225,7 @@ class DispositivosController extends Controller
             $sql = "SELECT pc_siva, pc_iva, pv_siva, pv_iva, descripcion FROM tipo_disp WHERE nombre = '".$model->tipoDispName."'";
             $precios=$connection->createCommand($sql)->queryAll();
             return $this->render('update', [
-                'model' => $model,
+                'disp' => $model,
                 'estados' => $estados,
                 'proveedores' => $proveedores,
                 'tiposDisp' => $tiposDisp,

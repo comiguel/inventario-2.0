@@ -34,14 +34,14 @@ function reloadSelect(data, idSelect, firstOption){
 		});
 		$(idSelect).append('<option value='+p[0]+'>'+p[1]+'</option>');
 	});
-	$('.selectpicker').selectpicker('refresh');
+	// $('.selectpicker').selectpicker('refresh');
 }
 
 function initializeSelects(selects){
-	$('.selectpicker').each(function(index, val) {
+	$('select').each(function(index, val) {
 		$(this).val(selects[index]);
 	});
-	$('.selectpicker').selectpicker('refresh');
+	// $('.selectpicker').selectpicker('refresh');
 }
 
 function validateSelect(select){

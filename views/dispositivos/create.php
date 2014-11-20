@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="panel-body">
 				<?php $form = ActiveForm::begin(['options' => ['name' => 'formulario', 'novalidate' => '']]); ?><br>
 					<div class="row">
-						<div class="form-group col-md-6" ng-class="{'has-error': formulario['Dispositivos[f_adquirido]'].$invalid, 'has-success': formulario['Dispositivos[f_adquirido]'].$valid}" >
+						<div class="form-group col-md-6" ng-class="{'has-error': formulario['Dispositivos[f_adquirido]'].$invalid, 'has-success': formulario['Dispositivos[f_adquirido]'].$valid}">
 							<label class="col-md-5 control-label">Fecha de adquisición:</label>
 							<div class="col-md-7">
 								<input type="date" class="form-control" ng-model="f_adquirido" required name="Dispositivos[f_adquirido]" placeholder="aaaa-mm-dd">
