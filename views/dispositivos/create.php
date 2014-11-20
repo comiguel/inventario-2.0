@@ -4,7 +4,10 @@
     	$("#link").on('click', function() { //Despliega el modal de cargar dispositivos por archivos
 				$('#myModal').modal({backdrop: 'static'});
 		});
-        $("#proveedor").on('change', function() { //Cuando se cambia el proveedor se crean los tipos de dispositivos en el select respectivo
+		$('.selectpicker').on('change', function(event) {
+			validateSelect(event.target.id);
+		});
+        $("#proveedor").on('change', function(event) { //Cuando se cambia el proveedor se crean los tipos de dispositivos en el select respectivo
 			restartTable();
 			var id_proveedor = $("#proveedor").val();
 			if(id_proveedor!=0){
@@ -12,10 +15,13 @@
 				.done(function(data) {
 					reloadSelect(data,"#tipoDispositivo","Seleccionar Tipo de dispositivo");
 				});
-			}
+			}else{
+                $('#tipoDispositivo').empty();
+                $('#tipoDispositivo').append('<option value="">Debes escoger un proveedor</option>');
+            }
 		});
 
-		$("#tipoDispositivo").on('change', function() { //Acualiza la tabla de precios cuando se cambia un tipo de dispositivo
+		$("#tipoDispositivo").on('change', function(event) { //Acualiza la tabla de precios cuando se cambia un tipo de dispositivo
 			var id_tipo = $("#tipoDispositivo").val();
 			if(id_tipo!=0){
 				$.post('prices', {tipo: id_tipo})
@@ -51,49 +57,71 @@ $this->params['breadcrumbs'][] = $this->title;
 				<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 			</div>
 			<div class="panel-body">
-				<?php $form = ActiveForm::begin(['options' => ['name' => 'formulario']]); ?><br>
-					<div class="form-group col-md-6" ng-class="{'has-error': formulario['Dispositivos[f_adquirido]'].$invalid, 'has-success': formulario['Dispositivos[f_adquirido]'].$valid}" >
-						<label class="col-md-5 control-label">Fecha de adquisición:</label>
-						<div class="col-md-7">
-							<input type="date" class="form-control" ng-model="f_adquirido" required name="Dispositivos[f_adquirido]" placeholder="aaaa-mm-dd">
+				<?php $form = ActiveForm::begin(['options' => ['name' => 'formulario', 'novalidate' => '']]); ?><br>
+					<div class="row">
+						<div class="form-group col-md-6" ng-class="{'has-error': formulario['Dispositivos[f_adquirido]'].$invalid, 'has-success': formulario['Dispositivos[f_adquirido]'].$valid}" >
+							<label class="col-md-5 control-label">Fecha de adquisición:</label>
+							<div class="col-md-7">
+								<input type="date" class="form-control" ng-model="f_adquirido" required name="Dispositivos[f_adquirido]" placeholder="aaaa-mm-dd">
+								<div ng-show="formulario['Dispositivos[f_adquirido]'].$dirty && formulario['Dispositivos[f_adquirido]'].$invalid">
+									<!-- <p class="help-block text-danger" ng-show="formulario['Dispositivos[f_adquirido]'].$error.required">Campo obligatorio</p> -->
+									<p class="help-block text-danger" ng-show="formulario['Dispositivos[f_adquirido]'].$error.date">Fecha introducida inválida</p>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-md-6" ng-class="{'has-error': formulario['Dispositivos[imei_ref]'].$invalid, 'has-success': formulario['Dispositivos[imei_ref]'].$valid}">
+							<label class="col-md-5 control-label">IMEI o referencia:</label>
+							<div class="col-md-7">
+								<input type="text" ng-model="imei_ref" required name="Dispositivos[imei_ref]" class="form-control" placeholder="IMEI o referencia">
+								<div ng-show="formulario['Dispositivos[imei_ref]'].$dirty && formulario['Dispositivos[imei_ref]'].$invalid">
+									<p class="help-block text-danger">Campo requerido</p>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="form-group col-md-6" ng-class="{'has-error': formulario['Dispositivos[imei_ref]'].$invalid, 'has-success': formulario['Dispositivos[imei_ref]'].$valid}">
-						<label class="col-md-5 control-label">IMEI o referencia:</label>
-						<div class="col-md-7">
-							<input type="text" ng-model="imei_ref" required name="Dispositivos[imei_ref]" class="form-control" placeholder="IMEI o referencia">
+					<div class="row">
+						<div class="form-group col-md-6" ng-class="{'has-error': formulario['Dispositivos[id_estado]'].$invalid, 'has-success': formulario['Dispositivos[id_estado]'].$valid}">
+							<label class="col-md-5 control-label">Estado:</label>
+							<div class="col-md-7">
+								<select id="estado" data-live-search="true" data-width="100%" ng-model="id_estado" required name="Dispositivos[id_estado]" class="form-control">
+									<option value="">Seleccionar estado</option>
+									<?php foreach($estados as $row){?>
+										<option value="<?= $row['id_estado'];?>"><?= $row['estado'];?></option>
+									<?php }?>
+								</select>
+								<div ng-show="formulario['Dispositivos[id_estado]'].$dirty && formulario['Dispositivos[id_estado]'].$invalid">
+									<p class="help-block text-danger">Debes seleccionar un estado</p>
+								</div>
+								<!-- <i class="form-control-feedback glyphicon glyphicon-remove" style="cursor: pointer;"></i> -->
+							</div>
+						</div>
+						<div class="form-group col-md-6" ng-class="{'has-error': formulario['proveedor'].$invalid, 'has-success': formulario['proveedor'].$valid}">
+							<label class="col-md-5 control-label">Proveedor:</label>
+							<div class="col-md-7">
+								<select id="proveedor" data-live-search="true" data-width="100%" ng-model="proveedor" required name="proveedor" class="form-control">
+									<option value="">Seleccionar proveedor</option>
+									<?php foreach($proveedores as $row){?>
+										<option value="<?= $row['id_proveedor'];?>"><?= $row['nombre'];?></option>
+									<?php }?>
+								</select>
+								<div ng-show="formulario['proveedor'].$dirty && formulario['proveedor'].$invalid">
+									<p class="help-block text-danger">Debes seleccionar un proveedor</p>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="form-group col-md-6" ng-class="{'has-error': formulario['Dispositivos[id_estado]'].$invalid, 'has-success': formulario['Dispositivos[id_estado]'].$valid}">
-						<label class="col-md-5 control-label">Estado:</label>
-						<div class="col-md-7">
-							<select id="estado" data-live-search="true" data-width="100%" ng-model="id_estado" required name="Dispositivos[id_estado]" class="selectpicker">
-								<option value="">Seleccionar estado</option>
-								<?php foreach($estados as $row){?>
-									<option value="<?= $row['id_estado'];?>"><?= $row['estado'];?></option>
-								<?php }?>
-							</select>
-							<!-- <i class="form-control-feedback glyphicon glyphicon-remove" style="cursor: pointer;"></i> -->
-						</div>
-					</div>
-					<div class="form-group col-md-6" ng-class="{'has-error': formulario.proveedor.$invalid, 'has-success': formulario.proveedor.$valid}">
-						<label class="col-md-5 control-label">Proveedor:</label>
-						<div class="col-md-7">
-							<select id="proveedor" data-live-search="true" data-width="100%" ng-model="proveedor" required name="proveedor" class="ignorar selectpicker">
-								<option value="">Seleccionar proveedor</option>
-								<?php foreach($proveedores as $row){?>
-									<option value="<?= $row['id_proveedor'];?>"><?= $row['nombre'];?></option>
-								<?php }?>
-							</select>
-						</div>
-					</div>
-					<div class="form-group col-md-6" ng-class="{'has-error': formulario['Dispositivos[tipo_disp]'].$invalid, 'has-success': formulario['Dispositivos[tipo_disp]'].$valid}">
-						<label class="col-md-5 control-label">Tipo de dispositivo:</label>
-						<div class="col-md-7">
-							<select id="tipoDispositivo" data-live-search="true" data-width="100%" ng-model="tipo_disp" required name="Dispositivos[tipo_disp]" class="selectpicker">
-								<option value="">Seleccionar Tipo de dispositivo</option>
-								<option value="">Debes escoger un proveedor</option>
-							</select>
+					<div class="row">
+						<div class="form-group col-md-6" ng-class="{'has-error': formulario['Dispositivos[tipo_disp]'].$invalid, 'has-success': formulario['Dispositivos[tipo_disp]'].$valid}">
+							<label class="col-md-5 control-label">Tipo de dispositivo:</label>
+							<div class="col-md-7">
+								<select id="tipoDispositivo" data-live-search="true" data-width="100%" ng-model="tipo_disp" required name="Dispositivos[tipo_disp]" class="form-control">
+									<option value="">Seleccionar Tipo de dispositivo</option>
+									<option value="">Debes escoger un proveedor</option>
+								</select>
+								<div ng-show="formulario['Dispositivos[tipo_disp]'].$dirty && formulario['Dispositivos[tipo_disp]'].$invalid">
+									<p class="help-block text-danger">Debes seleccionar un tipo de dispositivo</p>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="form-group col-md-12 text-center">
@@ -129,7 +157,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					</div>
 					<div class="buttons-submit col-sm-9">
 						<div class="col-sm-2 col-sm-offset-5">
-							<button type="submit" ng-disabled="formulario.$invalid" class="btn btn-primary">Guardar dispositivo</button>
+							<button ng-disabled="formulario.$invalid" type="submit" class="btn btn-primary">Guardar dispositivo</button>
 						</div>
 						<div class="col-sm-2 col-sm-offset-1">
 							<a href="#" class="btn btn-success">Cancelar</a>

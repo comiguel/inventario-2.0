@@ -37,6 +37,28 @@ function reloadSelect(data, idSelect, firstOption){
 	$('.selectpicker').selectpicker('refresh');
 }
 
+function initializeSelects(selects){
+	$('.selectpicker').each(function(index, val) {
+		$(this).val(selects[index]);
+	});
+	$('.selectpicker').selectpicker('refresh');
+}
+
+function validateSelect(select){
+	if($('#'+select).val() === ''){
+		$('#'+select).attr('ng-model', select);
+		$('#'+select).addClass('ng-pristine');
+		$('#'+select).addClass('ng-untouched');
+		$('#'+select).addClass('ng-invalid');
+		$('#'+select).addClass('ng-invalid-required');
+	}else{
+		$('#'+select).removeAttr('ng-model');
+		$('#'+select).removeClass('ng-pristine');
+		$('#'+select).removeClass('ng-untouched');
+		$('#'+select).removeClass('ng-invalid');
+		$('#'+select).removeClass('ng-invalid-required');
+	}
+}
 
 function multiDelete(btnDelete,grid){
     $(btnDelete).click(function(event) {
@@ -71,11 +93,4 @@ function restartTable(){
 	for (var i = 0; i < 5; i++) {
 		$('#prices').append('<td>-</td>');
 	};
-}
-
-function initializeSelects(selects){
-	$('.selectpicker').each(function(index, val) {
-		$(this).val(selects[index]);
-	});
-	$('.selectpicker').selectpicker('refresh');
 }
