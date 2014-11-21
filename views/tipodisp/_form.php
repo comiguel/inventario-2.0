@@ -1,5 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
+        $('[ng-class*="{\'has"]').removeClass('has-error');
         $('#usa_sim').val('<?= $model["usa_sim"];?>');
         $('#proveedor').val('<?= $model["id_proveedor"];?>');
 
@@ -14,24 +15,25 @@
                     $('#pv_iva').attr('value', precios[1]);
                 }
          });
+
+        $('.precioCompra').on('change', function(event) {
+            event.preventDefault();
+            var precios = parseFloat($('#pc_siva').val())+(parseFloat($('#pc_siva').val())*parseFloat($('#porcIVA').val()));
+            $('#pc_iva').attr('value', precios);
+        });
+        
         $('#usa_sim').on('change', function(event) {
                 if($(this).val() == 'si'){
-                    $('#num_sims').removeAttr('readonly');
-                    $('#num_sims').attr('name', 'texto');
+                    $('#total_sims').removeAttr('readonly');
+                    $('#total_sims').attr('name', 'texto');
                 }else{
-                    $('#num_sims').val('');
-                    $('#num_sims').attr('name', 'num_sims');
-                    $('#num_sims').attr('readonly', 'true');
+                    $('#total_sims').val('');
+                    $('#total_sims').attr('name', 'total_sims');
+                    $('#total_sims').attr('readonly', 'true');
                 }
          });
     });
-    function precioIva(pcsiva,pvsiva,iva){
-      var precios = [];
-      
-      precios[0] = pcsiva+(pcsiva*iva);
-      precios[1] = pvsiva+(pvsiva*iva);
-      return precios;
-    }
+    
 </script>
 
 <?php
@@ -43,7 +45,7 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\TipoDisp */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-8 col-md-offset-2" ng-app>
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Tipos de dispositivos</h3>
@@ -51,9 +53,7 @@ use yii\widgets\ActiveForm;
             <div class="panel-body">
                 <div class="tipo-disp-form">
 
-                    <?php $form = ActiveForm::begin([
-                        'options' => ['class' => 'form form-horizontal'],
-                    ]); ?>
+                    <?php $form = ActiveForm::begin(['options' => ['name' => 'formulario']]); ?>
 
                     <div class="form-group col-md-12">
                         <label class="col-md-3 control-label">Nombre:</label>
@@ -62,24 +62,30 @@ use yii\widgets\ActiveForm;
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12" ng-class="{'has-error': formulario['TipoDisp[tipo_ref]'].$invalid, 'has-success': formulario['TipoDisp[tipo_ref]'].$valid}">
                         <label class="col-md-3 control-label">Tipo o referencia:</label>
                         <div class="col-md-9">
-                            <input type="text" value="<?= $model['tipo_ref'];?>" class="form-control" name="TipoDisp[tipo_ref]" placeholder="Tipo o referencia">
+                            <input type="text" value="<?= $model['tipo_ref'];?>" ng-model="tipo_ref" required class="form-control" ng-init="tipo_ref='<?= $model->tipo_ref ?>'" name="TipoDisp[tipo_ref]" placeholder="Tipo o referencia">
+                            <div ng-show="formulario['TipoDisp[tipo_ref]'].$dirty && formulario['TipoDisp[tipo_ref]'].$invalid">
+                                <p class="help-block text-danger">El campo es requerido</p>
+                            </div>
                         </div>
                     </div>
 
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12" ng-class="{'has-error': formulario['TipoDisp[id_proveedor]'].$invalid, 'has-success': formulario['TipoDisp[id_proveedor]'].$valid}">
                         <label class="col-md-3 control-label">Proveedor:</label>
                         <div class="col-md-9">
-                            <select id="proveedor" data-width="100%" name="TipoDisp[id_proveedor]" class="selectpicker">
+                            <select id="proveedor" data-width="100%" ng-model="id_proveedor" required name="TipoDisp[id_proveedor]" class="form-control">
                                 <option value="">Seleccionar proveedor</option>
                                 <?php
                                         foreach($proveedores as $row){?>
                                             <option value="<?php echo $row['id_proveedor'];?>"><?php echo $row['nombre'];?></option>
                                 <?php   }?>
                             </select>
+                            <div ng-show="formulario['TipoDisp[id_proveedor]'].$dirty && formulario['TipoDisp[id_proveedor]'].$invalid">
+                                <p class="help-block text-danger">El campo es requerido</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -87,7 +93,7 @@ use yii\widgets\ActiveForm;
                     <div class="form-group col-md-12">
                         <label class="col-md-3 control-label">Porcentaje de IVA:</label>
                         <div class="col-md-9">
-                            <select id="porcIVA" data-width="100%" name="texto" class="precios selectpicker">
+                            <select id="porcIVA" data-width="100%" name="texto" class="precioCompra precios selectpicker">
                                 <option value="">Seleccionar porcentaje de IVA</option>
                                 <?php
                                     
@@ -99,10 +105,14 @@ use yii\widgets\ActiveForm;
                         </div>
                     </div>
                     
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12" ng-class="{'has-error': formulario['TipoDisp[pc_siva]'].$invalid, 'has-success': formulario['TipoDisp[pc_siva]'].$valid}">
                         <label class="col-md-3 control-label">Precio de compra sin IVA:</label>
                         <div class="col-md-9 input-group">
-                            <span class="input-group-addon">$</span><input id="pc_siva" type="number" value="<?= $model['pc_siva'];?>" class="precios form-control" name="TipoDisp[pc_siva]" placeholder="Precio compra sin iva"><span class="input-group-addon">.00</span>
+                            <span class="input-group-addon">$</span><input id="pc_siva" type="number" ng-model="pc_siva" required ng-init="pc_siva='<?= $model->pc_siva ?>'" value="<?= $model['pc_siva'];?>" class="precioCompra precios form-control" name="TipoDisp[pc_siva]" placeholder="Precio compra sin iva"><span class="input-group-addon">.00</span>
+                        </div>
+                        <div ng-show="formulario['TipoDisp[pc_siva]'].$dirty && formulario['TipoDisp[pc_siva]'].$invalid">
+                            <p ng-show="formulario['TipoDisp[pc_siva]'].$error.required" class="text-danger">El campo es requerido</p>
+                            <p ng-show="formulario['TipoDisp[pc_siva]'].$error.number" class="text-danger">El campo debe ser numerico</p>
                         </div>
                     </div>
                     
@@ -128,14 +138,17 @@ use yii\widgets\ActiveForm;
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12" ng-class="{'has-error': formulario['TipoDisp[usa_sim]'].$invalid, 'has-success': formulario['TipoDisp[usa_sim]'].$valid}">
                         <label class="col-md-3 control-label">¿Usa Simcard?:</label>
                         <div class="col-md-9">
-                            <select id="usa_sim" data-width="100%" name="TipoDisp[usa_sim]" class="selectpicker">
+                            <select id="usa_sim" data-width="100%" ng-model="usa_sim" required  name="TipoDisp[usa_sim]" class="form-control">
                                 <option value="">Seleccione si el dispositivo usa simcard</option>
                                 <option value="si">Si usa</option>
                                 <option value="no">No usa</option>
                             </select>
+                            <div ng-show="formulario['TipoDisp[usa_sim]'].$dirty && formulario['TipoDisp[usa_sim]'].$invalid">
+                                <p class="help-block text-danger">El campo es requerido</p>
+                            </div>
                         </div>
                     </div>
 
@@ -156,7 +169,7 @@ use yii\widgets\ActiveForm;
 
 
                     <div class="form-group col-md-12 text-center">
-                        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['ng-disabled'=>'formulario.$invalid', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>

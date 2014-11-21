@@ -61,7 +61,7 @@ use yii\widgets\ActiveForm;
                         <div class="form-group col-md-12" ng-class="{'has-error': formulario['Contactos[nombre]'].$invalid, 'has-success': formulario['Contactos[nombre]'].$valid}">
                             <label for="nombre" class="col-md-2 control-label">Nombre:</label>
                             <div class="col-md-10">
-                                <input type="text" ng-change="changeValidator()" ng-model="nombre" required value="<?= $model['nombre'];?>" class="requerido form-control" ng-init="nombre='<?= $model->nombre ?>'" name="Contactos[nombre]" placeholder="Nombre">
+                                <input type="text" ng-model="nombre" required value="<?= $model['nombre'];?>" class="requerido form-control" ng-init="nombre='<?= $model->nombre ?>'" name="Contactos[nombre]" placeholder="Nombre">
                                 <div ng-show="formulario['Contactos[nombre]'].$dirty && formulario['Contactos[nombre]'].$invalid">
                                     <p class="help-block text-danger">El campo es requerido</p>
                                 </div>
@@ -110,9 +110,10 @@ use yii\widgets\ActiveForm;
                             <div class="form-group col-md-6" ng-class="{'has-error': formulario['Contactos[email]'].$invalid, 'has-success': formulario['Contactos[email]'].$valid}">
                                 <label class="col-md-5 control-label">E-mail:</label>
                                 <div class="col-md-7">
-                                    <input id="email" type="text" value="<?= $model['email'];?>" ng-model="email" required ng-init="email='<?= $model->email ?>'" name="Contactos[email]" class="requerido form-control" placeholder="E-mail">
+                                    <input id="email" type="email" value="<?= $model['email'];?>" ng-model="email" required ng-init="email='<?= $model->email ?>'" name="Contactos[email]" class="requerido form-control" placeholder="E-mail">
                                     <div  ng-show="formulario['Contactos[email]'].$dirty && formulario['Contactos[email]'].$invalid">
-                                        <p class="help-block text-danger">El campo es requerido</p>
+                                        <p ng-show="formulario['Contactos[email]'].$error.required" class="text-danger">El campo es requerido</p>
+                                        <p ng-show="formulario['Contactos[email]'].$error.email" class="text-danger">No es un email válido</p>
                                     </div>
                                 </div>
                             </div>

@@ -94,3 +94,11 @@ function restartTable(){
 		$('#prices').append('<td>-</td>');
 	};
 }
+
+function precioIva(pcsiva,pvsiva,iva){
+	var precios = [];
+	
+	precios[0] = pcsiva+(pcsiva*iva);
+	precios[1] = pvsiva+(pvsiva*iva);
+	return precios;
+}
