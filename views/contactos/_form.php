@@ -5,7 +5,7 @@
            $('#tipo_entidad').on('change', function(event) {
             event.preventDefault();
            $('#bloqueEntidad').addClass('has-error');
-            $('#enviar').attr('disabled', 'true');
+            
             if($('#tipo_entidad').val()=='Cliente'){
                 $('#contactoDe').attr('name', 'Contactos[id_cliente]');
                 $.post('clientes')
@@ -23,7 +23,7 @@
           $('#contactoDe').on('change', function(event) {
                   event.preventDefault();
                   if($('#contactoDe').val()!=''){
-                    $('#enviar').removeAttr('disabled');
+                    
                     $('#bloqueEntidad').addClass('has-success');
                     $('#bloqueEntidad').removeClass('has-error');
                     $('#msjEntidad').hide();
@@ -56,12 +56,12 @@ use yii\widgets\ActiveForm;
 
                     <div class="contactos-form">
 
-                        <?php $form = ActiveForm::begin(['options' => ['ng-non-bindable', 'name' => 'formulario', 'novalidate' => '']]); ?>
+                        <?php $form = ActiveForm::begin(['options' => ['name' => 'formulario']]); ?>
 
                         <div class="form-group col-md-12" ng-class="{'has-error': formulario['Contactos[nombre]'].$invalid, 'has-success': formulario['Contactos[nombre]'].$valid}">
                             <label for="nombre" class="col-md-2 control-label">Nombre:</label>
                             <div class="col-md-10">
-                                <input type="text" ng-model="nombre" required value="<?= $model['nombre'];?>" class="form-control" ng-init="nombre='<?= $model->nombre ?>'" name="Contactos[nombre]" placeholder="Nombre">
+                                <input type="text" ng-change="changeValidator()" ng-model="nombre" required value="<?= $model['nombre'];?>" class="requerido form-control" ng-init="nombre='<?= $model->nombre ?>'" name="Contactos[nombre]" placeholder="Nombre">
                                 <div ng-show="formulario['Contactos[nombre]'].$dirty && formulario['Contactos[nombre]'].$invalid">
                                     <p class="help-block text-danger">El campo es requerido</p>
                                 </div>
@@ -79,25 +79,25 @@ use yii\widgets\ActiveForm;
                                     <div ng-show="formulario['Contactos[tipo_entidad]'].$dirty && formulario['Contactos[tipo_entidad]'].$invalid">
                                         <p class="help-block text-danger">El campo es requerido</p>
                                     </div>
-                            </div>
-                        </div>
-
-                         <div id="bloqueEntidad" class="form-group col-md-6">
-                            <label for="contactoDe" class="col-md-5 control-label">Contacto de:</label>
-                            <div class="col-md-7">
-                                <select id="contactoDe"  ng-model="entidad" required class="form-control">
-                                    <option value="">Seleccionar entidad</option>
-                                    <?php
-                                    foreach($data as $row){?>
-                                        <option value="<?= $row[$atributo];?>"><?= $row['nombre'];?></option>
-                                    <?php }?>
-                                    ?>
-                                </select>
-                                <div hidden id="msjEntidad">
-                                    <p class="help-block text-danger">El campo es requerido</p>
                                 </div>
                             </div>
-                        </div>
+
+                             <div id="bloqueEntidad" class="form-group col-md-6">
+                                <label for="contactoDe" class="col-md-5 control-label">Contacto de:</label>
+                                <div class="col-md-7">
+                                    <select id="contactoDe" required class="form-control">
+                                        <option value="">Seleccionar entidad</option>
+                                        <?php
+                                        foreach($data as $row){?>
+                                            <option value="<?= $row[$atributo];?>"><?= $row['nombre'];?></option>
+                                        <?php }?>
+                                        ?>
+                                    </select>
+                                    <div hidden id="msjEntidad">
+                                        <p class="help-block text-danger">El campo es requerido</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6">
@@ -110,7 +110,7 @@ use yii\widgets\ActiveForm;
                             <div class="form-group col-md-6" ng-class="{'has-error': formulario['Contactos[email]'].$invalid, 'has-success': formulario['Contactos[email]'].$valid}">
                                 <label class="col-md-5 control-label">E-mail:</label>
                                 <div class="col-md-7">
-                                    <input type="text" value="<?= $model['email'];?>" ng-model="email" required ng-init="email='<?= $model->email ?>'" name="Contactos[email]" class="form-control" placeholder="E-mail">
+                                    <input id="email" type="text" value="<?= $model['email'];?>" ng-model="email" required ng-init="email='<?= $model->email ?>'" name="Contactos[email]" class="requerido form-control" placeholder="E-mail">
                                     <div  ng-show="formulario['Contactos[email]'].$dirty && formulario['Contactos[email]'].$invalid">
                                         <p class="help-block text-danger">El campo es requerido</p>
                                     </div>
