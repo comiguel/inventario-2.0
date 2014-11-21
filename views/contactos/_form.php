@@ -1,8 +1,11 @@
 <script type="text/javascript">
     $(document).ready(function() {
+        $('[ng-class*="{\'has"]').removeClass('has-error');
 
-        $('#tipo_entidad').on('change', function(event) {
+           $('#tipo_entidad').on('change', function(event) {
             event.preventDefault();
+           $('#bloqueEntidad').addClass('has-error');
+            $('#enviar').attr('disabled', 'true');
             if($('#tipo_entidad').val()=='Cliente'){
                 $('#contactoDe').attr('name', 'Contactos[id_cliente]');
                 $.post('clientes')
@@ -12,11 +15,25 @@
             }else{
                 $('#contactoDe').attr('name', 'Contactos[id_proveedor]');
                 $.post('proveedores')
-                    .done(function(data){
+                .done(function(data){
                     reloadSelect(data, '#contactoDe', 'Seleccione un proveedor');
-                 });
+                });
             }
-        });
+         });
+          $('#contactoDe').on('change', function(event) {
+                  event.preventDefault();
+                  if($('#contactoDe').val()!=''){
+                    $('#enviar').removeAttr('disabled');
+                    $('#bloqueEntidad').addClass('has-success');
+                    $('#bloqueEntidad').removeClass('has-error');
+                    $('#msjEntidad').hide();
+                  }else{
+                    $('#bloqueEntidad').addClass('has-error');
+                    $('#bloqueEntidad').removeClass('has-success');
+                    $('#msjEntidad').show();
+                 }
+          });  
+
     });
 </script>
 
@@ -30,7 +47,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="col-md-9 col-md-offset-2">
+<div class="col-md-9 col-md-offset-2" ng-app>
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Contactos</h3>
@@ -39,67 +56,83 @@ use yii\widgets\ActiveForm;
 
                     <div class="contactos-form">
 
-                        <?php $form = ActiveForm::begin(); ?>
+                        <?php $form = ActiveForm::begin(['options' => ['ng-non-bindable', 'name' => 'formulario', 'novalidate' => '']]); ?>
 
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-12" ng-class="{'has-error': formulario['Contactos[nombre]'].$invalid, 'has-success': formulario['Contactos[nombre]'].$valid}">
                             <label for="nombre" class="col-md-2 control-label">Nombre:</label>
                             <div class="col-md-10">
-                                <input type="text" value="<?= $model['nombre'];?>" class="form-control" name="Contactos[nombre]" placeholder="Nombre">
+                                <input type="text" ng-model="nombre" required value="<?= $model['nombre'];?>" class="form-control" ng-init="nombre='<?= $model->nombre ?>'" name="Contactos[nombre]" placeholder="Nombre">
+                                <div ng-show="formulario['Contactos[nombre]'].$dirty && formulario['Contactos[nombre]'].$invalid">
+                                    <p class="help-block text-danger">El campo es requerido</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="tipo_entidad" class="col-md-5 control-label">Tipo de entidad:</label>
-                            <div class="col-md-7">
-                                <select id="tipo_entidad" name="Contactos[tipo_entidad]" data-live-search="true" data-width="100%" class="selectpicker">
-                                    <option value="">Seleccionar tipo entidad</option>
-                                    <option value="Cliente">Cliente</option>
-                                    <option value="Proveedor">Proveedor</option>
-                                </select>
+                        <div class="row">
+                            <div class="form-group col-md-6" ng-class="{'has-error': formulario['Contactos[tipo_entidad]'].$invalid, 'has-success': formulario['Contactos[tipo_entidad]'].$valid}">
+                                <label for="tipo_entidad" class="col-md-5 control-label">Tipo de entidad:</label>
+                                <div class="col-md-7">
+                                    <select id="tipo_entidad" ng-model="tipo_entidad" required name="Contactos[tipo_entidad]" ng-init="tipo_entidad='<?= $model->tipo_entidad ?>'" data-live-search="true" data-width="100%" class="form-control">
+                                        <option value="">Seleccionar tipo entidad</option>
+                                        <option value="Cliente">Cliente</option>
+                                        <option value="Proveedor">Proveedor</option>
+                                    </select>
+                                    <div ng-show="formulario['Contactos[tipo_entidad]'].$dirty && formulario['Contactos[tipo_entidad]'].$invalid">
+                                        <p class="help-block text-danger">El campo es requerido</p>
+                                    </div>
                             </div>
                         </div>
 
-                        <div class="form-group col-md-6">
+                         <div id="bloqueEntidad" class="form-group col-md-6">
                             <label for="contactoDe" class="col-md-5 control-label">Contacto de:</label>
                             <div class="col-md-7">
-                                <select id="contactoDe"  data-live-search="true" data-width="100%" class="selectpicker">
+                                <select id="contactoDe"  ng-model="entidad" required class="form-control">
                                     <option value="">Seleccionar entidad</option>
                                     <?php
-                                        foreach($data as $row){?>
-                                            <option value="<?= $row[$atributo];?>"><?= $row['nombre'];?></option>
-                                        <?php }?>
+                                    foreach($data as $row){?>
+                                        <option value="<?= $row[$atributo];?>"><?= $row['nombre'];?></option>
+                                    <?php }?>
                                     ?>
                                 </select>
+                                <div hidden id="msjEntidad">
+                                    <p class="help-block text-danger">El campo es requerido</p>
+                                </div>
                             </div>
                         </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="col-md-5 control-label">Teléfono:</label>
+                                <div class="col-md-7">
+                                    <input type="texto" value="<?= $model['telefono'];?>" name="Contactos[telefono]" class="form-control" placeholder="Teléfono">
+                                </div>
+                            </div>
 
-                        <div class="form-group col-md-6">
-                            <label class="col-md-5 control-label">Teléfono:</label>
-                            <div class="col-md-7">
-                                <input type="texto" value="<?= $model['telefono'];?>" name="Contactos[telefono]" class="form-control" placeholder="Teléfono">
+                            <div class="form-group col-md-6" ng-class="{'has-error': formulario['Contactos[email]'].$invalid, 'has-success': formulario['Contactos[email]'].$valid}">
+                                <label class="col-md-5 control-label">E-mail:</label>
+                                <div class="col-md-7">
+                                    <input type="text" value="<?= $model['email'];?>" ng-model="email" required ng-init="email='<?= $model->email ?>'" name="Contactos[email]" class="form-control" placeholder="E-mail">
+                                    <div  ng-show="formulario['Contactos[email]'].$dirty && formulario['Contactos[email]'].$invalid">
+                                        <p class="help-block text-danger">El campo es requerido</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="form-group col-md-6">
-                            <label class="col-md-5 control-label">E-mail:</label>
-                            <div class="col-md-7">
-                                <input type="text" value="<?= $model['email'];?>" name="Contactos[email]" class="form-control" placeholder="E-mail">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="col-md-5 control-label">Cargo:</label>
+                                <div class="col-md-7">
+                                    <input type="text" value="<?= $model['cargo'];?>" name="Contactos[cargo]" class="form-control" placeholder="Cargo">
+                                </div>
                             </div>
                         </div>
-
-                        <div class="form-group col-md-6">
-                            <label class="col-md-5 control-label">Cargo:</label>
-                            <div class="col-md-7">
-                                <input type="text" value="<?= $model['cargo'];?>" name="Contactos[cargo]" class="form-control" placeholder="Cargo">
-                            </div>
-                        </div>
-
                         <div class="form-group col-md-12 text-center">
-                            <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                            <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['id'=>'enviar', 'ng-disabled'=>'formulario.$invalid', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                         </div>
 
                         <?php ActiveForm::end(); ?>
 
                     </div>
                 </div>
-            </div>
+            
+        </div>
     </div>

@@ -1,5 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
+        $('[ng-class*="{\'has"]').removeClass('has-error');
         $('#tipo_id').val('<?= $model["tipo_identi"];?>');
         $('#ciudad').val('<?= $model["ciudad"];?>');
     });
@@ -15,7 +16,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="col-md-9 col-md-offset-2">
+<div class="col-md-9 col-md-offset-2" ng-app>
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Proveedores</h3>
@@ -24,7 +25,7 @@ use yii\widgets\ActiveForm;
 
                     <div class="proveedores-form">
 
-                        <?php $form = ActiveForm::begin(); ?>
+                        <?php $form = ActiveForm::begin(['options' => ['name' => 'formulario', 'novalidate' => '']]); ?>
 
                         <!-- <?= $form->field($model, 'nombre')->textInput(['maxlength' => 45]) ?> -->
 
@@ -40,30 +41,40 @@ use yii\widgets\ActiveForm;
 
                         <!-- <?= $form->field($model, 'email')->textInput(['maxlength' => 45]) ?> -->
 
-                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-12" ng-class="{'has-error': formulario['Proveedores[nombre]'].$invalid, 'has-success': formulario['Proveedores[nombre]'].$valid}">
                                             <label for="nombre" class="col-md-2 control-label">Nombre:</label>
                                             <div class="col-md-10">
-                                                <input type="text" value="<?= $model['nombre'];?>" class="form-control" name="Proveedores[nombre]" placeholder="Nombre">
+                                                <input ng-model="nombre" required type="text" ng-init="nombre='<?= $model->nombre ?>'" value="<?= $model['nombre'];?>" class="form-control" name="Proveedores[nombre]" placeholder="Nombre">
+                                                <div class="col-md-12 text-center" ng-show="formulario['Proveedores[nombre]'].$dirty && formulario['Proveedores[nombre]'].$invalid">
+                                                    <p class="help-block text-danger">El campo es requerido</p>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-12" ng-class="{'has-error': formulario['Proveedores[tipo_identi]'].$invalid, 'has-success': formulario['Proveedores[tipo_identi]'].$valid}">
                                             <label for="tipo_identi" class="col-md-2 control-label">Tipo de ID:</label>
                                             <div class="col-md-10">
-                                                <select id="tipo_id" name="Proveedores[tipo_identi]" value="<?= $model['tipo_identi'];?>" data-live-search="true" data-width="100%" class="selectpicker">
+                                                <select id="tipo_id" ng-model="tipo_identi" required ng-init="tipo_identi='<?= $model->tipo_identi ?>'" name="Proveedores[tipo_identi]" value="<?= $model['tipo_identi'];?>" data-live-search="true" data-width="100%" class="form-control">
                                                     <option value="">Seleccionar tipo id</option>
                                                     <option value="CC">CC</option>
                                                     <option value="NIT">NIT</option>
                                                 </select>
+                                                <div class="col-md-12 text-center" ng-show="formulario['Proveedores[tipo_identi]'].$dirty && formulario['Proveedores[tipo_identi]'].$invalid">
+                                                     <p class="help-block text-danger">Debe seleccionar un tipo de identificación</p>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-12" ng-class="{'has-error': formulario['Proveedores[num_id]'].$invalid, 'has-success': formulario['Proveedores[num_id]'].$valid}">
                                             <label class="col-md-2 control-label">Número de ID:</label>
                                             <div class="col-md-10">
-                                                <input type="number" value="<?= $model['num_id'];?>" name="Proveedores[num_id]" class="form-control" placeholder="Número ID">
+                                                <input type="number" value="<?= $model['num_id'];?>" ng-model="num_id" required ng-init="num_id='<?= $model->num_id ?>'" name="Proveedores[num_id]" class="form-control" placeholder="Número ID">
+                                            </div>
+                                            <div class="col-md-12 text-center" ng-show="formulario['Proveedores[num_id]'].$dirty && formulario['Proveedores[num_id]'].$invalid">
+                                                <p class="help-block text-danger" ng-show="formulario['Proveedores[num_id]'].$error.number">El campo debe ser numerico</p>
                                             </div>
                                         </div>
+
                                         <div class="form-group col-md-12">
                                             <label class="col-md-2 control-label">Ciudad:</label>
                                             <div class="col-md-10">
