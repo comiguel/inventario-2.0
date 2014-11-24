@@ -44,14 +44,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <?php // echo $this->render('..\estados\_search', ['model' => new EstadosSearch()]); ?>
-
-    <p class="btn-right">
-        <button id="facturar" class="btn btn-primary">Facturar</button>
-        <?= Html::a('Crear Dispositivos', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <p>
-        <button id="delete" class="btn btn-danger">Eliminar dispositivos</button>
-    </p>
+    <?php if(Yii::$app->user->can('admin')){?>
+        <p class="btn-right">
+            <button id="facturar" class="btn btn-primary">Facturar</button>
+            <?= Html::a('Crear Dispositivos', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+        <p>
+            <button id="delete" class="btn btn-danger">Eliminar dispositivos</button>
+        </p>
+    <?php } ?>
 <!-- <div class="col-sm-12"> -->
     
     <?= GridView::widget([

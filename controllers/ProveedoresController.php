@@ -8,6 +8,7 @@ use app\models\ProveedoresSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * ProveedoresController implements the CRUD actions for Proveedores model.
@@ -28,7 +29,7 @@ class ProveedoresController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index', 'view'],
                         'roles' => ['@'],
                     ],
                     [

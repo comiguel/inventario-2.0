@@ -42,7 +42,7 @@ AppAsset::register($this);
                 ],
             ]);
             echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
+                'options' => ['class' => 'navbar-nav'],
                 'items' => [
                     ['label' => 'Dispositivos',
                         'items' => [
@@ -116,7 +116,6 @@ AppAsset::register($this);
     <footer class="footer">
         <div class="container">
             <p class="pull-left">&copy; Elecsis <?= date('Y') ?></p>
-            <p class="pull-right"><?= Yii::powered() ?></p>
         </div>
     </footer>
 <?php $this->endBody() ?>

@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="perfiles-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+<?php if(Yii::$app->user->can('admin')){?>
     <p>
         <?= Html::a('Actualizar', ['update', 'id' => $model->name], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Eliminar', ['delete', 'id' => $model->name], [
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
+<?php } ?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [

@@ -39,12 +39,12 @@ use yii\widgets\ActiveForm;
                     <input id="perfiles-description" type="textArea" class="form-control" name="Perfiles[description]" placeholder="Descripción">
                 </div>
             </div>
-            <div class="buttons-submit col-md-12">
-                <div class="col-md-4 col-md-offset-3 form-group">
-                <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <div class= "col-md-12">
+                <div class="form-group col-md-6 text-center">
+                    <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['ng-disabled'=>'formulario.$invalid', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                 </div>
-                <div class="col-md-3">
-                    <a href="index" type="button" class="btn btn-danger">Cancelar</a>
+                <div class="form-group col-md-6 text-center">
+                    <a href="<?= Yii::$app->request->baseUrl; ?>/perfiles/index" class="btn btn-primary">Volver</a>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>

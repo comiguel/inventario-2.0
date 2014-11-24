@@ -8,6 +8,7 @@ use app\models\HistoricosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * HistoricosController implements the CRUD actions for Historicos model.

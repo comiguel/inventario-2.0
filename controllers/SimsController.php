@@ -16,6 +16,7 @@ use app\models\UploadForm;
 use yii\web\UploadedFile;
 use SimpleExcel\SimpleExcel;
 use app\models\DetallesSimsSearch;
+use yii\filters\AccessControl;
 
 /**
  * SimsController implements the CRUD actions for Sims model.
@@ -39,7 +40,7 @@ class SimsController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index', 'view'],
                         'roles' => ['@'],
                     ],
                     [

@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="dispositivos-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <?php if(Yii::$app->user->can('admin')){?>
     <p class="btn-right">
         <a href="<?= \Yii::$app->homeUrl; ?>sims/asignar?tipo_disp=<?=$model->tipoDispName; ?>&imei=<?= $model->imei_ref; ?>" id="asignar" <?= ($model->tipoDisp->total_sims-$model->sims_asig > 0) ? '':'disabled' ?> class="btn btn-success">Asignar simcard</a>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id_disp], ['class' => 'btn btn-primary']) ?>
@@ -24,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'method' => 'post',
         ],
     ]) ?>
-
+<?php } ?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [

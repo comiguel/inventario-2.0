@@ -8,6 +8,7 @@ use app\models\EstadosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * EstadosController implements the CRUD actions for Estados model.
@@ -28,7 +29,7 @@ class EstadosController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index', 'view'],
                         'roles' => ['@'],
                     ],
                     [

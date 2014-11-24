@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
+use yii\filters\AccessControl;
 
 /**
  * UsuariosController implements the CRUD actions for usuarios model.
@@ -30,7 +31,7 @@ class UsuariosController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index', 'view'],
                         'roles' => ['@'],
                     ],
                     [

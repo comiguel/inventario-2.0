@@ -10,6 +10,7 @@ use app\models\DetallesContactosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * ContactosController implements the CRUD actions for Contactos model.
@@ -30,7 +31,7 @@ class ContactosController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index', 'view'],
                         'roles' => ['@'],
                     ],
                     [

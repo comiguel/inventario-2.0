@@ -8,6 +8,7 @@ use app\models\PerfilesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * PerfilesController implements the CRUD actions for Perfiles model.
@@ -28,7 +29,7 @@ class PerfilesController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index', 'view'],
                         'roles' => ['@'],
                     ],
                     [

@@ -155,13 +155,13 @@ $this->params['breadcrumbs'][] = $this->title;
 							<textarea type="textArea" name="Dispositivos[comentario]" class="form-control" placeholder="Comentario..."></textarea>
 						</div>
 					</div>
-					<div class="buttons-submit col-sm-9">
-						<div class="col-sm-2 col-sm-offset-5">
-							<button ng-disabled="formulario.$invalid" type="submit" class="btn btn-primary">Guardar dispositivo</button>
+					<div class="buttons-submit col-md-12">
+						<div class="form-group col-md-6 text-center">
+							<button ng-disabled="formulario.$invalid" type="submit" class="btn btn-success">Crear</button>
 						</div>
-						<div class="col-sm-2 col-sm-offset-1">
-							<a href="#" class="btn btn-success">Cancelar</a>
-						</div>
+						<div class="form-group col-md-6 text-center">
+                        	<a href="<?= Yii::$app->request->baseUrl; ?>/dispositivos/index" class="btn btn-primary">Volver</a>
+                    	</div>
 					</div>
 				<?php ActiveForm::end(); ?>
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

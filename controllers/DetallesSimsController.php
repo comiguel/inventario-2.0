@@ -8,6 +8,7 @@ use app\models\DetallesSimsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * DetallesContactosController implements the CRUD actions for DetallesContactos model.
@@ -28,7 +29,7 @@ class DetallesSimsController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index', 'view'],
                         'roles' => ['@'],
                     ],
                     [

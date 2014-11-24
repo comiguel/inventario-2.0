@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="sims-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+<?php if(Yii::$app->user->can('admin')){?>
     <p class="btn-right">
         <button id="desasignar" <?= ($model->imei_disp == NULL) ? 'disabled':'' ?> class="btn btn-success">Desasignar simcard</button>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id_sim], ['class' => 'btn btn-primary']) ?>
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-
+<?php }?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [

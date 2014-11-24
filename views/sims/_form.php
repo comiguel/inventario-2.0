@@ -67,10 +67,10 @@ use yii\widgets\ActiveForm;
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-6" ng-class="{'has-error': formulario['Sims[f_asig]'].$invalid, 'has-success': formulario['Sims[f_asig]'].$valid}">
+                                    <div class="form-group col-md-6">
                                         <label for="dateAsig" class="col-md-5 control-label">Fecha de asignación:</label>
                                         <div class="col-md-7">
-                                            <input id="fechaAsig" ng-model="f_asig" required type="date" value="<?= $model['f_asig'];?>" ng-init="f_asig='<?= $model->f_asig ?>'" class="form-control" name="Sims[f_asig]" placeholder="aaaa-mm-dd">
+                                            <input id="fechaAsig" ng-model="f_asig" type="date" value="<?= $model['f_asig'];?>" ng-init="f_asig='<?= $model->f_asig ?>'" class="form-control" name="Sims[f_asig]" placeholder="aaaa-mm-dd">
                                             <div ng-show="formulario['Sims[f_asig]'].$dirty && formulario['Sims[f_asig]'].$invalid">
                                                 <p class="help-block text-danger" ng-show="formulario['Sims[f_asig]'].$error.date">Fecha introducida inválida</p>
                                             </div>
@@ -153,9 +153,14 @@ use yii\widgets\ActiveForm;
                                     </div>
                                 </div>
 
-                    <div class="form-group col-md-12 text-center">
-                        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                    </div>
+                    <div class= "col-md-12">
+                            <div class="form-group col-md-6 text-center">
+                                <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['ng-disabled'=>'formulario.$invalid', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                            </div>
+                            <div class="form-group col-md-6 text-center">
+                                <a href="<?= Yii::$app->request->baseUrl; ?>/sims/index" class="btn btn-primary">Volver</a>
+                            </div>
+                        </div>
 
 
                     <?php ActiveForm::end(); ?>

@@ -26,18 +26,19 @@ $this->params['breadcrumbs'][] = 'Ingresar';
                         <label class="text-left control-label col-md-3" for="LoginForm[username]">Usuario</label>
                         <div class="col-md-9">
 							<input type="text" name="LoginForm[username]" placeholder="Usuario" class="form-control" ng-model="usuario" required>
-								<div ng-show="formulario['LoginForm[username]'].$dirty && formulario['LoginForm[username]'].$invalid">
-									<p class="help-block text-danger" ng-show="formulario['LoginForm[username]'].$error.required">Campo obligatorio</p>
-								</div>
+							<div ng-show="formulario['LoginForm[username]'].$dirty && formulario['LoginForm[username]'].$invalid">
+								<p class="help-block text-danger" ng-show="formulario['LoginForm[username]'].$error.required">Campo obligatorio</p>
+							</div>
                         </div>
 					</div>
 					<div class="form-group field-loginform-password required" ng-class="{'has-error': formulario['LoginForm[password]'].$invalid, 'has-success': formulario['LoginForm[password]'].$valid}">
                         <label class="text-left control-label col-md-3" for="LoginForm[password]">Contraseña</label>
                         <div class="col-md-9">
                         	<input type="password" name="LoginForm[password]" placeholder="Contraseña" class="form-control" ng-model="password" required>
-								<div ng-show="formulario['LoginForm[password]'].$dirty && formulario['LoginForm[password]'].$invalid">
-									<p class="help-block text-danger" ng-show="formulario['LoginForm[password]'].$error.required">Campo obligatorio</p>
-								</div>
+							<div ng-show="formulario['LoginForm[password]'].$dirty && formulario['LoginForm[password]'].$invalid">
+								<p class="help-block text-danger" ng-show="formulario['LoginForm[password]'].$error.required">Campo obligatorio</p>
+							</div>
+                        	<div class="col-lg-12  has-error"><p class="help-block help-block-error"><?= $model->getFirstError('password'); ?></p></div>
                         </div>
 					</div>
 					<div class="form-group">

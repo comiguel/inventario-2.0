@@ -20,14 +20,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+<?php if(Yii::$app->user->can('admin')){?>
     <p>
         <?= Html::a('Crear Tipo disp', ['create'], ['class' => 'btn btn-success btn-right']) ?>
     </p>
      <p>
         <button id="delete" class="btn btn-danger" >Eliminar tipos disp</button>
     </p>
-
+<?php } ?>
     <?= GridView::widget([
         'id'=>'grid',
         'dataProvider' => $dataProvider,

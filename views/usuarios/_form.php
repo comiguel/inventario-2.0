@@ -76,8 +76,13 @@ use yii\widgets\ActiveForm;
 
                     <!-- <?= $form->field($model, 'borrado')->textInput() ?> -->
 
-                    <div class="form-group col-md-12 text-center">
-                        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                    <div class= "col-md-12">
+                        <div class="form-group col-md-6 text-center">
+                            <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['ng-disabled'=>'formulario.$invalid', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        </div>
+                        <div class="form-group col-md-6 text-center">
+                            <a href="<?= Yii::$app->request->baseUrl; ?>/usuarios/index" class="btn btn-primary">Volver</a>
+                        </div>
                     </div>
 
                     <?php ActiveForm::end(); ?>
