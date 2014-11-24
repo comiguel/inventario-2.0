@@ -55,9 +55,11 @@ use yii\widgets\ActiveForm;
                         <label for="cargo_voz" class="col-md-5 control-label">Cargo por voz:</label>
                         <div class="col-md-7 input-group">
                             <span class="input-group-addon">$</span><input id="voz" type="number" ng-model="cargo_voz" required ng-init="cargo_voz='<?= $model->cargo_voz ?>'" value="<?= $model['cargo_voz'];?>" class="precio form-control" name="Planes[cargo_voz]"><span class="input-group-addon">.00</span>
-                            <div class="col-md-12 text-center" ng-show="formulario['Planes[cargo_voz]'].$dirty && formulario['Planes[cargo_voz]'].$invalid">
-                                <p class="help-block text-danger" ng-show="formulario['Planes[cargo_voz]'].$error.number">El campo debe ser numerico</p>
-                            </div>
+                        </div>
+                        <div class="col-md-12 col-md-offset-6" ng-show="formulario['Planes[cargo_voz]'].$dirty && formulario['Planes[cargo_voz]'].$invalid">
+                            <p ng-show="formulario['Planes[cargo_voz]'].$error.required" class="text-danger">El campo es requerido</p>
+                            <p class="help-block text-danger" ng-show="formulario['Planes[cargo_voz]'].$error.number">El campo debe ser numerico</p>
+
                         </div>
                     </div>
 
@@ -65,9 +67,10 @@ use yii\widgets\ActiveForm;
                         <label for="cargo_datos" class="col-md-5 control-label">Cargo por datos:</label>
                         <div class="col-md-7 input-group">
                             <span class="input-group-addon">$</span><input id="datos" type="number" ng-model="cargo_datos" required ng-init="cargo_datos='<?= $model->cargo_datos ?>'" value="<?= $model['cargo_datos'];?>" class="precio form-control" name="Planes[cargo_datos]"><span class="input-group-addon">.00</span>
-                            <div class="col-md-12 text-center" ng-show="formulario['Planes[cargo_datos]'].$dirty && formulario['Planes[cargo_datos]'].$invalid">
-                                <p class="help-block text-danger" ng-show="formulario['Planes[cargo_datos]'].$error.number">El campo debe ser numerico</p>
-                            </div>
+                        </div>
+                        <div class="col-md-12 col-md-offset-6" ng-show="formulario['Planes[cargo_datos]'].$dirty && formulario['Planes[cargo_datos]'].$invalid">
+                            <p ng-show="formulario['Planes[cargo_datos]'].$error.required" class="text-danger">El campo es requerido</p>
+                            <p class="help-block text-danger" ng-show="formulario['Planes[cargo_datos]'].$error.number">El campo debe ser numerico</p>
                         </div>
                     </div>  
 
