@@ -15,10 +15,13 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
+        "ext-mbstring": "*",
+        "ext-gd": "*",
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "faisalman/simple-excel-php": "0.3.*"
+        "faisalman/simple-excel-php": "0.3.*",
+        "fxp/composer-asset-plugin": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
