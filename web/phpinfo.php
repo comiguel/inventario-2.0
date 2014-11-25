@@ -1,1 +1,1 @@
-<?= 'Hola mundo'; ?>
+<?= 'probando sincronización'; ?>
