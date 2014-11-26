@@ -192,9 +192,9 @@ class SimsController extends Controller
         $model = new Sims();
         $upload = new UploadForm();
 
-        $planes = Planes::find()->all();
-        $estados = Estados::find()->all();
-        $proveedores = Proveedores::find()->all();
+        $planes = Planes::find()->where('borrado=0')->all();
+        $estados = Estados::find()->where('borrado=0')->all();
+        $proveedores = Proveedores::find()->where('borrado=0')->all();
 
 
        
@@ -231,13 +231,13 @@ class SimsController extends Controller
     {
         $model = $this->findModel($id);
 
-        $planes = Planes::find()->all();
-        $estados = Estados::find()->all();
-        $proveedores = Proveedores::find()->all();
 
-        if ($model->load(Yii::$app->request->post() && $model->save())) {
-                return $this->redirect(['view', 'id' => $model->id_sim]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+             return $this->redirect(['view', 'id' => $model->id_sim]);
         } else {
+            $planes = Planes::find()->where('borrado=0')->all();
+            $estados = Estados::find()->where('borrado=0')->all();
+            $proveedores = Proveedores::find()->where('borrado=0')->all();
             return $this->render('update', [
                 'model' => $model,
                 'planes' => $planes,

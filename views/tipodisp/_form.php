@@ -170,7 +170,7 @@ use yii\widgets\ActiveForm;
 
                     <div class= "col-md-12">
                             <div class="form-group col-md-6 text-center">
-                                <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['ng-disabled'=>'formulario.$invalid', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                                <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['ng-disabled'=>'formulario.$invalid', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']) ?>
                             </div>
                             <div class="form-group col-md-6 text-center">
                                 <a href="<?= Yii::$app->request->baseUrl; ?>/tipoDisp/index" class="btn btn-primary">Volver</a>

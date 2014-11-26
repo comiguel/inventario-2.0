@@ -1,7 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('[ng-class*="{\'has"]').removeClass('has-error');
-        $('#tipo_id').val('<?= $model["tipo_identi"];?>');
         $('#ciudad').val('<?= $model["ciudad"];?>');
     });
 </script>
@@ -27,20 +26,6 @@ use yii\widgets\ActiveForm;
 
                         <?php $form = ActiveForm::begin(['options' => ['name' => 'formulario', 'novalidate' => '']]); ?>
 
-                        <!-- <?= $form->field($model, 'nombre')->textInput(['maxlength' => 45]) ?> -->
-
-                        <!-- <?= $form->field($model, 'tipo_identi')->textInput(['maxlength' => 10]) ?> -->
-
-                        <!-- <?= $form->field($model, 'num_id')->textInput(['maxlength' => 30]) ?> -->
-
-                        <!-- <?= $form->field($model, 'ciudad')->textInput(['maxlength' => 45]) ?> -->
-
-                        <!-- <?= $form->field($model, 'direccion')->textInput(['maxlength' => 45]) ?> -->
-
-                        <!-- <?= $form->field($model, 'telefono')->textInput(['maxlength' => 20]) ?> -->
-
-                        <!-- <?= $form->field($model, 'email')->textInput(['maxlength' => 45]) ?> -->
-
                                         <div class="form-group col-md-12" ng-class="{'has-error': formulario['Proveedores[nombre]'].$invalid, 'has-success': formulario['Proveedores[nombre]'].$valid}">
                                             <label for="nombre" class="col-md-2 control-label">Nombre:</label>
                                             <div class="col-md-10">
@@ -54,7 +39,7 @@ use yii\widgets\ActiveForm;
                                         <div class="form-group col-md-12" ng-class="{'has-error': formulario['Proveedores[tipo_identi]'].$invalid, 'has-success': formulario['Proveedores[tipo_identi]'].$valid}">
                                             <label for="tipo_identi" class="col-md-2 control-label">Tipo de ID:</label>
                                             <div class="col-md-10">
-                                                <select id="tipo_id" ng-model="tipo_identi" required ng-init="tipo_identi='<?= $model->tipo_identi ?>'" name="Proveedores[tipo_identi]" value="<?= $model['tipo_identi'];?>" data-live-search="true" data-width="100%" class="form-control">
+                                                <select id="tipo_id" ng-model="tipo_identi" ng-init="tipo_identi='<?= $model->tipo_identi; ?>'" required name="Proveedores[tipo_identi]" class="form-control">
                                                     <option value="">Seleccionar tipo id</option>
                                                     <option value="CC">CC</option>
                                                     <option value="NIT">NIT</option>
@@ -110,11 +95,10 @@ use yii\widgets\ActiveForm;
                                             </div>
                                         </div>
 
-                        <!-- <?= $form->field($model, 'borrado')->textInput() ?> -->
 
                         <div class= "col-md-12">
                             <div class="form-group col-md-6 text-center">
-                                <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['ng-disabled'=>'formulario.$invalid', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                                <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['ng-disabled'=>'formulario.$invalid', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']) ?>
                             </div>
                             <div class="form-group col-md-6 text-center">
                                 <a href="<?= Yii::$app->request->baseUrl; ?>/proveedores/index" class="btn btn-primary">Volver</a>

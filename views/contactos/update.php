@@ -2,7 +2,11 @@
 	$(document).ready(function() {
 		$('#tipo_entidad').val('<?= $model["tipo_entidad"];?>');
 		$('#contactoDe').val('<?= ($model->tipo_entidad === "Cliente") ? $model["id_cliente"] : $model["id_proveedor"];?>');
-		
+		<?php if($model->tipo_entidad==='Cliente'){?>
+                $('#contactoDe').attr('name', 'Contactos[id_cliente]');
+        <?php }else{ ?>
+                $('#contactoDe').attr('name', 'Contactos[id_proveedor]');
+        <?php } ?>
 	});
 </script>
 <?php

@@ -117,7 +117,7 @@ class ContactosController extends Controller
 
     public function actionProveedores(){
         $query = (new \yii\db\Query());
-        $query->select('id_proveedor, nombre')->from('proveedores');
+        $query->select('id_proveedor, nombre')->from('proveedores')->where('borrado=0');
         $proveedores = $query->all();        
         \Yii::$app->response->format = 'json';
         return $proveedores;
@@ -125,7 +125,7 @@ class ContactosController extends Controller
 
      public function actionClientes(){
         $query = (new \yii\db\Query());
-        $query->select('id_cliente, nombre')->from('clientes');
+        $query->select('id_cliente, nombre')->from('clientes')->where('borrado=0');
         $clientes = $query->all();
         \Yii::$app->response->format = 'json';
         return $clientes;

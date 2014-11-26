@@ -56,15 +56,11 @@ use yii\widgets\ActiveForm;
 
 
 
-                    <!-- <?= $form->field($model, 'usuario')->textInput(['maxlength' => 15]) ?> -->
-
-
 
                     <div class="form-group" ng-class="{'has-error': formulario['Usuarios[usuario]'].$invalid, 'has-success': formulario['Usuarios[usuario]'].$valid}">
 
                         <label for="usuario" class="control-label">Usuario:</label>
 
-                        <!-- <div class="col-md-7"> -->
 
                             <input type="text" ng-model="usuario" required ng-init="usuario='<?= $model->usuario ?>'" value="<?= $model['usuario'];?>" class="form-control" name="Usuarios[usuario]" placeholder="Nombre de usuario">
 
@@ -74,13 +70,11 @@ use yii\widgets\ActiveForm;
 
                             </div>
 
-                        <!-- </div> -->
 
                     </div>
 
 
 
-                    <!-- <?= $form->field($model, 'contrasena')->textInput(['maxlength' => 75])->passwordInput() ?> -->
 
                     <div class="form-group" ng-class="{'has-error': formulario['Usuarios[contrasena]'].$invalid, 'has-success': formulario['Usuarios[contrasena]'].$valid}">
 
@@ -98,8 +92,7 @@ use yii\widgets\ActiveForm;
 
 
 
-                    <!-- <?= $form->field($model, 'rol')->textInput(['maxlength' => 30]) ?> -->
-
+            <?php if(Yii::$app->user->can('admin')){?>
                     <div class="form-group" ng-class="{'has-error': formulario['Usuarios[rol]'].$invalid, 'has-success': formulario['Usuarios[rol]'].$valid}">
 
                         <label class="control-label" for="usuarios-rol">Perfil</label>
@@ -123,10 +116,7 @@ use yii\widgets\ActiveForm;
                         </div>
 
                     </div>
-
-
-
-                    <!-- <?= $form->field($model, 'nombre')->textInput(['maxlength' => 45]) ?> -->
+            <?php } ?>
 
 
 
@@ -134,7 +124,6 @@ use yii\widgets\ActiveForm;
 
                         <label for="nombre" class="control-label">Usuario:</label>
 
-                        <!-- <div class="col-md-7"> -->
 
                             <input type="text" ng-model="nombre" required value="<?= $model['nombre'];?>" ng-init="nombre='<?= $model->nombre ?>'" class="form-control" name="Usuarios[nombre]" placeholder="Nombre">
 
@@ -144,13 +133,9 @@ use yii\widgets\ActiveForm;
 
                             </div>
 
-                        <!-- </div> -->
 
                     </div>
 
-
-
-                    <!-- <?= $form->field($model, 'borrado')->textInput() ?> -->
 
 
 

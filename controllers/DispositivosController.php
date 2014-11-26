@@ -91,7 +91,7 @@ class DispositivosController extends Controller
 
     public function actionTypes(){
         if(Yii::$app->request->post() && isset($_POST['proveedor'])){
-            $sql = "SELECT id_tipo, nombre FROM tipo_disp WHERE id_proveedor=".$_POST['proveedor'];
+            $sql = "SELECT id_tipo, nombre FROM tipo_disp WHERE id_proveedor=".$_POST['proveedor']." AND borrado=0";
             $result=Yii::$app->db->createCommand($sql)->queryAll();
             \Yii::$app->response->format = 'json';
             return $result;
@@ -189,9 +189,9 @@ class DispositivosController extends Controller
             return $this->redirect(['view', 'id' => $model->id_disp]);
         } else {
             $connection = \Yii::$app->db;
-            $sql = "SELECT * FROM estados";
+            $sql = "SELECT * FROM estados WHERE borrado='0'";
             $estados=$connection->createCommand($sql)->query();
-            $sql = "SELECT * FROM proveedores";
+            $sql = "SELECT * FROM proveedores WHERE borrado='0'";
             $proveedores=$connection->createCommand($sql)->query();
             return $this->render('create', [
                 'model' => $model,
@@ -216,11 +216,11 @@ class DispositivosController extends Controller
             return $this->redirect(['view', 'id' => $model->id_disp]);
         } else {
             $connection = \Yii::$app->db;
-            $sql = "SELECT * FROM estados";
+            $sql = "SELECT * FROM estados WHERE borrado='0'";
             $estados=$connection->createCommand($sql)->queryAll();
-            $sql = "SELECT * FROM proveedores";
+            $sql = "SELECT * FROM proveedores WHERE borrado='0'";
             $proveedores=$connection->createCommand($sql)->query();
-            $sql = "SELECT * FROM tipo_disp WHERE id_proveedor = ".$model->proveedorId;
+            $sql = "SELECT * FROM tipo_disp WHERE id_proveedor = ".$model->proveedorId." AND borrado=0";
             $tiposDisp=$connection->createCommand($sql)->query();
             $sql = "SELECT pc_siva, pc_iva, pv_siva, pv_iva, descripcion FROM tipo_disp WHERE nombre = '".$model->tipoDispName."'";
             $precios=$connection->createCommand($sql)->queryAll();
@@ -279,27 +279,27 @@ class DispositivosController extends Controller
     public function actionUpload()
     {
         $model = new UploadForm();
-        $excel = new SimpleExcel('csv');
+        // $excel = new SimpleExcel('csv');
         if (Yii::$app->request->isPost) {
             $model->file = UploadedFile::getInstance($model, 'file');
 
             if ($model->validate()) {
                 $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
-                $excel->parser->loadFile($this->path.$model->file->baseName. '.' . $model->file->extension);
-                $foo = $excel->parser->getField();
+                // $excel->parser->loadFile($this->path.$model->file->baseName. '.' . $model->file->extension);
+                // $foo = $excel->parser->getField();
               
-                unset($foo[0]);
-                $transaction = \Yii::$app->db->beginTransaction();
-                try {
-                    foreach ($foo as $key => $value) {
-                        $fila = explode(';',$value[0]);
-                        $sql = "CALL uploadFileDisp('".$fila[1]."','".$fila[2]."','".$fila[3]."','".$fila[4]."','".$fila[5]."')";
-                        \Yii::$app->db->createCommand($sql)->execute();
-                    }
-                    $transaction->commit();
-                } catch (Exception $e) {
-                    $transaction->rollBack();
-                }
+                // unset($foo[0]);
+                // $transaction = \Yii::$app->db->beginTransaction();
+                // try {
+                //     foreach ($foo as $key => $value) {
+                //         $fila = explode(';',$value[0]);
+                //         $sql = "CALL uploadFileDisp('".$fila[1]."','".$fila[2]."','".$fila[3]."','".$fila[4]."','".$fila[5]."')";
+                //         \Yii::$app->db->createCommand($sql)->execute();
+                //     }
+                //     $transaction->commit();
+                // } catch (Exception $e) {
+                //     $transaction->rollBack();
+                // }
             }
         }
 

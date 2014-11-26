@@ -50,9 +50,6 @@ class Sims extends \yii\db\ActiveRecord
             [['tipo_plan'], 'string', 'max' => 15],
             [['comentario'], 'string', 'max' => 1000],
             [['imei_disp'], 'string', 'max' => 25],
-            [['imei_disp'], 'unique'],
-            [['imei_disp'], 'unique'],
-            [['imei_disp'], 'unique'],
             [['imei_disp'], 'unique']
         ];
     }

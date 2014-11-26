@@ -15,7 +15,11 @@ Thumbs.db
 # composer vendor dir
 /vendor
 
+#ftp connection file
 /sftp-config.json
+
+#upload files
+/web/uploads/*
 
 #assets
 /web/assets

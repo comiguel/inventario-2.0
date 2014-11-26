@@ -88,12 +88,16 @@ AppAsset::register($this);
                              ['label' => 'Historico', 'url' => ['/historicos/index']],
                          ],
                      ],
-                    Yii::$app->user->isGuest ?
-                        // ['label' => 'Login', 'url' => ['/site/login']] :
-                        '' :
-                        ['label' => 'Salir (' . Yii::$app->user->identity->username . ')',
-                            'url' => ['/site/logout'],
-                            'linkOptions' => ['data-method' => 'post']],
+                   
+                    [
+                        'label' => 'Mi perfil',
+                        'items' => [
+                            ['label' => 'Mi perfil', 'url' => ['/usuarios/view?id='.Yii::$app->user->id]],
+                            ['label' => 'Salir (' . Yii::$app->user->identity->username . ')',
+                                'url' => ['/site/logout'],
+                                'linkOptions' => ['data-method' => 'post']],
+                        ]
+                    ]
                 ],
             ]);
             NavBar::end();

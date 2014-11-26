@@ -3,8 +3,8 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\usuarios;
-use app\models\usuariosSearch;
+use app\models\Usuarios;
+use app\models\UsuariosSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -31,7 +31,7 @@ class UsuariosController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view'],
+                        'actions' => ['index', 'view', 'update'],
                         'roles' => ['@'],
                     ],
                     [
@@ -56,7 +56,7 @@ class UsuariosController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new usuariosSearch();
+        $searchModel = new UsuariosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -151,25 +151,40 @@ class UsuariosController extends Controller
         $model = $this->findModel($id);
         $contrasena = $model->contrasena;
 
-        if ($model->load(Yii::$app->request->post())) {
-            ($model->contrasena === '') ? $model->contrasena = $contrasena : $model->contrasena = sha1($model->contrasena);
-            $role = Yii::$app->authManager->getRole($model->rol);
-            if($model->rol !== ''){
-                Yii::$app->authManager->revokeAll($id);
-                Yii::$app->authManager->assign($role, $id);
+       if(Yii::$app->user->id===$model->id || Yii::$app->user->can('admin')){
+
+            if ($model->load(Yii::$app->request->post())) {
+                ($model->contrasena === '') ? $model->contrasena = $contrasena : $model->contrasena = sha1($model->contrasena);
+                $role = Yii::$app->authManager->getRole($model->rol);
+                if($model->rol !== ''){
+                    Yii::$app->authManager->revokeAll($id);
+                    Yii::$app->authManager->assign($role, $id);
+                }
+                if($model->save()){
+                    return $this->redirect(['view', 'id' => $model->id_usuario]);
+                }
+            } else {
+                $query = new Query;
+                $roles = $query->select('name')->from('items')->all();
+                return $this->render('update', [
+                    'model' => $model,
+                    'roles' => $roles,
+                ]);
             }
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id_usuario]);
-            }
-        } else {
-            $query = new Query;
-            $roles = $query->select('name')->from('items')->all();
-            return $this->render('update', [
-                'model' => $model,
-                'roles' => $roles,
-            ]);
+        }else{
+            throw new \yii\web\HttpException(403, 'No tiene permisos para ejecutar esta acción');
         }
     }
+
+    // public function actionUpdate($id)
+    // {
+    //     $this->actualizar($id);
+    // }
+
+    // public function actionActualizarperfil()
+    // {
+    //     $this->actualizar($_POST['id']);
+    // }
 
     /**
      * Deletes an existing usuarios model.

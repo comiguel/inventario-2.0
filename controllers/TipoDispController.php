@@ -88,7 +88,7 @@ class TipoDispController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_tipo]);
         } else {
-            $proveedores = Proveedores::find()->all();
+            $proveedores = Proveedores::find()->where('borrado=0')->all();
             $query = (new \yii\db\Query());
             $query->select('*')->from('ivas');
             $ivas = $query->all();
@@ -115,7 +115,7 @@ class TipoDispController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_tipo]);
         } else {
-            $proveedores = Proveedores::find()->all();
+            $proveedores = Proveedores::find()->where('borrado=0')->all();
             $query = (new \yii\db\Query());
             $query->select('*')->from('ivas');
             $ivas = $query->all();

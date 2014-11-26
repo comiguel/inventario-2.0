@@ -27,25 +27,6 @@ use yii\widgets\ActiveForm;
 
                     <?php $form = ActiveForm::begin(['options' => ['name' => 'formulario', 'novalidate' => '']]); ?>
 
-                    <!-- <?= $form->field($model, 'f_act')->textInput() ?> -->
-
-                    <!-- <?= $form->field($model, 'num_linea')->textInput(['maxlength' => 12]) ?> -->
-
-                    <!-- <?= $form->field($model, 'imei_sc')->textInput(['maxlength' => 30]) ?> -->
-
-                    <!-- <?= $form->field($model, 'tipo_plan')->textInput(['maxlength' => 15]) ?> -->
-
-                    <!-- <?= $form->field($model, 'comentario')->textInput(['maxlength' => 1000]) ?> -->
-
-                    <!-- <?= $form->field($model, 'id_estado')->textInput() ?> -->
-
-                    <!-- <?= $form->field($model, 'id_proveedor')->textInput() ?> -->
-
-                    <!-- <?= $form->field($model, 'id_plan')->textInput() ?> -->
-
-                    <!-- <?= $form->field($model, 'imei_disp')->textInput(['maxlength' => 25]) ?> -->
-
-                    <!-- <?= $form->field($model, 'f_asig')->textInput() ?> -->
                                 <div class="row">
                                     <div class="form-group col-md-6" ng-class="{'has-error': formulario['Sims[imei_sc]'].$invalid, 'has-success': formulario['Sims[imei_sc]'].$valid}">
                                         <label for="imei" class="col-md-5 control-label">Imei de la simcard:</label>
@@ -155,7 +136,7 @@ use yii\widgets\ActiveForm;
 
                     <div class= "col-md-12">
                             <div class="form-group col-md-6 text-center">
-                                <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['ng-disabled'=>'formulario.$invalid', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                                <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['ng-disabled'=>'formulario.$invalid', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']) ?>
                             </div>
                             <div class="form-group col-md-6 text-center">
                                 <a href="<?= Yii::$app->request->baseUrl; ?>/sims/index" class="btn btn-primary">Volver</a>
