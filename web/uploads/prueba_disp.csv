@@ -1,4 +1,4 @@
-f_adquirido ;imei_ref ;estado ;tipo_disp ;comentario
+f_adquirido;imei_ref ;estado ;tipo_disp ;comentario
 ;2014-05-02;2345341;Disponible;GPS RXZ;Comentario 1
-;2014-05-02;2411233;Dañado;sensor prueba;Comentario 2
+;2014-05-02;2411233;Dañado;GPS TTY;Comentario 2
 ;2014-05-02;3127468;Disponible;Sensor 7max;Comentario 3

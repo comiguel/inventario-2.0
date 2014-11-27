@@ -263,8 +263,8 @@ class SimsController extends Controller
      public function actionMultidelete(){
           $sql = "UPDATE sims SET borrado='1' WHERE id_sim IN (".$_POST['data'].")";
          try {
-            Yii::$app->db->createCommand($sql)->execute(); 
-            return  $this->redirect(['index']);
+            Yii::$app->db->createCommand($sql)->execute();
+            return $this->redirect(['index']);
          } catch (Exception $e) {
             return $e->getMessage();
          }
@@ -277,14 +277,14 @@ class SimsController extends Controller
         if (Yii::$app->request->isPost) {
             $model->file = UploadedFile::getInstance($model, 'file');
 
-            if ($model->validate()) {                
+            if ($model->validate()) {
                 $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
                 $excel->parser->loadFile($this->path.$model->file->baseName. '.' . $model->file->extension);
                 $foo = $excel->parser->getField();
                
                 unset($foo[0]);
                 $transaction = \Yii::$app->db->beginTransaction();
-                try {                    
+                try {
                     foreach ($foo as $key => $value) {
                         $fila = explode(';',$value[0]);
                         $sql = "CALL uploadFileSim('".$fila[1]."','".$fila[2]."','".$fila[3]."','".$fila[4]."','".$fila[5]."','".$fila[6]."','".$fila[7]."','".$fila[8]."','".$fila[9]."')";

@@ -279,27 +279,27 @@ class DispositivosController extends Controller
     public function actionUpload()
     {
         $model = new UploadForm();
-        // $excel = new SimpleExcel('csv');
+        $excel = new SimpleExcel('csv');
         if (Yii::$app->request->isPost) {
             $model->file = UploadedFile::getInstance($model, 'file');
 
             if ($model->validate()) {
                 $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
-                // $excel->parser->loadFile($this->path.$model->file->baseName. '.' . $model->file->extension);
-                // $foo = $excel->parser->getField();
+                $excel->parser->loadFile($this->path.$model->file->baseName. '.' . $model->file->extension);
+                $foo = $excel->parser->getField();
               
-                // unset($foo[0]);
-                // $transaction = \Yii::$app->db->beginTransaction();
-                // try {
-                //     foreach ($foo as $key => $value) {
-                //         $fila = explode(';',$value[0]);
-                //         $sql = "CALL uploadFileDisp('".$fila[1]."','".$fila[2]."','".$fila[3]."','".$fila[4]."','".$fila[5]."')";
-                //         \Yii::$app->db->createCommand($sql)->execute();
-                //     }
-                //     $transaction->commit();
-                // } catch (Exception $e) {
-                //     $transaction->rollBack();
-                // }
+                unset($foo[0]);
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    foreach ($foo as $key => $value) {
+                        $fila = explode(';',$value[0]);
+                        $sql = "CALL uploadFileDisp('".$fila[1]."','".$fila[2]."','".$fila[3]."','".$fila[4]."','".$fila[5]."')";
+                        \Yii::$app->db->createCommand($sql)->execute();
+                    }
+                    $transaction->commit();
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
             }
         }
 

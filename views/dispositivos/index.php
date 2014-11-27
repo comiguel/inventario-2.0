@@ -66,9 +66,9 @@ $this->params['breadcrumbs'][] = $this->title;
             // ['class' => 'yii\grid\SerialColumn'],
             ['class' => 'yii\grid\CheckboxColumn'],
 
+            'Fecha_Adq',
             'Referencia',
             'Tipo_disp',
-            // 'Fecha_Adq',
             'Estado',
             // 'Proveedor',
             'Imei_ref',
