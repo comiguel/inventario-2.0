@@ -151,8 +151,7 @@ class UsuariosController extends Controller
         $model = $this->findModel($id);
         $contrasena = $model->contrasena;
 
-       if(Yii::$app->user->id===$model->id || Yii::$app->user->can('admin')){
-
+        if(Yii::$app->user->id===$model->id || Yii::$app->user->can('admin')){
             if ($model->load(Yii::$app->request->post())) {
                 ($model->contrasena === '') ? $model->contrasena = $contrasena : $model->contrasena = sha1($model->contrasena);
                 $role = Yii::$app->authManager->getRole($model->rol);

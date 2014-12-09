@@ -247,7 +247,7 @@ class DispositivosController extends Controller
         $query->addParams(['id'=>$id]);
         $rows = $query->count();
 
-        $query->select('*')->from('sims')->where('id_disp =:id');
+        $query->select('*')->from('dispositivos')->where('id_disp =:id');
         $query->addParams(['id'=>$id]);
         $rows += $query->count();
 

@@ -6,7 +6,11 @@
 		});
 	});
 </script>
-<?php
+<?php if(isset($_GET['mensaje']) && $_GET['mensaje']==='OK'){?>
+        <script>
+			success('Se ha cargado el archivo correctamente','1');
+        </script>
+    <?php }
 
 use yii\helpers\Html;
 
