@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 <?php if(Yii::$app->user->can('admin')){?>
     <p>
-        <?= Html::a('Create Perfiles', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Perfil', ['create'], ['class' => 'btn btn-success btn-right']) ?>
     </p>
 <?php } ?>
     <?= GridView::widget([

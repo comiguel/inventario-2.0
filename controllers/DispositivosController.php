@@ -247,8 +247,12 @@ class DispositivosController extends Controller
         $query->addParams(['id'=>$id]);
         $rows = $query->count();
 
-        $query->select('*')->from('dispositivos')->where('id_disp =:id');
+        $query->select('imei_ref')->from('dispositivos')->where('id_disp =:id');
         $query->addParams(['id'=>$id]);
+        $imei_disp = $query->scalar();
+
+        $query->select('*')->from('sims')->where('imei_disp =:id');
+        $query->addParams(['id'=>$imei_disp]);
         $rows += $query->count();
 
         try {
